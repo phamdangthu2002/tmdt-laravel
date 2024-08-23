@@ -110,71 +110,73 @@
             color: red !important;
         }
     </style>
-    <div class="container-danhmuc main-data mt-5">
-        <h2 class="mb-4">{{ $title }}</h2>
-        <div class="table-responsive">
-            <table id="table_js" class="table table-striped" style="width:100%">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col" style="width: 140px";>Tên sản phẩm</th>
-                        <th scope="col">Mô Tả</th>
-                        <th scope="col" style="width: 140px";>Giá</th>
-                        <th scope="col" style="width: 140px";>Sale</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Lượt mua</th>
-                        <th scope="col">Lượt xem</th>
-                        <th scope="col">Hình ảnh</th>
-                        <th scope="col">Trạng thái</th>
-                        <th scope="col" style="width: 140px";>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($sanphams)
-                        @foreach ($sanphams as $sanpham)
+    <div class="row">
+        <div class="col-md-6">
+            <div class="container-danhmuc main-data mt-5">
+                <h2 class="mb-4">{{ $title }}</h2>
+                <div class="table-responsive">
+                    <table id="table_js" class="table table-striped" style="width:100%">
+                        <thead class="thead-dark">
                             <tr>
-                                <td>{{ $sanpham->id_sanpham }}</td>
-                                <td>{{ $sanpham->tensanpham }}</td>
-                                <td>{{ $sanpham->mota }}</td> <!-- Swap with the correct column -->
-                                <td>{{ $sanpham->gia }} VND</td>
-                                <td>{{ $sanpham->sale }} VND</td>
-                                <td>{{ $sanpham->soluong }}</td>
-                                <td>{{ $sanpham->luotmua }}</td>
-                                <td>{{ $sanpham->luotxem }}</td>
-                                <td><img src="{{ asset($sanpham->hinhanh) }}" class="img-thumbnail mb-2"
-                                        style="max-height: 50px; width: auto;"></td>
-                                <td>
-                                    @if ($sanpham->trangthai == 1)
-                                        <span class="text-success">Hoạt động</span>
-                                    @else
-                                        <span class="text-danger">Tạm khóa</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <!-- Nút sửa -->
-                                    <a href="{{ route('admin.store-edit-san-pham', $sanpham->id_sanpham) }}"
-                                        class="btn btn-outline-warning bx bx-edit"></a>
-                                    <!-- Form xóa với SweetAlert -->
-                                    <form action="{{ route('admin.delete-san-pham', $sanpham->id_sanpham) }}"
-                                        method="post" class="delete-form" style="display:inline;"
-                                        data-name="{{ $sanpham->tensanpham }}">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger bx bx-trash"></button>
-                                    </form>
-                                </td>
+                                <th scope="col">ID</th>
+                                <th scope="col" style="width: 140px";>Tên sliders</th>
+                                <th scope="col">URL</th>
+                                <th scope="col">Hình ảnh</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Cập nhật</th>
+                                <th scope="col" style="width: 140px";>Thao tác</th>
                             </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="5">Không có danh mục nào để hiển thị.</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-            {{ $sanphams->links() }}
+                        </thead>
+                        <tbody>
+                            @if ($sliders)
+                                @foreach ($sliders as $slider)
+                                    <tr>
+                                        <td>{{ $slider->id_slider }}</td>
+                                        <td>{{ $slider->name }}</td>
+                                        <td>{{ $slider->url }}</td> <!-- Swap with the correct column -->
+                                        <td>
+                                            <a href="{{ asset($slider->hinhanh) }}" target="_blank">
+                                                <img src="{{ asset($slider->hinhanh) }}" class="img-thumbnail mb-2"
+                                                    style="max-height: 50px; width: auto;">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if ($slider->trangthai == 1)
+                                                <span class="text-success">Hoạt động</span>
+                                            @else
+                                                <span class="text-danger">Tạm khóa</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $slider->updated_at }}</td>
+                                        <td>
+                                            <!-- Nút sửa -->
+                                            <a href="{{ route('admin.store-edit-slider', $slider->id_slider) }}"
+                                                class="btn btn-outline-warning bx bx-edit"></a>
+                                            <!-- Form xóa với SweetAlert -->
+                                            <form action="{{ route('admin.delete-slider', $slider->id_slider) }}"
+                                                method="post" class="delete-form" style="display:inline;"
+                                                data-name="{{ $slider->name }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger bx bx-trash"></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5">Không có danh mục nào để hiển thị.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                    {{ $sliders->links() }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            @yield('noidung')
         </div>
     </div>
-    @yield('noidung')
     <script src="/assets/vendor/ckeditor/ckeditor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -184,11 +186,11 @@
                     event.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
                     const form = event.target;
-                    const tensanpham = form.getAttribute(
+                    const tenslider = form.getAttribute(
                         'data-name'); // Lấy tên danh mục từ thuộc tính data-name
 
                     Swal.fire({
-                        title: `Bạn có chắc chắn muốn xóa sản phẩm "${tensanpham}" này không?`,
+                        title: `Bạn có chắc chắn muốn xóa sản phẩm "${tenslider}" này không?`,
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Xóa',

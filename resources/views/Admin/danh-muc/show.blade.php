@@ -13,6 +13,7 @@
                                 <th scope="col">Tên Danh Mục</th>
                                 <th scope="col">Mô Tả</th>
                                 <th scope="col">Trạng thái</th>
+                                <th scope="col">Cập nhật</th>
                                 <th scope="col">Thao tác</th>
                             </tr>
                         </thead>
@@ -30,6 +31,7 @@
                                                 <span class="text-danger">Tạm khóa</span>
                                             @endif
                                         </td>
+                                        <td>{{ $danhmuc->updated_at }}</td>
                                         <td>
                                             <!-- Nút sửa -->
                                             <a href="{{ route('admin.store-edit-danh-muc', $danhmuc->id_danhmuc) }}"
@@ -71,7 +73,7 @@
 
                     const form = event.target;
                     const categoryName = form.getAttribute(
-                    'data-name'); // Lấy tên danh mục từ thuộc tính data-name
+                        'data-name'); // Lấy tên danh mục từ thuộc tính data-name
 
                     Swal.fire({
                         title: `Bạn có chắc chắn muốn xóa danh mục "${categoryName}" này không?`,

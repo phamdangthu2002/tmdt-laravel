@@ -1,7 +1,4 @@
 <style>
-    body{
-        background-color: rgb(207, 207, 207);
-    }
     #logo {
         width: 80%;
         padding-left: 10%;
@@ -88,7 +85,7 @@
                 <ul class="collapse submenu" id="slider">
                     <li><a class="nav-link boder-sidebar bx bxs-add-to-queue"
                             href="{{ route('admin.create-slider') }}"> Thêm slider</a></li>
-                    <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-danh-muc') }}"> Quản lý slider</a></li>
+                    <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-slider') }}"> Quản lý slider</a></li>
                 </ul>
             </li>
         </ul>

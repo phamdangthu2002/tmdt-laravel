@@ -57,10 +57,10 @@ Route::middleware(['admin'])->group(function () {
         Route::prefix('Slider')->group(function () {
             Route::get('/add', [SliderController::class, 'create'])->name('admin.create-slider');
             Route::post('/add-new-slider', [SliderController::class, 'store'])->name('admin.store-slider');
-            // Route::get('/show-slider', [SliderController::class, 'show'])->name('admin.show-san-pham');
-            // Route::get('{id_slider}/store-edit-slider', [SliderController::class, '__store'])->name('admin.store-edit-slider');
-            // Route::post('{id_slider}/edit-slider', [SliderController::class, 'edit'])->name('admin.edit-slider');
-            // Route::post('{id_slider}/delete-slider', [SliderController::class, 'destroy'])->name('admin.delete-slider');
+            Route::get('/show-slider', [SliderController::class, 'show'])->name('admin.show-slider');
+            Route::get('{id_slider}/store-edit-slider', [SliderController::class, '__store'])->name('admin.store-edit-slider');
+            Route::post('{id_slider}/edit-slider', [SliderController::class, 'edit'])->name('admin.edit-slider');
+            Route::post('{id_slider}/delete-slider', [SliderController::class, 'destroy'])->name('admin.delete-slider');
 
         });
         //upload

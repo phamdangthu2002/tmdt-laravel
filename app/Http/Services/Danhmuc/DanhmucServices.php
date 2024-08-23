@@ -22,7 +22,7 @@ class DanhmucServices
     }
     public function showAllDanhmuc()
     {
-        $danhmucs = Danhmuc::all();
+        $danhmucs = Danhmuc::orderByDesc('id_danhmuc')->paginate(15);
         return $danhmucs;
     }
     public function delete($id_danhmuc)

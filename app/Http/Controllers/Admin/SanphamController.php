@@ -74,6 +74,6 @@ class SanphamController extends Controller
     public function destroy($id_sanpham)
     {
         $this->sanphamServices->delete($id_sanpham);
-        return redirect()->route('admin.show-san-pham')->with('success', 'Sản phẩm đã được xóa thành công.');
+        return redirect()->back();
     }
 }

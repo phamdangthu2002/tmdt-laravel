@@ -90,7 +90,12 @@ class SanphamServices
 
     public function delete($id_sanpham)
     {
-        $sanphams = Sanpham::where('id_sanpham', $id_sanpham)->firstOrFail()->delete();
-        return $sanphams;
+        $sanphams = Sanpham::where('id_sanpham', $id_sanpham)->first();
+        if($sanphams){
+            $sanphams->delete();
+            Session::flash('success', 'Xóa sản phẩm thành công');
+        }else{
+            Session::flash('error', 'Xóa sản phẩm thất bại');
+        }
     }
 }

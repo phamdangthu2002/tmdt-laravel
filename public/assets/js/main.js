@@ -46,7 +46,6 @@ function uploadFile(file) {
             if (data.error == false) {
                 $('#file').val(data.url);
                 $('#file-preview').val(data.url);
-                // Có thể gọi thêm previewImages ở đây nếu muốn hiển thị ảnh sau khi upload thành công
             } else {
                 alert(data.error);
             }

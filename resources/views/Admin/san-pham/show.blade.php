@@ -126,6 +126,7 @@
                         <th scope="col">Lượt xem</th>
                         <th scope="col">Hình ảnh</th>
                         <th scope="col">Trạng thái</th>
+                        <th scope="col">Cập nhật</th>
                         <th scope="col" style="width: 140px";>Thao tác</th>
                     </tr>
                 </thead>
@@ -150,6 +151,7 @@
                                         <span class="text-danger">Tạm khóa</span>
                                     @endif
                                 </td>
+                                <td>{{ $sanpham->updated_at }}</td>
                                 <td>
                                     <!-- Nút sửa -->
                                     <a href="{{ route('admin.store-edit-san-pham', $sanpham->id_sanpham) }}"

@@ -1,15 +1,16 @@
 <?php
-namespace App\Http\Services\Danhmuc;
+namespace App\Http\Services\Danhmuccon;
 
-use App\Models\Danhmuc;
+use App\Models\DanhmucCon;
 
-class DanhmucServices
+class DanhmucConServices
 {
     public function create($danhmucFormRequest)
     {
         try {
-            Danhmuc::create([
-                'tendanhmuc' => (string) $danhmucFormRequest->input('categoryName'),
+            DanhmucCon::create([
+                'id_danhmuc' => $danhmucFormRequest->input('id_danhmuc'),
+                'tendanhmuccon' => (string) $danhmucFormRequest->input('categoryName'),
                 'mota' => (string) $danhmucFormRequest->input('categoryDescription'),
                 'trangthai' => (int) $danhmucFormRequest->input('categoryStatus'), // Chuyển đổi thành số nguyên
             ]);
@@ -20,43 +21,34 @@ class DanhmucServices
         }
         return true;
     }
-
-    public function show()
-    {
-        $danhmucs = Danhmuc::select('id_danhmuc','tendanhmuc')->orderByDesc('id_danhmuc')->get();
-        return $danhmucs;
-    }
     public function showAllDanhmuc()
     {
-        $danhmucs = Danhmuc::orderByDesc('id_danhmuc')->paginate(15);
+        $danhmucs = DanhmucCon::orderByDesc('id_danhmuccon')->paginate(15);
         return $danhmucs;
     }
-    public function getAllDanhmuc(){
-        $danhmucs = Danhmuc::all();
-        return $danhmucs;
-    }
-    public function delete($id_danhmuc)
+    public function getAllDanhmuc()
     {
-        $danhmucs = Danhmuc::where('id_danhmuc', $id_danhmuc)->firstOrFail()->delete();
+        $danhmucs = DanhmucCon::all();
+        return $danhmucs;
+    }
+    
+    public function delete($id_danhmuccon)
+    {
+        $danhmucs = DanhmucCon::where('id_danhmuccon', $id_danhmuccon)->firstOrFail()->delete();
         return $danhmucs;
     }
 
-    public function getDanhmucById($id_danhmuc)
+    public function getDanhmucById($id_danhmuccon)
     {
-        // Tìm danh mục với trạng thái 1 và id_danhmuc tương ứng
-        $danhmuc = Danhmuc::where('id_danhmuc', $id_danhmuc)->first();
+        // Tìm danh mục với trạng thái 1 và id_danhmuccon tương ứng
+        $danhmuc = DanhmucCon::where('id_danhmuccon', $id_danhmuccon)->first();
 
-        if ($danhmuc) {
-            return $danhmuc;
-        } else {
-            // Xử lý khi không tìm thấy danh mục
-            return null; // Hoặc bạn có thể ném một ngoại lệ hoặc trả về thông báo lỗi
-        }
+        return $danhmuc;
     }
-    public function update($request, $id_danhmuc)
+    public function update($request, $id_danhmuccon)
     {
         // Tìm danh mục cần cập nhật
-        $danhmuc = Danhmuc::find($id_danhmuc);
+        $danhmuc = DanhmucCon::find($id_danhmuccon);
 
         // Kiểm tra xem danh mục có tồn tại không
         if (!$danhmuc) {
@@ -64,13 +56,12 @@ class DanhmucServices
         }
 
         // Cập nhật thông tin danh mục
-        $danhmuc->tendanhmuc = $request->input('categoryName');
+        $danhmuc->id_danhmuc = $request->input('id_danhmuccon');
+        $danhmuc->tendanhmuccon = $request->input('categoryName');
         $danhmuc->trangthai = $request->input('categoryStatus');
         $danhmuc->mota = $request->input('categoryDescription', ''); // Nếu không có mô tả thì để rỗng
 
         // Lưu lại thay đổi
         $danhmuc->save();
     }
-
-
 }

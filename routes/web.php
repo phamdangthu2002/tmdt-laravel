@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DanhmucConController;
 use App\Http\Controllers\Admin\DanhmucController;
 use App\Http\Controllers\Admin\SanphamController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Auth\Users\LoginController;
 use App\Http\Controllers\Users\UserController;
-use App\Http\Middleware\AuthenticateMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,9 +27,8 @@ Route::get('/Auth/users/login', [LoginController::class, 'login'])->name('auth.l
 Route::post('/Auth/users/login/store', [LoginController::class, 'store'])->name('auth.store');
 
 
-
+//admin
 Route::middleware(['admin'])->group(function () {
-
     Route::prefix('Admin')->group(function () {
         // trangchu
         Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
@@ -41,7 +40,15 @@ Route::middleware(['admin'])->group(function () {
             Route::get('{id_danhmuc}/store-edit-danh-muc', [DanhmucController::class, '__store'])->name('admin.store-edit-danh-muc');
             Route::post('{id_danhmuc}/edit-danh-muc', [DanhmucController::class, 'edit'])->name('admin.edit-danh-muc');
             Route::post('{id_danhmuc}/delete-danh-muc', [DanhmucController::class, 'destroy'])->name('admin.delete-danh-muc');
-
+            // danhmuc con
+            Route::prefix('Danhmuc-con')->group(function () {
+                Route::get('/add', [DanhmucConController::class, 'create'])->name('admin.create-danh-muc-con');
+                Route::post('/add-new-danh-muc-con', [DanhmucConController::class, 'store'])->name('admin.store-danh-muc-con');
+                Route::get('/show-danh-muc-con', [DanhmucConController::class, 'show'])->name('admin.show-danh-muc-con');
+                Route::get('{id_danhmuccon}/store-edit-danh-muc-con', [DanhmucConController::class, '__store'])->name('admin.store-edit-danh-muc-con');
+                Route::post('{id_danhmuccon}/edit-danh-muc-con', [DanhmucConController::class, 'edit'])->name('admin.edit-danh-muc-con');
+                Route::post('{id_danhmuccon}/delete-danh-muc-con', [DanhmucConController::class, 'destroy'])->name('admin.delete-danh-muc-con');
+            });
         });
         //sanpham
         Route::prefix('Sanpham')->group(function () {
@@ -67,3 +74,12 @@ Route::middleware(['admin'])->group(function () {
         Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');
     });
 });
+
+//user
+Route::prefix('User')->group(function () {
+    // trangchu
+    Route::get('/trang-chu', [UserController::class, 'index'])->name('user.index');
+    Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
+
+});
+

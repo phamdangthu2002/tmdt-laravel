@@ -36,6 +36,10 @@ class SliderServices
         return Slider::orderByDesc('id_slider')->paginate(15);
     }
 
+    public function show(){
+        return Slider::where('trangthai',1)->orderByDesc('sort_by')->get();
+    }
+
     public function getSliderById($id_slider)
     {
         return Slider::where('id_slider', $id_slider)->first();

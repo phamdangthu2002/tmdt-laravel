@@ -43,14 +43,29 @@ class SanphamController extends Controller
     public function show()
     {
         $sanphams = $this->sanphamServices->getAll();
+
+        // Lấy thông tin các trang
+        $currentPage = $sanphams->currentPage(); // Trang hiện tại
+        $lastPage = $sanphams->lastPage(); // Trang cuối cùng
+
+        // Tính toán các số trang để hiển thị (giới hạn 6 trang ở giữa)
+        $visiblePages = 6;
+        $startPage = max(1, $currentPage - floor($visiblePages / 2));
+        $endPage = min($lastPage, $startPage + $visiblePages - 1);
+
+        // Tạo mảng các số trang
+        $pageNumbers = range($startPage, $endPage);
+
         return view('Admin.san-pham.show', [
-            'title' => 'Chi tiết sản phẩm',
+            'title' => 'Danh sách sản phẩm',
             'sanphams' => $sanphams,
+            'pageNumbers' => $pageNumbers,
         ]);
     }
 
     public function __store($id_sanpham)
     {
+        $pageNumbers = ['1'];
         $sanphams = $this->sanphamServices->getAll();
         $sanphamedits = $this->sanphamServices->getByidsanpham($id_sanpham);
         $danhmucs = $this->danhmucServices->showAllDanhmuc();
@@ -59,6 +74,8 @@ class SanphamController extends Controller
             'sanphams' => $sanphams,
             'sanphamedits' => $sanphamedits,
             'danhmucs' => $danhmucs,
+            'pageNumbers' => $pageNumbers,
+
         ]);
     }
 

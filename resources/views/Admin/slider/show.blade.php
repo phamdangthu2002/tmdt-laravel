@@ -122,6 +122,7 @@
                                 <th scope="col" style="width: 140px";>Tên sliders</th>
                                 <th scope="col">URL</th>
                                 <th scope="col">Hình ảnh</th>
+                                <th scope="col">Sắp xếp</th>
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Cập nhật</th>
                                 <th scope="col" style="width: 140px";>Thao tác</th>
@@ -140,6 +141,7 @@
                                                     style="max-height: 50px; width: auto;">
                                             </a>
                                         </td>
+                                        <td>{{ $slider->sort_by }}</td>
                                         <td>
                                             @if ($slider->trangthai == 1)
                                                 <span class="text-success">Hoạt động</span>

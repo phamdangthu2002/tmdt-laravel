@@ -1,22 +1,22 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Danhmuc extends Model
+class DanhmucCon extends Model
 {
     use HasFactory;
-
-    // Tên bảng
-    protected $table = 'danhmucs';
+    protected $table = 'danhmuc_cons';
 
     // Cột khóa chính
-    protected $primaryKey = 'id_danhmuc';
+    protected $primaryKey = 'id_danhmuccon';
 
     // Các thuộc tính có thể được gán hàng loạt
     protected $fillable = [
-        'tendanhmuc',
+        'tendanhmuccon',
+        'id_danhmuc',
         'mota',
         'slug',
         'trangthai',
@@ -24,12 +24,8 @@ class Danhmuc extends Model
 
     // Nếu bạn không sử dụng timestamps
     public $timestamps = true; // Thay đổi thành false nếu không sử dụng timestamps
-    public function sanphams()
+    public function danhmuc()
     {
-        return $this->hasMany(Sanpham::class, 'id_danhmuc', 'id_danhmuc');
-    }
-    public function danhmuc_cons()
-    {
-        return $this->hasMany(DanhmucCon::class, 'id_danhmuc', 'id_danhmuc');
+        return $this->belongsTo(Danhmuc::class, 'id_danhmuc', 'id_danhmuc');
     }
 }

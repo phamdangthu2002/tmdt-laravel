@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_danhmuc');
             $table->foreign('id_danhmuc')->references('id_danhmuc')->on('danhmucs')->onDelete('cascade');
             $table->decimal('gia');
-            $table->decimal('sale')->nullable();
+            $table->integer('sale')->nullable();
             $table->integer('luotxem')->nullable();
             $table->integer('luotmua')->nullable();
             $table->integer('soluong');

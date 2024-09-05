@@ -173,7 +173,64 @@
                     @endif
                 </tbody>
             </table>
-            {{ $sanphams->links() }}
+            {{-- {{ $sanphams->links() }} --}}
+            <div class="pagination justify-content-center">
+                <ul class="pagination">
+                    {{-- Nút Trang đầu --}}
+                    @if ($sanphams->onFirstPage())
+                        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.first')">
+                            <span class="page-link" aria-hidden="true">&laquo;Trang đầu</span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $sanphams->url(1) }}" aria-label="@lang('pagination.first')">&laquo;Trang
+                                đầu</a>
+                        </li>
+                    @endif
+
+                    {{-- Nút Previous --}}
+                    @if ($sanphams->onFirstPage())
+                        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                            <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $sanphams->previousPageUrl() }}" rel="prev"
+                                aria-label="@lang('pagination.previous')">&lsaquo;</a>
+                        </li>
+                    @endif
+                    {{-- Các số trang --}}
+                    @foreach ($pageNumbers as $pageNumber)
+                        <li class="page-item {{ $pageNumber == $sanphams->currentPage() ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $sanphams->url($pageNumber) }}">{{ $pageNumber }}</a>
+                        </li>
+                    @endforeach
+
+                    {{-- Nút Next --}}
+                    @if ($sanphams->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $sanphams->nextPageUrl() }}" rel="next"
+                                aria-label="@lang('pagination.next')">&rsaquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                            <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                        </li>
+                    @endif
+
+                    {{-- Nút Trang cuối --}}
+                    @if ($sanphams->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $sanphams->url($sanphams->lastPage()) }}"
+                                aria-label="@lang('pagination.last')">Trang cuối&raquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.last')">
+                            <span class="page-link" aria-hidden="true">Trang cuối&raquo;</span>
+                        </li>
+                    @endif
+                </ul>
+            </div>
         </div>
     </div>
     @yield('noidung')

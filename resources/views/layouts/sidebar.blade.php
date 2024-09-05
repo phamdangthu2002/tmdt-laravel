@@ -72,9 +72,10 @@
                     Categories
                 </a>
                 <ul class="collapse submenu" id="danhmuc">
-                    <li><a class="nav-link boder-sidebar bx bxs-add-to-queue"
-                            href="{{ route('admin.create-danh-muc') }}"> Thêm danh mục</a></li>
+                    <li><a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.create-danh-muc') }}"> Thêm danh mục</a></li>
                     <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-danh-muc') }}"> Quản lý danh mục</a></li>
+                    <li><a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.create-danh-muc-con') }}"> Thêm danh mục con</a></li>
+                    <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-danh-muc-con') }}"> Quản lý danh mục con</a></li>
                 </ul>
             </li>
             <li class="nav-item">

@@ -20,7 +20,7 @@ class SanphamServices
     }
     public function getAll()
     {
-        return Sanpham::with('danhmuc')->orderByDesc('id_sanpham')->paginate(15);
+        return Sanpham::with('danhmuc')->orderByDesc('id_sanpham')->paginate(10);
     }
     protected function kiemtraGia($sanphamRequest)
     {

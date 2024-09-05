@@ -1,6 +1,6 @@
 @extends('Admin.san-pham.show')
 @section('noidung')
-    <form action="{{ route('admin.edit-san-pham', $sanphamedits->id_sanpham) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.edit-san-pham', $sanphamedits->id_sanpham) }}" method="post" enctype="multipart/form-data">
         @csrf <!-- Laravel CSRF Token -->
         <div class="container-danhmuc mt-5">
             <h1 class="mb-3">{{ $title }}</h1>

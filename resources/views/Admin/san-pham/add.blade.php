@@ -214,7 +214,7 @@
                                         {{ $errors->first('file') }}
                                     </p>
                                 @endif
-                                <input type="file" class="form-control-file" id="hinhanh" name="hinhanh[]" multiple>
+                                <input type="file" class="form-control-file" id="hinhanh" name="hinhanh" multiple>
                                 <div id="preview-zone" class="mt-3"></div>
                                 <input type="hidden" name="file" id="file">
                             </div>

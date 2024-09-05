@@ -1,6 +1,9 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\DanhmucCon;
+use Illuminate\Support\Str;
+
 class Helper
 {
     public static function danhmuc($danhmucs)
@@ -43,7 +46,67 @@ class Helper
         return $html;
     }
 
+
+    public static function menu($danhmucs, $danhmuccons, $parent_id = 0)
+    {
+        $html = '';
+
+        foreach ($danhmucs as $danhmuc) {
+            if ($danhmuc->parent_id == $parent_id) {
+                $html .= '
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/danh-muc/' . $danhmuc->id_danhmuc . '-' . Str::slug($danhmuc->tendanhmuc, '-') . '.html">
+                        ' . $danhmuc->tendanhmuc . '
+                        </a>';
+
+                // Kiểm tra nếu có danh mục con thuộc về danh mục này
+                if (self::isChild($danhmuccons, $danhmuc->id_danhmuc)) {
+                    $html .= '<ul class="dropdown-menu">';
+                    // Gọi lại menu cho các danh mục con thuộc danh mục này
+                    $html .= self::menu($danhmuccons, $danhmuc->id_danhmuc);
+                    $html .= '</ul>';
+                }
+
+                $html .= '</li>';
+            }
+        }
+
+        return $html;
+    }
+
+
+    public static function isChild($danhmuccons, $parent_id)
+    {
+        foreach ($danhmuccons as $danhmucCon) {
+            if ($danhmucCon->id_danhmuc == $parent_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function formatVND($number)
+    {
+        return number_format($number, 0, ',', '.') . ' VND';
+    }
+
+    public static function price($gia = 0, $sale = 0)
+    {
+        $price = $gia - ($gia * $sale / 100);
+
+        if ($price > 0) {
+            return '<div class="banner-sale">Sale off: ' . $sale . '%</div>'
+                . '<div class="product-banner">'
+                . '<div class="tille-price">'
+                . '<div class="price-update">Giá gốc: ' . self::formatVND($gia) . '</div>'
+                . '<div class="price-sale">Giảm còn: ' . self::formatVND($price) . '</div>'
+                . '</div>'
+                . '</div>';
+        } else {
+            return '<div class="price-danger">Đang cập nhật</div>';
+        }
+    }
+
+
+
 }
-// <a href="' . route('admin.delete-danh-muc', $danhmuc->id_danhmuc) . '" 
-// onclick="return deleteDanhMuc(' . $danhmuc->id_danhmuc . ');" 
-// class="btn btn-outline-danger bx bx-trash"></a>

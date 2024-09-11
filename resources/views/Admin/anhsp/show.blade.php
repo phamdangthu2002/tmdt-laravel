@@ -11,8 +11,8 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Tên Danh Mục</th>
-                                <th scope="col">Danh Mục Cha</th>
                                 <th scope="col">Mô Tả</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Cập nhật</th>
                                 <th scope="col">Thao tác</th>
@@ -22,10 +22,12 @@
                             @if ($danhmucs)
                                 @foreach ($danhmucs as $danhmuc)
                                     <tr>
-                                        <td>{{ $danhmuc->id_danhmuccon }}</td>
-                                        <td>{{ $danhmuc->tendanhmuccon }}</td> <!-- Swap with the correct column -->
-                                        <td>{{ $danhmuc->danhmuc->tendanhmuc }}</td>
+                                        <td>{{ $danhmuc->id_danhmuc }}</td>
+                                        <td>{{ $danhmuc->tendanhmuc }}</td> <!-- Swap with the correct column -->
                                         <td>{{ $danhmuc->mota }}</td>
+                                        <td><img src="{{ asset($danhmuc->hinhanh) }}" class="img-thumbnail mb-2"
+                                                style="max-height: 50px; width: auto;"></td>
+                                        </td>
                                         <td>
                                             @if ($danhmuc->trangthai == 1)
                                                 <span class="text-success">Hoạt động</span>
@@ -36,12 +38,12 @@
                                         <td>{{ $danhmuc->updated_at }}</td>
                                         <td>
                                             <!-- Nút sửa -->
-                                            <a href="{{ route('admin.store-edit-danh-muc-con', $danhmuc->id_danhmuccon) }}"
+                                            <a href="{{ route('admin.store-edit-danh-muc', $danhmuc->id_danhmuc) }}"
                                                 class="btn btn-outline-warning bx bx-edit"></a>
                                             <!-- Form xóa với SweetAlert -->
-                                            <form action="{{ route('admin.delete-danh-muc-con', $danhmuc->id_danhmuccon) }}"
+                                            <form action="{{ route('admin.delete-danh-muc', $danhmuc->id_danhmuc) }}"
                                                 method="post" class="delete-form" style="display:inline;"
-                                                data-name="{{ $danhmuc->tendanhmuccon }}">
+                                                data-name="{{ $danhmuc->tendanhmuc }}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger bx bx-trash"></button>
                                             </form>

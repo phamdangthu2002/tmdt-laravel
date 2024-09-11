@@ -28,5 +28,9 @@ class Sanpham extends Model
     {
         return $this->belongsTo(Danhmuc::class, 'id_danhmuc', 'id_danhmuc');
     }
-
+    // Quan hệ với bảng 'Anhsp' (nhiều ảnh cho một sản phẩm)
+    public function anhsp()
+    {
+        return $this->hasMany(Anhsp::class, 'id_sanpham', 'id_sanpham');
+    }
 }

@@ -23,30 +23,30 @@
                         @foreach ($sanphams as $sanpham)
                             <tr class="item-cart">
                                 <th>
-                                    <img src="{{ $sanpham->hinhanh }}" alt="{{ $sanpham->tensanpham }}" class="img-thumbnail">
+                                    <img src="{{ $sanpham->sanpham->hinhanh }}" alt="{{ $sanpham->sanpham->tensanpham }}" class="img-thumbnail">
                                 </th>
                                 <th>
                                     <div class="cart-name">
-                                        {{ $sanpham->tensanpham }}
+                                        {{ $sanpham->sanpham->tensanpham }}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="cart-content">
-                                        {{ $giohang[$sanpham->id_sanpham]['size'] }}
+                                        {{$sanpham->size}}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="cart-content">
-                                        {{ $giohang[$sanpham->id_sanpham]['color'] }}
+                                        {{$sanpham->color}}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="quantity-controls mt-3">
-                                        <button type="button" id="decrease-quantity-2">-</button>
-                                        <input type="number" name="quantity_product[{{ $sanpham->id_sanpham }}]"
-                                            class="quantity2" value="{{ $giohang[$sanpham->id_sanpham]['quantity'] }}"
+                                        {{-- <button type="button" id="decrease-quantity-2">-</button> --}}
+                                        <input type="number" name="{{ $sanpham->sanpham->id_sanpham }}"
+                                            class="quantity2" value="{{$sanpham->quantity}}"
                                             min="1" max="10">
-                                        <button type="button" id="increase-quantity-2">+</button>
+                                        {{-- <button type="button" id="increase-quantity-2">+</button> --}}
                                     </div>
                                 </th>
 
@@ -55,7 +55,10 @@
                                 </th>
 
                                 <th>
-                                    <a class="cart-content cart-item-remove" onclick="deleteItem(this)">
+                                    {{-- <a class="cart-content cart-item-remove" onclick="deleteItem(this)">
+                                        <i class='bx bx-trash'></i>
+                                    </a> --}}
+                                    <a href="#" class="cart-content cart-item-remove">
                                         <i class='bx bx-trash'></i>
                                     </a>
                                 </th>
@@ -63,7 +66,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <input type="submit" value="Update" formaction="/User/update-cart" class="text-center cart-update btn btn-outline-dark">
+                {{-- <input type="submit" value="Update" formaction="/User/update-cart" class="text-center cart-update btn btn-outline-dark"> --}}
                 <div class="cart-total">
                     <p class="font-weight-bold">Total: <span id="cartTotal">$0.00</span></p>
                 </div>

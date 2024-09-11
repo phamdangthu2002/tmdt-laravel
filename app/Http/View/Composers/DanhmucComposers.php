@@ -38,15 +38,8 @@ class DanhmucComposers
             ->orderByDesc('id_danhmuc')
             ->get();
 
-        // Lấy tất cả danh mục con
-        $danhmuccons = DanhmucCon::select('id_danhmuc', 'id_danhmuccon', 'tendanhmuccon')
-            ->where('trangthai', 1)
-            ->orderByDesc('id_danhmuccon')
-            ->get();
-
         $view->with([
             'danhmucs' => $danhmucs,
-            'danhmuccons' => $danhmuccons,
         ]);
     }
 }

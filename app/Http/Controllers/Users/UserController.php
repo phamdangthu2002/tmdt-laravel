@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\Cart\CartServices;
 use App\Http\Services\Danhmuc\DanhmucServices;
-use App\Http\Services\Danhmuccon\DanhmucConServices;
 use App\Http\Services\Slider\SliderServices;
 use App\Http\Services\Users\SanphamServices;
+use App\Models\cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -16,12 +17,13 @@ class UserController extends Controller
     protected $danhmucConServices;
     protected $sliderServices;
     protected $sanphamServices;
-    public function __construct(DanhmucServices $danhmucServices, DanhmucConServices $danhmucConServices, SliderServices $sliderServices, SanphamServices $sanphamServices)
+    protected $cartServices;
+    public function __construct(DanhmucServices $danhmucServices, SliderServices $sliderServices, SanphamServices $sanphamServices, CartServices $cartServices)
     {
         $this->danhmucServices = $danhmucServices;
         $this->sliderServices = $sliderServices;
         $this->sanphamServices = $sanphamServices;
-        $this->danhmucConServices = $danhmucConServices;
+        $this->cartServices = $cartServices;
     }
     public function index()
     {
@@ -72,31 +74,28 @@ class UserController extends Controller
 
     public function chitiet($id)
     {
+        $anhs = $this->sanphamServices->getAllAnh();
         $sanphams = $this->sanphamServices->showSanpham($id);
         $sanphamMores = $this->sanphamServices->more($id);
         return view('Users.chi-tiet.index', [
             'title' => $sanphams->tensanpham,
             'sanphams' => $sanphams,
             'sanphamMores' => $sanphamMores,
+            'anhs' => $anhs,
         ]);
     }
 
     public function giohang(Request $request)
     {
-        $result = $this->sanphamServices->add_cart($request);
-        if ($result === false) {
-            return redirect()->back();
-        } else {
-            return redirect()->route('user.giohangshow');
-        }
+        $this->cartServices->add_cart($request);
+        return redirect()->back();
     }
     public function giohangshow()
     {
-        $sanphams = $this->sanphamServices->show_cart();
+        $sanphams = $this->cartServices->show_cart();
         return view('Users.gio-hang.index', [
             'title' => 'Giỏ hàng',
             'sanphams' => $sanphams,
-            'giohang' => Session::get('giohang'),
         ]);
     }
 

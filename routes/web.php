@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\DanhmucConController;
+use App\Http\Controllers\Admin\AnhController;
 use App\Http\Controllers\Admin\DanhmucController;
 use App\Http\Controllers\Admin\SanphamController;
 use App\Http\Controllers\Admin\SliderController;
@@ -40,15 +40,6 @@ Route::middleware(['admin'])->group(function () {
             Route::get('{id_danhmuc}/store-edit-danh-muc', [DanhmucController::class, '__store'])->name('admin.store-edit-danh-muc');
             Route::post('{id_danhmuc}/edit-danh-muc', [DanhmucController::class, 'edit'])->name('admin.edit-danh-muc');
             Route::post('{id_danhmuc}/delete-danh-muc', [DanhmucController::class, 'destroy'])->name('admin.delete-danh-muc');
-            // danhmuc con
-            Route::prefix('Danhmuc-con')->group(function () {
-                Route::get('/add', [DanhmucConController::class, 'create'])->name('admin.create-danh-muc-con');
-                Route::post('/add-new-danh-muc-con', [DanhmucConController::class, 'store'])->name('admin.store-danh-muc-con');
-                Route::get('/show-danh-muc-con', [DanhmucConController::class, 'show'])->name('admin.show-danh-muc-con');
-                Route::get('{id_danhmuccon}/store-edit-danh-muc-con', [DanhmucConController::class, '__store'])->name('admin.store-edit-danh-muc-con');
-                Route::post('{id_danhmuccon}/edit-danh-muc-con', [DanhmucConController::class, 'edit'])->name('admin.edit-danh-muc-con');
-                Route::post('{id_danhmuccon}/delete-danh-muc-con', [DanhmucConController::class, 'destroy'])->name('admin.delete-danh-muc-con');
-            });
         });
         //sanpham
         Route::prefix('Sanpham')->group(function () {
@@ -70,8 +61,14 @@ Route::middleware(['admin'])->group(function () {
             Route::post('{id_slider}/delete-slider', [SliderController::class, 'destroy'])->name('admin.delete-slider');
 
         });
+        //anhsp
+        Route::prefix('Anhsp')->group(function () {
+            Route::get('/add', [AnhController::class, 'add'])->name('admin.add-anh');
+            Route::post('/add-new-anh', [AnhController::class, 'store'])->name('admin.store-anh');
+        });
         //upload
         Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');
+        Route::post('/uploadAnh/services', [UploadController::class, 'storeAnh'])->name('admin.uploadAnh-services');
     });
 });
 
@@ -82,7 +79,6 @@ Route::prefix('User')->group(function () {
     Route::post('/load-more', [UserController::class, 'load'])->name('user.load');
     //danhmuc
     Route::get('{id}/load-danhmuc', [UserController::class, 'danhmuc'])->name('user.danhmuc');
-    // Route::get('{id}/load-danhmuc-con', [UserController::class, 'danhmuccon'])->name('user.danhmuccon');
     Route::get('{id}/chi-tiet', [UserController::class, 'chitiet'])->name('user.chitiet');
     //giohang
     Route::post('/gio-hang', [UserController::class, 'giohang'])->name('user.giohang');
@@ -92,4 +88,3 @@ Route::prefix('User')->group(function () {
     Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
 
 });
-

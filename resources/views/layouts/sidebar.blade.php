@@ -74,8 +74,6 @@
                 <ul class="collapse submenu" id="danhmuc">
                     <li><a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.create-danh-muc') }}"> Thêm danh mục</a></li>
                     <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-danh-muc') }}"> Quản lý danh mục</a></li>
-                    <li><a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.create-danh-muc-con') }}"> Thêm danh mục con</a></li>
-                    <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-danh-muc-con') }}"> Quản lý danh mục con</a></li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -87,6 +85,16 @@
                     <li><a class="nav-link boder-sidebar bx bxs-add-to-queue"
                             href="{{ route('admin.create-slider') }}"> Thêm slider</a></li>
                     <li><a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-slider') }}"> Quản lý slider</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link boder-sidebar bx bxs-category" data-bs-toggle="collapse" href="#anh"
+                    role="button" aria-expanded="false" aria-controls="anh">
+                    Ảnh Sản phẩm
+                </a>
+                <ul class="collapse submenu" id="anh">
+                    <li><a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{route('admin.add-anh')}}"> Thêm ảnh</a></li>
+                    <li><a class="nav-link boder-sidebar bx bxs-cog" href="#"> Quản lý ảnh</a></li>
                 </ul>
             </li>
         </ul>

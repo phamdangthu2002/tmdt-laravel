@@ -238,21 +238,27 @@
                     <i class='bx bx-user'></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#"><i class='bx bx-edit'></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="#"><i class='bx bx-cog'></i> Settings</a></li>
-                    <li><a class="dropdown-item" href="#"><i class='bx bx-log-in'></i> Login</a></li>
-                    <li><a class="dropdown-item" href="#"><i class='bx bx-registered'></i> Sign-up</a></li>
-                    <li><a class="dropdown-item text-danger" href="#" onclick="confirmLogout(event)"><i
-                                class='bx bx-log-out'></i> Logout</a></li>
+                    @auth
+                        <li><span class="dropdown-item">{{ Auth::user()->name }}</span></li>
+                        <li><a class="dropdown-item" href="#"><i class='bx bx-edit'></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class='bx bx-cog'></i> Settings</a></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="confirmLogout(event)"><i
+                                    class='bx bx-log-out'></i> Logout</a></li>
+                    @else
+                        <li><a class="dropdown-item" href="#"><i class='bx bx-log-in'></i> Login</a></li>
+                        <li><a class="dropdown-item" href="#"><i class='bx bx-registered'></i> Sign-up</a></li>
+                    @endauth
                 </ul>
-            </li>
-            <li class="nav-item d-flex">
-                {{-- <a class="nav-link" href="#" id="cartDropdown" role="button"> --}}
-                <a class="nav-link" href="{{ route('user.giohangshow') }}" role="button">
-                    <i class='bx bx-cart'></i>
-                    <!-- Badge để hiển thị số lượng sản phẩm trong giỏ hàng -->
-                    <span class="cart-badge" id="cartCount">0</span>
-                </a>
+                @auth
+                <li class="nav-item d-flex">
+                    {{-- <a class="nav-link" href="#" id="cartDropdown" role="button"> --}}
+                    <a class="nav-link" href="{{ route('user.giohangshow') }}" role="button">
+                        <i class='bx bx-cart'></i>
+                        <!-- Badge để hiển thị số lượng sản phẩm trong giỏ hàng -->
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </a>
+                </li>
+            @endauth
             </li>
         </ul>
     </div>

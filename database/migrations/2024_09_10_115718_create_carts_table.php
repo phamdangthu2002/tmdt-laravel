@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,9 +15,20 @@ return new class extends Migration
             $table->unsignedBigInteger('id_sanpham');
             $table->unsignedBigInteger('id_user');
             $table->string('size');
-            $table->integer('color');
+            $table->string('color');
             $table->integer('quantity');
-            $table->integer('total');
+            $table->integer('gia');
+            // Khóa ngoại liên kết với bảng 'sanphams'
+            $table->foreign('id_sanpham')
+                ->references('id_sanpham')
+                ->on('sanphams')
+                ->onDelete('cascade'); // Khi xóa sản phẩm, sẽ tự động xóa giỏ hàng liên quan
+
+            // Khóa ngoại liên kết với bảng 'users'
+            $table->foreign('id_user')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade'); // Khi xóa user, sẽ tự động xóa giỏ hàng liên quan
             $table->timestamps();
         });
     }

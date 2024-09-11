@@ -165,6 +165,9 @@
                                         @csrf
                                         <button type="submit" class="btn btn-danger bx bx-trash"></button>
                                     </form>
+                                    {{-- sửa ảnh --}}
+                                    <a href="{{ route('admin.add-anh', $sanpham->id_sanpham) }}"
+                                        class="btn btn-outline-warning bx bx-edit"></a>
                                 </td>
                             </tr>
                         @endforeach

@@ -13,6 +13,10 @@ class SanphamServices
     {
 
     }
+    public function get(){
+        $sanpham = Sanpham::all();
+        return $sanpham;
+    }
     public function getByidsanpham($id_sanpham)
     {
         $sanpham = Sanpham::with('danhmuc')->where('id_sanpham', $id_sanpham)->first();

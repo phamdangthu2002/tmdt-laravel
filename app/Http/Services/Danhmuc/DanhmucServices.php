@@ -56,12 +56,6 @@ class DanhmucServices
         $danhmuc = Danhmuc::where('id_danhmuc', $id_danhmuc)->where('trangthai', 1)->firstOrFail();
         return $danhmuc;
     }
-    public function getDanhmucByIdCon($id_danhmuccon)
-    {
-        // Tìm danh mục với trạng thái 1 và id_danhmuc tương ứng
-        $danhmuccon = DanhmucCon::where('id_danhmuccon', $id_danhmuccon)->where('trangthai', 1)->firstOrFail();
-        return $danhmuccon;
-    }
     public function update($request, $id_danhmuc)
     {
         // Tìm danh mục cần cập nhật

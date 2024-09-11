@@ -186,27 +186,35 @@
         <div class="row">
             <div class="col-md-6">
                 <ul class="slides">
-                    <li id="slide1"><img src="/assets/images/bee99001-9ef2-0f00-89da-001adda0d2ee.jpg" alt="Slide 1" />
-                    </li>
-                    <li id="slide2"><img src="/assets/images/4208e021-b217-df00-805f-001ae3b8b700.jpg" alt="Slide 2" />
-                    </li>
-                    <li id="slide3"><img src="/assets/images/3f557c5a-8b71-0200-f2c5-001adda2238a.jpg" alt="Slide 3" />
-                    </li>
+                    @foreach ($anhs as $anh)
+                        @php
+                            $count = 0;
+                            $counts = $count + 1;
+                        @endphp
+                        <li id="slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}" alt="Slide <?= $counts ?>" />
+                        </li>
+                    @endforeach
+
                     {{-- <li id="slide4"><img src="https://via.placeholder.com/800x400?text=Slide+4" alt="Slide 4" /></li>
                     <li id="slide5"><img src="https://via.placeholder.com/800x400?text=Slide+5" alt="Slide 5" /></li> --}}
                 </ul>
 
                 <ul class="thumbnails">
-                    <li><a href="#slide1"><img src="/assets/images/bee99001-9ef2-0f00-89da-001adda0d2ee.jpg"
-                                alt="Thumbnail 1" /></a></li>
-                    <li><a href="#slide2"><img src="/assets/images/4208e021-b217-df00-805f-001ae3b8b700.jpg"
-                                alt="Thumbnail 2" /></a></li>
-                    <li><a href="#slide3"><img src="/assets/images/3f557c5a-8b71-0200-f2c5-001adda2238a.jpg" /></a></li>
+                    @foreach ($anhs as $anh)
+                        @php
+                            $count = 0;
+                            $counts = $count + 1;
+                        @endphp
+                        <li><a href="#slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}"
+                                    alt="Thumbnail <?= $counts ?>" /></a></li>
+                    @endforeach
                     {{-- <li><a href="#slide4"><img src="https://via.placeholder.com/100x60?text=4" alt="Thumbnail 4" /></a></li>
                     <li><a href="#slide5"><img src="https://via.placeholder.com/100x60?text=5" alt="Thumbnail 5" /></a></li> --}}
                 </ul>
             </div>
-
+            @php
+                $price = $sanphams->gia - ($sanphams->gia * $sanphams->sale) / 100;
+            @endphp
             <div class="col-md-6">
                 <h1>{{ $sanphams->tensanpham }}</h1>
                 <h3>{!! \App\Helpers\Helper::price_sale($sanphams->gia, $sanphams->sale) !!}</h3>
@@ -217,6 +225,8 @@
                         <div class="btn btn-danger">Đang cập nhật</div>
                     @else
                         <input type="hidden" name="id_sanpham" value="{{ $sanphams->id_sanpham }}">
+                        <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="gia" value="<?= $price ?>">
                         <!-- Chọn kích thước -->
                         <div class="form-group">
                             <label for="size">Chọn kích thước</label>
@@ -298,9 +308,10 @@
             </div>
 
             <!-- Additional Information Tab Content -->
-            <div class="tab-pane fade" id="additional-info" role="tabpanel" aria-labelledby="additional-info-tab">
+            <div class="tab-pane fade" style="text-align: left" id="additional-info" role="tabpanel"
+                aria-labelledby="additional-info-tab">
                 <p>
-                    {{ $sanphams->motachitiet }}
+                    {!! $sanphams->motachitiet !!}
                 </p>
             </div>
 

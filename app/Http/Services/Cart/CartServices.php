@@ -2,6 +2,7 @@
 namespace App\Http\Services\Cart;
 
 use App\Models\cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class CartServices
@@ -35,7 +36,14 @@ class CartServices
         return true;
     }
 
-    public function show_cart(){
+    public function show_cart()
+    {
         return cart::select('id_giohang', 'id_sanpham', 'id_user', 'size', 'color', 'quantity', 'gia')->with('sanpham')->get();
+    }
+    public function getCartByID()
+    {
+        // Lấy id của người dùng hiện tại đã đăng nhập
+        $id_user = Auth::id();
+        return cart::select('id_giohang', 'id_sanpham', 'size', 'color', 'quantity', 'gia')->with('sanpham')->where('id_user', $id_user)->get();
     }
 }

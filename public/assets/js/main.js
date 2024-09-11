@@ -137,7 +137,7 @@ function confirmLogout(event) {
         cancelButtonText: 'Hủy'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '#'; // Thay đổi đường dẫn theo cấu hình của bạn
+            window.location.href = '/Auth/users/logout'; // Thay đổi đường dẫn theo cấu hình của bạn
         }
     });
 }

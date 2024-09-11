@@ -5,7 +5,7 @@
     <div class="container-cart mt-5">
         <h5>Your Cart</h5>
         @if (count($sanphams) != 0)
-            <form method="POST">
+            <form action="#" method="POST">
                 @csrf
                 <table class="cart-table">
                     <thead>
@@ -23,7 +23,8 @@
                         @foreach ($sanphams as $sanpham)
                             <tr class="item-cart">
                                 <th>
-                                    <img src="{{ $sanpham->sanpham->hinhanh }}" alt="{{ $sanpham->sanpham->tensanpham }}" class="img-thumbnail">
+                                    <img src="{{ $sanpham->sanpham->hinhanh }}" alt="{{ $sanpham->sanpham->tensanpham }}"
+                                        class="img-thumbnail">
                                 </th>
                                 <th>
                                     <div class="cart-name">
@@ -32,22 +33,24 @@
                                 </th>
                                 <th>
                                     <div class="cart-content">
-                                        {{$sanpham->size}}
+                                        {{ $sanpham->size }}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="cart-content">
-                                        {{$sanpham->color}}
+                                        {{ $sanpham->color }}
                                     </div>
                                 </th>
                                 <th>
-                                    <div class="quantity-controls mt-3">
+                                    <div class="cart-content">
                                         {{-- <button type="button" id="decrease-quantity-2">-</button> --}}
-                                        <input type="number" name="{{ $sanpham->sanpham->id_sanpham }}"
-                                            class="quantity2" value="{{$sanpham->quantity}}"
-                                            min="1" max="10">
+                                        <input type="number" name="{{ $sanpham->sanpham->id_sanpham }}" class="quantity"
+                                            value="{{ $sanpham->quantity }}" min="1" max="10">
                                         {{-- <button type="button" id="increase-quantity-2">+</button> --}}
                                     </div>
+                                    {{-- <div class="cart-content">
+                                        <span class="quantity">{{ $sanpham->quantity }}</span>
+                                    </div> --}}
                                 </th>
 
                                 <th>
@@ -55,9 +58,6 @@
                                 </th>
 
                                 <th>
-                                    {{-- <a class="cart-content cart-item-remove" onclick="deleteItem(this)">
-                                        <i class='bx bx-trash'></i>
-                                    </a> --}}
                                     <a href="#" class="cart-content cart-item-remove">
                                         <i class='bx bx-trash'></i>
                                     </a>
@@ -66,10 +66,11 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <input type="submit" value="Update" formaction="/User/update-cart" class="text-center cart-update btn btn-outline-dark"> --}}
                 <div class="cart-total">
                     <p class="font-weight-bold">Total: <span id="cartTotal">$0.00</span></p>
                 </div>
+                <button type="submit" class="cart-buy btn btn-danger">Đặt hàng</button>
+                <a href="{{ url()->previous() }}" class="btn btn-outline-success">Tiếp tục mua sắm</a>
             </form>
         @else
             <p>No items in cart</p>

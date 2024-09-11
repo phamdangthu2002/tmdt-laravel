@@ -1,25 +1,3 @@
-// Hàm để đếm tổng số sản phẩm trong giỏ hàng
-function getCartItemsCount() {
-    let count = 0;
-    const cartItems = document.querySelectorAll('.item-cart');
-
-    cartItems.forEach(item => {
-        // Lấy phần tử input số lượng trong mỗi hàng sản phẩm
-        const quantityInput = item.querySelector('.quantity2');
-
-        // Kiểm tra nếu phần tử input tồn tại và giá trị là số hợp lệ
-        if (quantityInput) {
-            const quantity = parseInt(quantityInput.value, 10);
-            if (!isNaN(quantity)) {
-                // Cộng dồn số lượng sản phẩm
-                count += quantity;
-            }
-        }
-    });
-
-    return count;
-}
-
 // Hàm để điều chỉnh số lượng sản phẩm
 function adjustQuantity(button, change) {
     // Tìm phần tử input chứa số lượng sản phẩm
@@ -66,7 +44,7 @@ function calculateTotal() {
     cartItems.forEach(item => {
         const priceText = item.querySelector('.cart-item-price').innerText.replace(/[^0-9]/g, ''); // Lấy số tiền bỏ ký tự đặc biệt
         const price = parseFloat(priceText); // Chuyển sang số
-        const quantity = parseInt(item.querySelector('.quantity2').value, 10); // Lấy số lượng từ giá trị của input
+        const quantity = parseInt(item.querySelector('.quantity').value, 10); // Lấy số lượng từ giá trị của input
         total += price * quantity; // Tính tổng giá
     });
 
@@ -77,22 +55,6 @@ function calculateTotal() {
 // Hàm để định dạng số tiền theo VND
 function formatVND(number) {
     return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', ' VND');
-}
-
-// Hàm để xóa sản phẩm khỏi giỏ hàng
-function deleteItem(button) {
-    const row = button.closest('tr');
-    row.remove();
-
-    // Tính tổng tiền và cập nhật số lượng giỏ hàng sau khi xóa
-    calculateTotal();
-    updateCartCount();
-}
-
-// Hàm để cập nhật số lượng sản phẩm trong giỏ hàng hiển thị trên thanh điều hướng
-function updateCartCount() {
-    const totalItems = getCartItemsCount();
-    document.querySelector('#cartCount').innerText = totalItems;
 }
 
 // Gán sự kiện cho các nút điều chỉnh số lượng

@@ -8,6 +8,7 @@ use App\Http\Services\Danhmuc\DanhmucServices;
 use App\Http\Services\Slider\SliderServices;
 use App\Http\Services\Users\SanphamServices;
 use App\Models\cart;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -90,9 +91,9 @@ class UserController extends Controller
         $this->cartServices->add_cart($request);
         return redirect()->back();
     }
-    public function giohangshow()
+    public function giohangshow(Request $request)
     {
-        $sanphams = $this->cartServices->show_cart();
+        $sanphams = $this->cartServices->getCartByID();
         return view('Users.gio-hang.index', [
             'title' => 'Giỏ hàng',
             'sanphams' => $sanphams,

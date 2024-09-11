@@ -194,9 +194,6 @@
                         <li id="slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}" alt="Slide <?= $counts ?>" />
                         </li>
                     @endforeach
-
-                    {{-- <li id="slide4"><img src="https://via.placeholder.com/800x400?text=Slide+4" alt="Slide 4" /></li>
-                    <li id="slide5"><img src="https://via.placeholder.com/800x400?text=Slide+5" alt="Slide 5" /></li> --}}
                 </ul>
 
                 <ul class="thumbnails">
@@ -208,8 +205,6 @@
                         <li><a href="#slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}"
                                     alt="Thumbnail <?= $counts ?>" /></a></li>
                     @endforeach
-                    {{-- <li><a href="#slide4"><img src="https://via.placeholder.com/100x60?text=4" alt="Thumbnail 4" /></a></li>
-                    <li><a href="#slide5"><img src="https://via.placeholder.com/100x60?text=5" alt="Thumbnail 5" /></a></li> --}}
                 </ul>
             </div>
             @php
@@ -277,7 +272,6 @@
 
                         <button type="submit" class="btn btn-primary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>
                     @endif
-                    {{-- {!! \App\Helpers\Helper::button($sanphams->gia, $sanphams->sale) !!} --}}
                 </form>
             </div>
         </div>

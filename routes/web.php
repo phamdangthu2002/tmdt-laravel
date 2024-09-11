@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AnhController;
 use App\Http\Controllers\Admin\DanhmucController;
 use App\Http\Controllers\Admin\SanphamController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TrangthaiController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Auth\Users\LoginController;
 use App\Http\Controllers\Users\UserController;
@@ -25,6 +26,9 @@ Route::get('/', [UserController::class, 'index'])->name('index');
 
 Route::get('/Auth/users/login', [LoginController::class, 'login'])->name('auth.login');
 Route::post('/Auth/users/login/store', [LoginController::class, 'store'])->name('auth.store');
+Route::get('/Auth/users/register', [LoginController::class, 'register'])->name('auth.register');
+Route::post('/Auth/users/register/store-register', [LoginController::class, 'add'])->name('auth.store-register');
+Route::get('/Auth/users/logout', [LoginController::class, 'logout'])->name('auth.logout');
 
 
 //admin
@@ -65,6 +69,11 @@ Route::middleware(['admin'])->group(function () {
         Route::prefix('Anhsp')->group(function () {
             Route::get('/add', [AnhController::class, 'add'])->name('admin.add-anh');
             Route::post('/add-new-anh', [AnhController::class, 'store'])->name('admin.store-anh');
+        });
+        // user
+        // trangthai
+        Route::prefix('Trangthai')->group(function () {
+            Route::get('/add', [TrangthaiController::class, 'create'])->name('');
         });
         //upload
         Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');

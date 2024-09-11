@@ -119,6 +119,7 @@
                         <th scope="col">ID</th>
                         <th scope="col" style="width: 140px";>Tên sản phẩm</th>
                         <th scope="col">Mô Tả</th>
+                        {{-- <th scope="col">Mô Tả chi tiết</th> --}}
                         <th scope="col" style="width: 140px";>Giá</th>
                         <th scope="col" style="width: 140px";>Sale</th>
                         <th scope="col">Số lượng</th>
@@ -137,6 +138,7 @@
                                 <td>{{ $sanpham->id_sanpham }}</td>
                                 <td>{{ $sanpham->tensanpham }}</td>
                                 <td>{{ $sanpham->mota }}</td> <!-- Swap with the correct column -->
+                                {{-- <td>{{ $sanpham->motachitiet }}</td> <!-- Swap with the correct column --> --}}
                                 <td>{{ $sanpham->gia }} VND</td>
                                 <td>{{ $sanpham->sale }} VND</td>
                                 <td>{{ $sanpham->soluong }}</td>
@@ -261,7 +263,7 @@
             });
         });
         // Khởi tạo CKEditor cho trường mô tả (mota)
-        CKEDITOR.replace('mota');
+        CKEDITOR.replace('motachitiet');
 
         // Biến cho vùng thả file, input file, vùng preview và biến đếm số lượng file
         const dropZone = document.getElementById('drop-zone');

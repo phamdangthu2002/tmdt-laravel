@@ -2,6 +2,9 @@
 namespace App\Http\Services\Danhmuc;
 
 use App\Models\Danhmuc;
+use App\Models\DanhmucCon;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class DanhmucServices
 {
@@ -11,11 +14,15 @@ class DanhmucServices
             Danhmuc::create([
                 'tendanhmuc' => (string) $danhmucFormRequest->input('categoryName'),
                 'mota' => (string) $danhmucFormRequest->input('categoryDescription'),
+                'hinhanh' => $danhmucFormRequest->input('file'),
                 'trangthai' => (int) $danhmucFormRequest->input('categoryStatus'), // Chuyển đổi thành số nguyên
+
             ]);
+            // Danhmuc::create($danhmucFormRequest->all());
             session()->flash('success', 'Thêm danh mục thành công');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', 'Thêm danh mục thất bại: ' . $e->getMessage());
+            Log::info($e->getMessage());
             return false;
         }
         return true;
@@ -23,7 +30,8 @@ class DanhmucServices
 
     public function show()
     {
-        $danhmucs = Danhmuc::select('id_danhmuc','tendanhmuc')->orderByDesc('id_danhmuc')->get();
+        $LIMIT = 3;
+        $danhmucs = Danhmuc::select('id_danhmuc', 'tendanhmuc','hinhanh')->orderByDesc('id_danhmuc')->limit($LIMIT)->get();
         return $danhmucs;
     }
     public function showAllDanhmuc()
@@ -31,7 +39,8 @@ class DanhmucServices
         $danhmucs = Danhmuc::orderByDesc('id_danhmuc')->paginate(15);
         return $danhmucs;
     }
-    public function getAllDanhmuc(){
+    public function getAllDanhmuc()
+    {
         $danhmucs = Danhmuc::all();
         return $danhmucs;
     }
@@ -44,14 +53,14 @@ class DanhmucServices
     public function getDanhmucById($id_danhmuc)
     {
         // Tìm danh mục với trạng thái 1 và id_danhmuc tương ứng
-        $danhmuc = Danhmuc::where('id_danhmuc', $id_danhmuc)->first();
-
-        if ($danhmuc) {
-            return $danhmuc;
-        } else {
-            // Xử lý khi không tìm thấy danh mục
-            return null; // Hoặc bạn có thể ném một ngoại lệ hoặc trả về thông báo lỗi
-        }
+        $danhmuc = Danhmuc::where('id_danhmuc', $id_danhmuc)->where('trangthai', 1)->firstOrFail();
+        return $danhmuc;
+    }
+    public function getDanhmucByIdCon($id_danhmuccon)
+    {
+        // Tìm danh mục với trạng thái 1 và id_danhmuc tương ứng
+        $danhmuccon = DanhmucCon::where('id_danhmuccon', $id_danhmuccon)->where('trangthai', 1)->firstOrFail();
+        return $danhmuccon;
     }
     public function update($request, $id_danhmuc)
     {
@@ -67,9 +76,19 @@ class DanhmucServices
         $danhmuc->tendanhmuc = $request->input('categoryName');
         $danhmuc->trangthai = $request->input('categoryStatus');
         $danhmuc->mota = $request->input('categoryDescription', ''); // Nếu không có mô tả thì để rỗng
+        // Kiểm tra xem có file mới không
+        if ($request->input('file')) {
+            // Lấy đường dẫn file từ input ẩn
+            $danhmuc->hinhanh = $request->input('file');
+        }
 
         // Lưu lại thay đổi
-        $danhmuc->save();
+        if ($danhmuc->isDirty()) {
+            $danhmuc->save();
+            return redirect()->back()->with('success', 'Slider đã được cập nhật.');
+        } else {
+            return redirect()->back()->with('info', 'Không có thay đổi nào được thực hiện.');
+        }
     }
 
 

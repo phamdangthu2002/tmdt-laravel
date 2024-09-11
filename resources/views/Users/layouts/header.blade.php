@@ -122,166 +122,6 @@
         display: block;
     }
 
-    /* Định dạng giỏ hàng */
-    .cart-menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 500px;
-        height: 100vh;
-        background-color: #fff;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        z-index: 1050;
-        overflow-y: auto;
-    }
-
-    .cart-menu-content {
-        padding: 20px;
-        position: relative;
-    }
-
-    .cart-menu-close {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: #333;
-        z-index: 1060;
-    }
-
-    .overlay.show {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    /* Cải thiện kiểu dáng cho giỏ hàng */
-    .cart-items {
-        margin-bottom: 20px;
-    }
-
-    .cart-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-        position: relative;
-    }
-
-    .cart-item img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 5px;
-        margin-right: 15px;
-    }
-
-    .cart-item-info {
-        flex: 1;
-    }
-
-    .cart-item-name {
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-    }
-
-    .cart-item-size,
-    .cart-item-quantity {
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-        color: #6c757d;
-        display: inline-block;
-        margin-left: 5px;
-        font-weight: bold;
-    }
-
-    .cart-item-price {
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-    }
-
-    .cart-item-description {
-        color: #6c757d;
-        font-size: 0.9rem;
-    }
-
-    .cart-item-remove {
-        background: none;
-        border: none;
-        font-size: 25px;
-        color: #e74c3c;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .cart-item-remove:hover {
-        color: #c0392b;
-    }
-
-    .cart-total {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .cart-total p {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-    }
-
-    .cart-total .btn {
-        background-color: #007bff;
-        border-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        font-size: 1rem;
-        text-transform: uppercase;
-        border-radius: 5px;
-    }
-
-    .cart-total .btn:hover {
-        background-color: #0056b3;
-        border-color: #00408c;
-    }
-
-    .cart-check-out {
-        width: 60%;
-        border-color: #007bff;
-        margin: 0 20% 0 20%;
-    }
-
-    .cart-badge {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        padding: 3px 6px;
-        border-radius: 50%;
-        background-color: red;
-        color: white;
-        font-size: 12px;
-    }
-
-    /* Định dạng thông báo giỏ hàng */
-    .cart-notification {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #28a745;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        z-index: 9999;
-    }
-
     /* Định dạng khung tìm kiếm với hiệu ứng tròn và bóng đổ */
     #searchContainer {
         position: relative;
@@ -348,18 +188,18 @@
                 <ul class="dropdown-menu" aria-labelledby="danhmucDropdown">
                     @foreach ($danhmucs as $danhmuc)
                         <li class="dropdown-item-parent" data-id="{{ $danhmuc->id_danhmuc }}">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{ route('user.danhmuc', $danhmuc->id_danhmuc) }}">
                                 {{ $danhmuc->tendanhmuc }}
                             </a>
-                            <ul class="dropdown-menu-sub no-bullets" id="submenu-{{ $danhmuc->id_danhmuc }}">
+                            {{-- <ul class="dropdown-menu-sub no-bullets" id="submenu-{{ $danhmuc->id_danhmuc }}">
                                 @foreach ($danhmuccons->where('id_danhmuc', $danhmuc->id_danhmuc) as $danhmuccon)
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{route('user.danhmuccon', $danhmuccon->id_danhmuccon)}}">
                                             {{ $danhmuccon->tendanhmuccon }}
                                         </a>
                                     </li>
                                 @endforeach
-                            </ul>
+                            </ul> --}}
                         </li>
                     @endforeach
                 </ul>
@@ -407,7 +247,8 @@
                 </ul>
             </li>
             <li class="nav-item d-flex">
-                <a class="nav-link" href="#" id="cartDropdown" role="button">
+                {{-- <a class="nav-link" href="#" id="cartDropdown" role="button"> --}}
+                <a class="nav-link" href="{{ route('user.giohangshow') }}" role="button">
                     <i class='bx bx-cart'></i>
                     <!-- Badge để hiển thị số lượng sản phẩm trong giỏ hàng -->
                     <span class="cart-badge" id="cartCount">0</span>
@@ -416,146 +257,3 @@
         </ul>
     </div>
 </nav>
-
-
-<script>
-    // Hàm xác nhận đăng xuất
-    function confirmLogout(event) {
-        event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
-
-        Swal.fire({
-            title: 'Bạn có chắc chắn muốn đăng xuất?',
-            text: "Bạn sẽ bị đưa trở lại trang đăng nhập.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đăng xuất',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '#'; // Thay đổi đường dẫn theo cấu hình của bạn
-            }
-        });
-    }
-
-    // Hàm để tính tổng tiền của các sản phẩm trong giỏ hàng
-    function updateCartTotal() {
-        let total = 0;
-        const cartItems = document.querySelectorAll('.cart-item'); // Lấy tất cả sản phẩm trong giỏ hàng
-
-        // Duyệt qua từng sản phẩm trong giỏ hàng
-        cartItems.forEach(item => {
-            const priceElement = item.querySelector('.cart-item-price');
-            const price = parseFloat(priceElement.innerText.replace('$',
-                '')); // Lấy giá sản phẩm và chuyển thành số
-            total += price; // Cộng giá sản phẩm vào tổng
-        });
-
-        // Cập nhật tổng tiền trên giao diện
-        document.getElementById('cartTotal').innerText = `$${total.toFixed(2)}`;
-    }
-
-    // Hàm để xóa sản phẩm khỏi giỏ hàng với xác nhận từ người dùng
-    function deleteItem(element) {
-        // Hiển thị thông báo xác nhận bằng SweetAlert2
-        Swal.fire({
-            title: 'Bạn có chắc chắn muốn xóa?',
-            text: "Hành động này không thể hoàn tác!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xóa',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const itemName = element.closest('.cart-item').querySelector('.cart-item-name')
-                    .innerText; // Lấy tên sản phẩm
-                element.closest('.cart-item').remove(); // Xóa phần tử sản phẩm khỏi giỏ hàng
-                updateCartTotal(); // Cập nhật tổng tiền sau khi xóa sản phẩm
-                const newCount = getCartItemsCount(); // Đếm số lượng sản phẩm còn lại
-                updateCartCount(newCount); // Cập nhật số lượng sản phẩm trên biểu tượng giỏ hàng
-
-                // Hiển thị thông báo đã xóa sản phẩm thành công
-                Swal.fire(
-                    'Đã xóa!',
-                    `${itemName} đã được xóa khỏi giỏ hàng.`,
-                    'success'
-                );
-            }
-        });
-    }
-
-    // Hàm để đếm số lượng sản phẩm hiện có trong giỏ hàng
-    function getCartItemsCount() {
-        return document.querySelectorAll('.cart-item').length; // Đếm tất cả các phần tử có lớp cart-item
-    }
-
-    // Hàm để cập nhật số lượng sản phẩm trong biểu tượng giỏ hàng
-    function updateCartCount(count) {
-        const cartCountElement = document.getElementById("cartCount"); // Lấy phần tử hiển thị số lượng sản phẩm
-        cartCountElement.textContent = count; // Cập nhật số lượng sản phẩm
-
-        // Nếu giỏ hàng không có sản phẩm, hiển thị "0"
-        if (count === 0) {
-            cartCountElement.textContent = '0';
-            cartCountElement.style.display = 'block'; // Luôn hiển thị badge với số "0"
-        } else {
-            cartCountElement.style.display = 'block'; // Hiển thị badge nếu có sản phẩm
-        }
-    }
-
-    // Khi trang web được tải, tính tổng tiền ban đầu và số lượng sản phẩm trong giỏ hàng
-    document.addEventListener('DOMContentLoaded', () => {
-        updateCartTotal(); // Cập nhật tổng tiền
-        updateCartCount(getCartItemsCount()); // Cập nhật số lượng sản phẩm trên biểu tượng giỏ hàng
-    });
-
-    //nút tìm kiếm
-    // Khi bấm vào biểu tượng tìm kiếm
-    document.getElementById('searchToggle').addEventListener('click', function(e) {
-        e.preventDefault();
-        const searchContainer = document.getElementById('searchContainer');
-
-        // Kiểm tra trạng thái hiển thị của ô tìm kiếm
-        if (searchContainer.style.display === 'none' || searchContainer.style.width === '0px') {
-            searchContainer.style.display = 'block';
-            anime({
-                targets: '#searchContainer',
-                width: '250px',
-                easing: 'easeInOutQuad',
-                duration: 500
-            });
-        } else {
-            // // Nếu ô tìm kiếm đã mở, thu nhỏ ô tìm kiếm về kích thước 0
-            // anime({
-            //     targets: '#searchContainer',
-            //     width: '0',
-            //     easing: 'easeInOutQuad',
-            //     duration: 500,
-            //     complete: function() {
-            //         searchContainer.style.display = 'none';
-            //         document.getElementById('searchInput').value = ''; // Xóa nội dung ô tìm kiếm
-            //     }
-            // });
-        }
-    });
-
-    // Khi bấm vào dấu x
-    document.getElementById('closeSearch').addEventListener('click', function(e) {
-        e.preventDefault();
-        const searchContainer = document.getElementById('searchContainer');
-
-        anime({
-            targets: '#searchContainer',
-            width: '0',
-            easing: 'easeInOutQuad',
-            duration: 500,
-            complete: function() {
-                searchContainer.style.display = 'none';
-                document.getElementById('searchInput').value = ''; // Xóa nội dung ô tìm kiếm
-            }
-        });
-    });
-</script>

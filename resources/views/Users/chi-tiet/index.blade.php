@@ -1,0 +1,333 @@
+@extends('Users.index')
+@section('main')
+    <style>
+        /* Bố cục chung của phần breadcrumbs */
+        .bread-crumb {
+            display: flex;
+            align-items: center;
+            /* Căn giữa các phần tử dọc theo trục chính */
+            font-size: 16px;
+            /* Kích thước font cho các liên kết */
+            color: #333;
+            /* Màu chữ chung */
+        }
+
+        /* Phần tử liên kết */
+        .bread-crumb a {
+            text-decoration: none;
+            /* Xóa gạch chân của liên kết */
+            color: #007bff;
+            /* Màu chữ của liên kết */
+            margin-right: 10px;
+            /* Khoảng cách giữa các liên kết */
+            transition: color 0.3s;
+            /* Hiệu ứng chuyển màu mượt mà */
+        }
+
+        .bread-crumb a:hover {
+            color: #0056b3;
+            /* Màu chữ khi di chuột qua liên kết */
+        }
+
+        /* Biểu tượng phân cách giữa các liên kết */
+        .bread-crumb i {
+            color: #666;
+            /* Màu của biểu tượng */
+            font-size: 14px;
+            /* Kích thước biểu tượng */
+        }
+
+        /* Phần tử văn bản không phải liên kết */
+        .bread-crumb span {
+            color: #333;
+            /* Màu chữ cho văn bản cuối cùng */
+        }
+
+        /* Các lớp bổ sung từ Bootstrap */
+        .p-l-25 {
+            padding-left: 25px;
+        }
+
+        .p-r-15 {
+            padding-right: 15px;
+        }
+
+        .p-t-30 {
+            padding-top: 30px;
+        }
+
+        .p-lr-0-lg {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .mt-5 {
+            margin-top: 3rem;
+        }
+
+        /* Cung cấp khoảng cách trên cho phần tử chứa */
+
+        /* Cập nhật bố cục slider và hình thu nhỏ */
+        .container-chitiet {
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 20%;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 5px 10px 16px rgba(158, 158, 158, 0.5);
+        }
+
+        .slides {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        .slides li {
+            display: none;
+        }
+
+        .slides img {
+            width: 100%;
+            height: auto;
+        }
+
+        .thumbnails {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: -100px;
+            /* Điều chỉnh khoảng cách nếu cần */
+        }
+
+        .thumbnails li {
+            margin: 5px 0;
+        }
+
+        .thumbnails img {
+            width: 90px;
+            height: auto;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .thumbnails img.active {
+            border: 2px solid #2fda1f;
+            /* Màu viền cho hình thu nhỏ được chọn */
+        }
+
+        /* Hiển thị hình ảnh đầu tiên */
+        .slides li:first-child {
+            display: block;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Center tabs horizontally */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+
+        /* Center and limit width of tab content */
+        .tab-content {
+            display: flex;
+            justify-content: center;
+            color: #949494;
+            width: 80%;
+            /* Giới hạn chiều rộng */
+            max-width: 1200px;
+            /* Kích thước tối đa (tuỳ chỉnh theo nhu cầu) */
+            margin: auto;
+            /* Căn giữa trong phần tử chứa */
+        }
+
+        /* Optional: Center the text inside each tab pane */
+        .tab-pane {
+            text-align: center;
+        }
+
+
+        /* Chọn kích thước */
+    </style>
+    <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+                Home
+                <i class="bx bx-chevron-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+
+            <a href="{{ route('user.danhmuc', $sanphams->danhmuc->id_danhmuc) }}" class="stext-109 cl8 hov-cl1 trans-04">
+                {{ $sanphams->danhmuc->tendanhmuc }}
+                <i class="bx bx-chevron-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+
+            <span class="stext-109 cl4">
+                {{ $title }}
+            </span>
+        </div>
+    </div>
+    <div class="container-chitiet mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="slides">
+                    <li id="slide1"><img src="/assets/images/bee99001-9ef2-0f00-89da-001adda0d2ee.jpg" alt="Slide 1" />
+                    </li>
+                    <li id="slide2"><img src="/assets/images/4208e021-b217-df00-805f-001ae3b8b700.jpg" alt="Slide 2" />
+                    </li>
+                    <li id="slide3"><img src="/assets/images/3f557c5a-8b71-0200-f2c5-001adda2238a.jpg" alt="Slide 3" />
+                    </li>
+                    {{-- <li id="slide4"><img src="https://via.placeholder.com/800x400?text=Slide+4" alt="Slide 4" /></li>
+                    <li id="slide5"><img src="https://via.placeholder.com/800x400?text=Slide+5" alt="Slide 5" /></li> --}}
+                </ul>
+
+                <ul class="thumbnails">
+                    <li><a href="#slide1"><img src="/assets/images/bee99001-9ef2-0f00-89da-001adda0d2ee.jpg"
+                                alt="Thumbnail 1" /></a></li>
+                    <li><a href="#slide2"><img src="/assets/images/4208e021-b217-df00-805f-001ae3b8b700.jpg"
+                                alt="Thumbnail 2" /></a></li>
+                    <li><a href="#slide3"><img src="/assets/images/3f557c5a-8b71-0200-f2c5-001adda2238a.jpg" /></a></li>
+                    {{-- <li><a href="#slide4"><img src="https://via.placeholder.com/100x60?text=4" alt="Thumbnail 4" /></a></li>
+                    <li><a href="#slide5"><img src="https://via.placeholder.com/100x60?text=5" alt="Thumbnail 5" /></a></li> --}}
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h1>{{ $sanphams->tensanpham }}</h1>
+                <h3>{!! \App\Helpers\Helper::price_sale($sanphams->gia, $sanphams->sale) !!}</h3>
+                <p>{{ $sanphams->mota }}</p>
+                <form action="{{ route('user.giohang') }}" method="post">
+                    @csrf
+                    @if ($sanphams->gia < $sanphams->sale)
+                        <div class="btn btn-danger">Đang cập nhật</div>
+                    @else
+                        <input type="hidden" name="id_sanpham" value="{{ $sanphams->id_sanpham }}">
+                        <!-- Chọn kích thước -->
+                        <div class="form-group">
+                            <label for="size">Chọn kích thước</label>
+                            <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                <label class="btn btn-outline-primary size-option">
+                                    <input type="radio" name="size" value="S" autocomplete="off"> Size S
+                                </label>
+                                <label class="btn btn-outline-primary size-option">
+                                    <input type="radio" name="size" value="M" autocomplete="off"> Size M
+                                </label>
+                                <label class="btn btn-outline-primary size-option">
+                                    <input type="radio" name="size" value="L" autocomplete="off"> Size L
+                                </label>
+                                <label class="btn btn-outline-primary size-option">
+                                    <input type="radio" name="size" value="XL" autocomplete="off"> Size XL
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Chọn màu sắc -->
+                        <div class="form-group">
+                            <label for="color">Chọn màu sắc</label>
+                            <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                <label class="btn btn-outline-primary color-option">
+                                    <input type="radio" name="color" value="red" autocomplete="off"> Đỏ
+                                </label>
+                                <label class="btn btn-outline-primary color-option">
+                                    <input type="radio" name="color" value="green" autocomplete="off"> Xanh lá
+                                </label>
+                                <label class="btn btn-outline-primary color-option">
+                                    <input type="radio" name="color" value="blue" autocomplete="off"> Xanh dương
+                                </label>
+                                <label class="btn btn-outline-primary color-option">
+                                    <input type="radio" name="color" value="black" autocomplete="off"> Đen
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Chọn số lượng -->
+                        <div class="quantity-controls">
+                            <button type="button" id="decrease-quantity-1">-</button>
+                            <input type="number" name="quantity" class="quantity" value="1" min="1"
+                                max="10">
+                            <button type="button" id="increase-quantity-1">+</button>
+                        </div>
+
+                        <!-- Nút thêm vào giỏ hàng -->
+
+                        <button type="submit" class="btn btn-primary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>
+                    @endif
+                    {{-- {!! \App\Helpers\Helper::button($sanphams->gia, $sanphams->sale) !!} --}}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
+                    type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="additional-info-tab" data-bs-toggle="tab" data-bs-target="#additional-info"
+                    type="button" role="tab" aria-controls="additional-info" aria-selected="false">Additional
+                    information</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"
+                    role="tab" aria-controls="reviews" aria-selected="false">Reviews (1)</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- Description Tab Content -->
+            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                <p>
+                    {{ $sanphams->mota }}
+                </p>
+            </div>
+
+            <!-- Additional Information Tab Content -->
+            <div class="tab-pane fade" id="additional-info" role="tabpanel" aria-labelledby="additional-info-tab">
+                <p>
+                    {{ $sanphams->motachitiet }}
+                </p>
+            </div>
+
+            <!-- Reviews Tab Content -->
+            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                <p>
+                    Customer reviews about the product. Average rating, etc.
+                    Customer reviews about the product. Average rating, etc.
+                    Customer reviews about the product. Average rating, etc.
+                    Customer reviews about the product. Average rating, etc.
+                    Customer reviews about the product. Average rating, etc.
+                    Customer reviews about the product. Average rating, etc.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @include('Users.san-pham-main.more')
+    </div>
+    <div class="custom-bg d-flex justify-content-center align-items-center flex-wrap p-3 mt-5 mb-5"
+        style="background-color: #b2c2b2;">
+        <span class="text-white px-3">
+            SKU: JAK-01
+        </span>
+
+        <span class="text-white px-3">
+            Categories: {{ $sanphams->danhmuc->tendanhmuc }}
+        </span>
+    </div>
+@endsection

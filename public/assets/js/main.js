@@ -4,7 +4,7 @@ $.ajaxSetup({
     }
 });
 
-
+//admin
 
 // upload
 $('#hinhanh').change(function () {
@@ -52,3 +52,137 @@ function uploadFile(file) {
         },
     });
 }
+
+
+// user
+
+function loadMore() {
+    const page = $('#page').val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        data: { page },
+        url: '/User/load-more',
+        success: function (data) {
+            if (data !== '') {
+                $('#load').append(data.html);
+                $('#page').val(page + 1);
+            }
+            alert('Đã load thêm sản phẩm');
+            $('#btn-load-more').css('display', 'none');
+        }
+    });
+}
+
+
+
+// Hàm xác nhận đăng xuất
+function confirmLogout(event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+
+    Swal.fire({
+        title: 'Bạn có chắc chắn muốn đăng xuất?',
+        text: "Bạn sẽ bị đưa trở lại trang đăng nhập.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đăng xuất',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '#'; // Thay đổi đường dẫn theo cấu hình của bạn
+        }
+    });
+}
+
+
+
+//nút tìm kiếm
+// Khi bấm vào biểu tượng tìm kiếm
+document.getElementById('searchToggle').addEventListener('click', function (e) {
+    e.preventDefault();
+    const searchContainer = document.getElementById('searchContainer');
+
+    // Kiểm tra trạng thái hiển thị của ô tìm kiếm
+    if (searchContainer.style.display === 'none' || searchContainer.style.width === '0px') {
+        searchContainer.style.display = 'block';
+        anime({
+            targets: '#searchContainer',
+            width: '250px',
+            easing: 'easeInOutQuad',
+            duration: 500
+        });
+    } else {
+        // // Nếu ô tìm kiếm đã mở, thu nhỏ ô tìm kiếm về kích thước 0
+        // anime({
+        //     targets: '#searchContainer',
+        //     width: '0',
+        //     easing: 'easeInOutQuad',
+        //     duration: 500,
+        //     complete: function() {
+        //         searchContainer.style.display = 'none';
+        //         document.getElementById('searchInput').value = ''; // Xóa nội dung ô tìm kiếm
+        //     }
+        // });
+    }
+});
+
+// Khi bấm vào dấu x
+document.getElementById('closeSearch').addEventListener('click', function (e) {
+    e.preventDefault();
+    const searchContainer = document.getElementById('searchContainer');
+
+    anime({
+        targets: '#searchContainer',
+        width: '0',
+        easing: 'easeInOutQuad',
+        duration: 500,
+        complete: function () {
+            searchContainer.style.display = 'none';
+            document.getElementById('searchInput').value = ''; // Xóa nội dung ô tìm kiếm
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Xử lý sự kiện khi chọn kích thước
+    const sizeOptions = document.querySelectorAll('.size-option input');
+    sizeOptions.forEach(option => {
+        option.addEventListener('change', function () {
+            // Xóa lớp 'active' khỏi tất cả các tùy chọn
+            sizeOptions.forEach(opt => opt.parentElement.classList.remove('active'));
+            // Thêm lớp 'active' vào tùy chọn hiện tại
+            this.parentElement.classList.add('active');
+        });
+    });
+
+    // Xử lý sự kiện khi chọn màu sắc
+    const colorOptions = document.querySelectorAll('.color-option input');
+    colorOptions.forEach(option => {
+        option.addEventListener('change', function () {
+            // Xóa lớp 'active' khỏi tất cả các tùy chọn
+            colorOptions.forEach(opt => opt.parentElement.classList.remove('active'));
+            // Thêm lớp 'active' vào tùy chọn hiện tại
+            this.parentElement.classList.add('active');
+        });
+    });
+
+    // Xử lý sự kiện khi chọn hình thu nhỏ
+    const slides = document.querySelectorAll('.slides li');
+    const thumbnails = document.querySelectorAll('.thumbnails li a img');
+
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', function (event) {
+            event.preventDefault();
+            // Ẩn tất cả các slide
+            slides.forEach(slide => slide.style.display = 'none');
+            // Ẩn viền của tất cả các hình thu nhỏ
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            // Hiển thị slide tương ứng với hình thu nhỏ được chọn
+            slides[index].style.display = 'block';
+            // Thêm viền vào hình thu nhỏ được chọn
+            thumbnails[index].classList.add('active');
+        });
+    });
+});

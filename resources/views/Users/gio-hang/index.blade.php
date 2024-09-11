@@ -1,113 +1,75 @@
-<!-- Cart Menu -->
-<div class="cart-menu" id="cartMenu">
-    <button class="cart-menu-close">&times;</button>
-    <div class="cart-menu-content">
+@extends('Users.index')
+@section('main')
+    <title>{{ $title }}</title>
+    <!-- Cart Menu -->
+    <div class="container-cart mt-5">
         <h5>Your Cart</h5>
-        <div class="cart-items">
-            <!-- Example cart items -->
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/100" alt="Product 1">
-                <div class="cart-item-info">
-                    <p class="cart-item-name">Product 1</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="cart-item-size">Size:
-                                <span class="cart-item-size-number">M</span>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="cart-item-quantity">Quantity:
-                                <span class="cart-item-quantity-number">1</span>
-                            </p>
-                        </div>
-                    </div>
-                    <p class="cart-item-price">$20.00</p>
-                    <p class="cart-item-description">A brief description of Product 1 that gives more details about
-                        the item.</p>
+        @if (count($sanphams) != 0)
+            <form method="POST">
+                @csrf
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Color</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($sanphams as $sanpham)
+                            <tr class="item-cart">
+                                <th>
+                                    <img src="{{ $sanpham->hinhanh }}" alt="{{ $sanpham->tensanpham }}" class="img-thumbnail">
+                                </th>
+                                <th>
+                                    <div class="cart-name">
+                                        {{ $sanpham->tensanpham }}
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="cart-content">
+                                        {{ $giohang[$sanpham->id_sanpham]['size'] }}
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="cart-content">
+                                        {{ $giohang[$sanpham->id_sanpham]['color'] }}
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="quantity-controls mt-3">
+                                        <button type="button" id="decrease-quantity-2">-</button>
+                                        <input type="number" name="quantity_product[{{ $sanpham->id_sanpham }}]"
+                                            class="quantity2" value="{{ $giohang[$sanpham->id_sanpham]['quantity'] }}"
+                                            min="1" max="10">
+                                        <button type="button" id="increase-quantity-2">+</button>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    {!! \App\Helpers\Helper::price_cart($sanpham->gia, $sanpham->sale) !!}
+                                </th>
+
+                                <th>
+                                    <a class="cart-content cart-item-remove" onclick="deleteItem(this)">
+                                        <i class='bx bx-trash'></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <input type="submit" value="Update" formaction="/User/update-cart" class="text-center cart-update btn btn-outline-dark">
+                <div class="cart-total">
+                    <p class="font-weight-bold">Total: <span id="cartTotal">$0.00</span></p>
                 </div>
-                <a class="cart-item-remove" onclick="deleteItem(this)">
-                    <i class='bx bx-trash'></i>
-                </a>
-            </div>
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/100" alt="Product 1">
-                <div class="cart-item-info">
-                    <p class="cart-item-name">Product 1</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="cart-item-size">Size:
-                                <span class="cart-item-size-number">M</span>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="cart-item-quantity">Quantity:
-                                <span class="cart-item-quantity-number">1</span>
-                            </p>
-                        </div>
-                    </div>
-                    <p class="cart-item-price">$20.00</p>
-                    <p class="cart-item-description">A brief description of Product 1 that gives more details about
-                        the item.</p>
-                </div>
-                <a class="cart-item-remove" onclick="deleteItem(this)">
-                    <i class='bx bx-trash'></i>
-                </a>
-            </div>
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/100" alt="Product 2">
-                <div class="cart-item-info">
-                    <p class="cart-item-name">Product 2</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="cart-item-size">Size:
-                                <span class="cart-item-size-number">M</span>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="cart-item-quantity">Quantity:
-                                <span class="cart-item-quantity-number">1</span>
-                            </p>
-                        </div>
-                    </div>
-                    <p class="cart-item-price">$15.00</p>
-                    <p class="cart-item-description">A brief description of Product 2 that gives more details about
-                        the item.</p>
-                </div>
-                <a class="cart-item-remove" onclick="deleteItem(this)">
-                    <i class='bx bx-trash'></i>
-                </a>
-            </div>
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/100" alt="Product 2">
-                <div class="cart-item-info">
-                    <p class="cart-item-name">Product 2</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="cart-item-size">Size:
-                                <span class="cart-item-size-number">M</span>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="cart-item-quantity">Quantity:
-                                <span class="cart-item-quantity-number">1</span>
-                            </p>
-                        </div>
-                    </div>
-                    <p class="cart-item-price">$15.00</p>
-                    <p class="cart-item-description">A brief description of Product 2 that gives more details about
-                        the item.</p>
-                </div>
-                <a class="cart-item-remove text-danger ml-3" onclick="deleteItem(this)">
-                    <i class='bx bx-trash'></i>
-                </a>
-            </div>
-        </div>
-        <div class="cart-total">
-            <p>Total: <span id="cartTotal">$0.00</span></p>
-        </div>
-        <div class="cart-check-out d-flex justify-content-between align-items-center p-3">
-            <a href="#" class="btn btn-outline-dark">View cart</a>
-            <a href="{{ route('user.thanh-toan') }}" class="btn btn-success">Checkout</a>
-        </div>
+            </form>
+        @else
+            <p>No items in cart</p>
+        @endif
     </div>
-</div>
+@endsection

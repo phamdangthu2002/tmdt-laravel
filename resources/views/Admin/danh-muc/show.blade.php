@@ -12,6 +12,7 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Tên Danh Mục</th>
                                 <th scope="col">Mô Tả</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Cập nhật</th>
                                 <th scope="col">Thao tác</th>
@@ -24,6 +25,9 @@
                                         <td>{{ $danhmuc->id_danhmuc }}</td>
                                         <td>{{ $danhmuc->tendanhmuc }}</td> <!-- Swap with the correct column -->
                                         <td>{{ $danhmuc->mota }}</td>
+                                        <td><img src="{{ asset($danhmuc->hinhanh) }}" class="img-thumbnail mb-2"
+                                                style="max-height: 50px; width: auto;"></td>
+                                        </td>
                                         <td>
                                             @if ($danhmuc->trangthai == 1)
                                                 <span class="text-success">Hoạt động</span>

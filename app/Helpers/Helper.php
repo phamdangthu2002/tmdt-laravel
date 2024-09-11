@@ -55,7 +55,7 @@ class Helper
             if ($danhmuc->parent_id == $parent_id) {
                 $html .= '
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="/danh-muc/' . $danhmuc->id_danhmuc . '-' . Str::slug($danhmuc->tendanhmuc, '-') . '.html">
+                        <a class="nav-link">
                         ' . $danhmuc->tendanhmuc . '
                         </a>';
 
@@ -93,7 +93,6 @@ class Helper
     public static function price($gia = 0, $sale = 0)
     {
         $price = $gia - ($gia * $sale / 100);
-
         if ($price > 0) {
             return '<div class="banner-sale">Sale off: ' . $sale . '%</div>'
                 . '<div class="product-banner">'
@@ -107,6 +106,31 @@ class Helper
         }
     }
 
+    public static function price_sale($gia = 0, $sale = 0)
+    {
+        $price = $gia - ($gia * $sale / 100);
 
+        if ($price > 0) {
+            return '<div class="text-sale">Sale off: ' . $sale . '%</div>'
+                . '<div class="text-danger">Giá gốc: ' . self::formatVND($gia) . '</div>'
+                . '<div class="text-success">Giảm còn: ' . self::formatVND($price) . '</div>';
+        } else {
+            return '<div class="price-danger">Đang cập nhật</div>';
+        }
+    }
+    public static function price_cart($gia = 0, $sale = 0)
+    {
+        $price = $gia - ($gia * $sale / 100);
+        return '<div class="cart-item-price">'.self::formatVND($price).'</div>';
+    }
+
+    public static function button($gia = 0, $sale = 0)
+    {
+        $price = $gia - $sale;
+        if ($price <= 0) {
+            return '<div class="btn btn-danger">Đang cập nhật</div>';
+        }
+        return '<button type="submit" class="btn btn-primary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>';
+    }
 
 }

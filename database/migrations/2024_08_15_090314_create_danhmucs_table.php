@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->bigIncrements('id_danhmuc');
             $table->string('tendanhmuc',255);
             $table->text('mota');
+            $table->string('hinhanh', 255);
             $table->tinyInteger('trangthai')->default(1);
             $table->timestamps();
         });

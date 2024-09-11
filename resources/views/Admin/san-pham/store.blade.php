@@ -10,6 +10,10 @@
                         <label for="mota"><b>Mô tả</b></label>
                         <textarea class="form-control" id="mota" name="mota" rows="3" placeholder="Nhập mô tả sản phẩm">{{ $sanphamedits->mota }}</textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="motachitiet"><b>Mô tả chi tiết</b></label>
+                        <textarea class="form-control" id="motachitiet" name="motachitiet" rows="3" placeholder="Nhập mô tả sản phẩm">{{ $sanphamedits->motachitiet }}</textarea>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="row">
@@ -71,7 +75,7 @@
                             <label for="hinhanh"><b>Hình ảnh</b></label>
                             <div id="drop-zone" class="p-3">
                                 <div class="form-group mb-3 mt-1">
-                                    <input type="text" class="form-control text-decorate-none" id="file-preview" />
+                                    <input type="text" name="file" class="form-control text-decorate-none" id="file-preview" />
                                 </div>
                                 <p>Thêm ảnh ở đây</p>
                                 <div id="file-count" class="mt-2">Đã thêm 0/1 file</div>

@@ -72,7 +72,7 @@
 
     .block1 img {
         width: 100%;
-        height: auto;
+        height: 300px;
         object-fit: cover;
         transition: transform 0.3s ease;
     }
@@ -248,8 +248,6 @@
         border-bottom-color: rgb(12, 185, 55);
         text-decoration: none;
     }
-
-    
 </style>
 
 <div class="slider mt-1">
@@ -264,28 +262,28 @@
         <div class="slide">
             <img src="https://via.placeholder.com/800x400?text=Slide+3" alt="Slide 3">
         </div> --}}
-        @foreach ($sliders as $slider)
-            <div class="slide">
-                <img src="{{ $slider->hinhanh }}" alt="IMG-BANNER" class="slide-img">
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <span class="slide-title">
-                            {{ $slider->name }}
-                        </span>
-                    </div>
-                    <div class="slide-season">
-                        <span class="slide-season-text">
-                            Spring 2024
-                        </span>
-                    </div>
-                    <div class="slide-button">
-                        <a href="#">Shop Now</a>
+        @foreach ($menus as $key => $menu)
+            @foreach ($sliders as $slider)
+                <div class="slide">
+                    <img src="{{ $slider->hinhanh }}" alt="IMG-BANNER" class="slide-img">
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <span class="slide-title">
+                                {{ $slider->name }}
+                            </span>
+                        </div>
+                        <div class="slide-season">
+                            <span class="slide-season-text">
+                                Spring 2024
+                            </span>
+                        </div>
+                        <div class="slide-button">
+                            <a href="{{ route('user.danhmuc', $menu->id_danhmuc) }}">Shop Now</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         @endforeach
-
-
     </div>
     <div class="prev">
         <i class='bx bxs-chevron-left'></i>
@@ -304,9 +302,9 @@
                 <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
                     <!-- Block1 -->
                     <div class="block1 wrap-pic-w">
-                        <img src="/assets/images/product-detail-01.png" alt="IMG-BANNER">
+                        <img src="{{$menu->hinhanh}}" alt="IMG-BANNER">
 
-                        <a href="product.html"
+                        <a href="{{ route('user.danhmuc', $menu->id_danhmuc) }}"
                             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                             <div class="block1-txt-child1 flex-col-l">
                                 <span class="block1-name-header ltext-102 trans-04 p-b-8">

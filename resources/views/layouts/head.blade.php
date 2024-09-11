@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/assets/vendor/boxicons-2.1.4/css/boxicons.min.css">
 {{-- css --}}
 <link rel="stylesheet" href="/assets/css/card.css">
+<link rel="stylesheet" href="/assets/css/User/upload.css">
 
 <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/assets/vendor/boxicons-2.1.4/css/boxicons.min.css">

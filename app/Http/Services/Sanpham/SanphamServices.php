@@ -44,6 +44,7 @@ class SanphamServices
             Sanpham::create([
                 'tensanpham' => $sanphamRequest->input('tensanpham'),
                 'mota' => $sanphamRequest->input('mota'),
+                'motachitiet' => $sanphamRequest->input('motachitiet'),
                 'id_danhmuc' => $sanphamRequest->input('id_danhmuc'),
                 'gia' => $sanphamRequest->input('gia'),
                 'sale' => $sanphamRequest->input('sale'),
@@ -67,17 +68,18 @@ class SanphamServices
         $sanpham = Sanpham::find($id);
 
         // Cập nhật thông tin danh mục
-        $sanpham->mota = $sanphamRequest->input('mota', '');
-        $sanpham->tensanpham = $sanphamRequest->input('tensanpham', '');
-        $sanpham->id_danhmuc = $sanphamRequest->input('id_danhmuc', '');
-        $sanpham->gia = $sanphamRequest->input('gia', '');
-        $sanpham->sale = $sanphamRequest->input('sale', '');
-        $sanpham->soluong = $sanphamRequest->input('soluong', '');
-        $sanpham->trangthai = $sanphamRequest->input('trangthai', '');
+        $sanpham->mota = $sanphamRequest->input('mota');
+        $sanpham->motachitiet = $sanphamRequest->input('motachitiet');
+        $sanpham->tensanpham = $sanphamRequest->input('tensanpham');
+        $sanpham->id_danhmuc = $sanphamRequest->input('id_danhmuc');
+        $sanpham->gia = $sanphamRequest->input('gia');
+        $sanpham->sale = $sanphamRequest->input('sale');
+        $sanpham->soluong = $sanphamRequest->input('soluong');
+        $sanpham->trangthai = $sanphamRequest->input('trangthai');
         // Kiểm tra nếu có tệp hình ảnh mới
-        if ($sanphamRequest->hasFile('file')) {
-            // Lưu trữ tệp mới và cập nhật đường dẫn hình ảnh
-            $sanpham->hinhanh = $sanphamRequest->file('file');
+        if ($sanphamRequest->input('file')) {
+            // Lấy đường dẫn file từ input ẩn
+            $sanpham->hinhanh = $sanphamRequest->input('file');
         }
         // Lưu lại thay đổi
         if ($sanpham->isDirty()) {

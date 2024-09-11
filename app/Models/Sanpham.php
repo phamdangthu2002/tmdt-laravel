@@ -12,6 +12,7 @@ class Sanpham extends Model
         'id_sanpham',
         'tensanpham',
         'mota',
+        'motachitiet',
         'id_danhmuc',
         'gia',
         'sale',

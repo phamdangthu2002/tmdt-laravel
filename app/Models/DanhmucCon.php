@@ -28,4 +28,8 @@ class DanhmucCon extends Model
     {
         return $this->belongsTo(Danhmuc::class, 'id_danhmuc', 'id_danhmuc');
     }
+    public function sanphamcons()
+    {
+        return $this->hasMany(Sanpham::class, 'id_danhmuc', 'id_danhmuc');
+    }
 }

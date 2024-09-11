@@ -12,7 +12,7 @@
     {{-- header --}}
     @include('Users.layouts.header')
     {{-- giỏ hàng --}}
-    @include('Users.gio-hang.index')
+    {{-- @include('Users.review.index') --}}
     {{-- main --}}
     {{-- @include('Users.layouts.main') --}}
     {{-- content --}}

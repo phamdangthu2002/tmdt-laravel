@@ -14,14 +14,15 @@ return new class extends Migration {
             $table->bigIncrements('id_sanpham');
             $table->string('tensanpham', 255);
             $table->text('mota');
+            $table->text('motachitiet')->nullable();
             $table->unsignedBigInteger('id_danhmuc');
             $table->foreign('id_danhmuc')->references('id_danhmuc')->on('danhmucs')->onDelete('cascade');
-            $table->decimal('gia');
+            $table->integer('gia');
             $table->integer('sale')->nullable();
             $table->integer('luotxem')->nullable();
             $table->integer('luotmua')->nullable();
             $table->integer('soluong');
-            $table->string('hinhanh', 255)->nullable();
+            $table->string('hinhanh', 255);
             $table->tinyInteger('trangthai')->default(1);
             $table->timestamps();
         });

@@ -11,3 +11,4 @@
 <script src="/assets/vendor/daterangejs/daterangepicker.min.js"></script>
 <script src="/assets/vendor/ckeditor/ckeditor.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/upload.js"></script>

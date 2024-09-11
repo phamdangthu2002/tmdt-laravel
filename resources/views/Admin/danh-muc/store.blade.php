@@ -6,8 +6,8 @@
             <h2 class="mb-4">{{ $title }}</h2>
             <div class="form-group">
                 <label for="categoryName">Tên Danh Mục</label>
-                <input type="text" value="{{ old('categoryName', $danhmucedits->tendanhmuc) }}" class="form-control" name="categoryName" id="categoryName"
-                    placeholder="Nhập tên danh mục">
+                <input type="text" value="{{ old('categoryName', $danhmucedits->tendanhmuc) }}" class="form-control"
+                    name="categoryName" id="categoryName" placeholder="Nhập tên danh mục">
                 @if ($errors->has('categoryName'))
                     <p class="error-message">*
                         {{ $errors->first('categoryName') }}
@@ -30,6 +30,28 @@
                         {{ $errors->first('categoryDescription') }}
                     </p>
                 @endif
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="hinhanh"><b>Hình ảnh</b></label>
+                    <div id="drop-zone" class="p-3">
+                        <div class="form-group mb-3 mt-1">
+                            <input type="text" class="form-control text-decorate-none" id="file-preview" />
+                        </div>
+                        <p>Thêm ảnh ở đây</p>
+                        <div id="file-count" class="mt-2">Đã thêm 0/1 file</div>
+                        <input type="file" class="form-control-file" id="hinhanh" name="hinhanh">
+                        <div id="preview-zone" name="file-hinhanh" class="mt-3">
+                            @if ($danhmucedits->hinhanh)
+                                <img src="{{ $danhmucedits->hinhanh }}" class="img-thumbnail mb-2"
+                                    style="max-height: 150px; width: auto;">
+                            @else
+                                <p>Chưa có hình ảnh</p>
+                            @endif
+                        </div>
+                        <input type="hidden" name="file" id="file">
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Lưu</button>
         </div>

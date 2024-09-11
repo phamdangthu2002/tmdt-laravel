@@ -79,6 +79,16 @@ Route::middleware(['admin'])->group(function () {
 Route::prefix('User')->group(function () {
     // trangchu
     Route::get('/trang-chu', [UserController::class, 'index'])->name('user.index');
+    Route::post('/load-more', [UserController::class, 'load'])->name('user.load');
+    //danhmuc
+    Route::get('{id}/load-danhmuc', [UserController::class, 'danhmuc'])->name('user.danhmuc');
+    // Route::get('{id}/load-danhmuc-con', [UserController::class, 'danhmuccon'])->name('user.danhmuccon');
+    Route::get('{id}/chi-tiet', [UserController::class, 'chitiet'])->name('user.chitiet');
+    //giohang
+    Route::post('/gio-hang', [UserController::class, 'giohang'])->name('user.giohang');
+    Route::get('/gio-hang-show', [UserController::class, 'giohangshow'])->name('user.giohangshow');
+    Route::post('/update-cart', [UserController::class, 'update'])->name('user.update-cart');
+    //thanhtoan
     Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
 
 });

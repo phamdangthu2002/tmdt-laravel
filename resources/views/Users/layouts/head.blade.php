@@ -5,6 +5,8 @@
 <link rel="icon" href="/assets/images/logo7.png" type="image/png">
 <link rel="stylesheet" href="/assets/vendor/bootstrap.min.css">
 <link rel="stylesheet" href="/assets/css/body.css">
+<link rel="stylesheet" href="/assets/vendor/bootstrap-icons.css">
+
 
 {{-- Bootstrap 5 CSS --}}
 <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
@@ -17,6 +19,7 @@
 {{-- css --}}
 <link rel="stylesheet" href="/assets/css/User/card.css">
 <link rel="stylesheet" href="/assets/css/User/main.css">
+<link rel="stylesheet" href="/assets/css/User/cart.css">
 
 
 <meta name="csrf-token" content="{{ csrf_token() }}">

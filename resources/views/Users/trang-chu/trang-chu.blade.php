@@ -43,6 +43,7 @@
     <div class="container mt-5 mb-5">
         <h1>Product Overview</h1>
 
+        {{-- @include('Users.layouts.filter') --}}
         <!-- Categories Section -->
         <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
@@ -52,5 +53,11 @@
             </div>
         </div>
     </div>
-    @include('Users.san-pham-main.main')
+    <div class="container-main mt-5 mb-5" id="load">
+        @include('Users.san-pham-main.main')
+    </div>
+    <div class="load-more mb-5" id="btn-load-more">
+        <input type="hidden" value="1" id="page">
+        <a onclick="loadMore()" class="btn btn-outline-success"> Xem thêm </a>
+    </div>
 @endsection

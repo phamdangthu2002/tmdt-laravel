@@ -1,0 +1,103 @@
+#hinhanh {
+    display: none;
+}
+
+#drop-zone {
+    background-color: #f8f9fa;
+    border: 2px dashed #ced4da;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+    padding: 10px;
+    min-width: 200px;
+    min-height: 214px;
+    width: auto;
+}
+
+#drop-zone.border-primary {
+    background-color: #e9ecef;
+    border: 2px solid #007bff;
+}
+
+#drop-zone p {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+#file-count {
+    font-size: 14px;
+    color: #28a745;
+    font-weight: bold;
+}
+
+#preview-zone {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    /* Khoảng cách giữa các ảnh */
+    width: 100%;
+    /* Đảm bảo khu vực xem trước chiếm toàn bộ chiều rộng của phần tử chứa */
+    max-width: 100%;
+    /* Đảm bảo khu vực xem trước không vượt quá chiều rộng của phần tử chứa */
+}
+
+
+#preview-zone .col-md-3 {
+    position: relative;
+    width: calc(25% - 10px);
+    /* Chiều rộng của mỗi ảnh chiếm 1/4 khu vực xem trước, trừ khoảng cách */
+    max-width: 100%;
+    /* Giới hạn kích thước tối đa của phần tử chứa ảnh */
+    box-sizing: border-box;
+    /* Đảm bảo tính toán kích thước bao gồm padding và border */
+}
+
+
+#preview-zone img {
+    width: 100%;
+    /* Chiều rộng ảnh chiếm toàn bộ không gian của phần tử chứa */
+    height: auto;
+    /* Để giữ tỷ lệ khung hình */
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+
+#preview-zone img:hover {
+    transform: scale(1.05);
+    /* Hiệu ứng phóng to khi di chuột qua */
+}
+
+#preview-zone .btn-danger {
+    position: absolute;
+    top: -15px;
+    right: -5px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+.text-decorate-none {
+    text-decoration: none;
+    border: none;
+    /* Không có gạch chân văn bản */
+}
+
+/* Nếu bạn muốn thêm một số hiệu ứng hoặc chỉnh sửa khác */
+#file-preview {
+    /* Thay đổi kích thước, màu sắc, và kiểu chữ nếu cần */
+    font-size: 13px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    width: 470px;
+    text-align: center;
+}

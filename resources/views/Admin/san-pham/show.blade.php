@@ -157,17 +157,17 @@
                                 <td>
                                     <!-- Nút sửa -->
                                     <a href="{{ route('admin.store-edit-san-pham', $sanpham->id_sanpham) }}"
-                                        class="btn btn-outline-warning bx bx-edit"></a>
+                                        class="btn btn-outline-warning bx bx-edit">Sửa</a>
+                                    {{-- sửa ảnh --}}
+                                    <a href="{{ route('admin.add-anh', $sanpham->id_sanpham) }}"
+                                        class="btn btn-outline-warning bx bx-edit">Ảnh</a>
                                     <!-- Form xóa với SweetAlert -->
                                     <form action="{{ route('admin.delete-san-pham', $sanpham->id_sanpham) }}"
                                         method="post" class="delete-form" style="display:inline;"
                                         data-name="{{ $sanpham->tensanpham }}">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger bx bx-trash"></button>
+                                        <button type="submit" class="btn btn-danger bx bx-trash">Xóa</button>
                                     </form>
-                                    {{-- sửa ảnh --}}
-                                    <a href="{{ route('admin.add-anh', $sanpham->id_sanpham) }}"
-                                        class="btn btn-outline-warning bx bx-edit"></a>
                                 </td>
                             </tr>
                         @endforeach

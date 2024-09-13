@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->bigIncrements('id_donhang');
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_trangthai');
+            $table->tinyInteger('trangthai')->default(1);
             // Liên kết khóa ngoại với bảng users
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade'); // Khi xóa user, sẽ tự động xóa giỏ hàng liên quan
             // Liên kết khóa ngoại với bảng trangthais

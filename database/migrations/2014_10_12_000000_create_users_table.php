@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address')->nullable(); // Địa chỉ, có thể null
             $table->string('avatar')->nullable(); // Đường dẫn ảnh đại diện, có thể null
             $table->string('role')->default('2'); // Vai trò mặc định là '2'
-            $table->integer('trangthai')->default(1); // Trạng thái mặc định là 1
+            $table->tinyInteger('trangthai')->default(1); // Trạng thái mặc định là 1
             $table->timestamp('email_verified_at')->nullable(); // Thời gian xác nhận email, có thể null
             $table->rememberToken(); // Token nhớ đăng nhập
             $table->timestamps(); // Thêm các cột created_at và updated_at

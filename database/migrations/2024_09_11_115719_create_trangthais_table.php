@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id_trangthai');
             $table->string('tentrangthai');
             $table->string('mota');
+            $table->tinyInteger('trangthai')->default(1);
             $table->timestamps();
         });
     }

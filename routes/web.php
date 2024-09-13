@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SanphamController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TrangthaiController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\Users\LoginController;
 use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,15 @@ Route::middleware(['admin'])->group(function () {
     Route::prefix('Admin')->group(function () {
         // trangchu
         Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
+        //user
+        Route::prefix('User')->group(function (){
+            Route::get('/add', [UsersController::class, 'create'])->name('admin.create.user');
+            Route::post('/add-new-user', [UsersController::class, 'store'])->name('admin.add.user');
+            Route::get('/add-show-user', [UsersController::class, 'show'])->name('admin.show.user');
+            Route::get('{id}/add-store-edit-user', [UsersController::class, '__store'])->name('admin.store.user');
+            Route::post('{id}/add-edit-user', [UsersController::class, 'edit'])->name('admin.edit.user');
+            Route::post('{id}/add-delete-user', [UsersController::class, 'destroy'])->name('admin.delete.user');
+        });
         // danhmuc
         Route::prefix('Danhmuc')->group(function () {
             Route::get('/add', [DanhmucController::class, 'create'])->name('admin.create-danh-muc');
@@ -70,10 +80,14 @@ Route::middleware(['admin'])->group(function () {
             Route::get('/add', [AnhController::class, 'add'])->name('admin.add-anh');
             Route::post('/add-new-anh', [AnhController::class, 'store'])->name('admin.store-anh');
         });
-        // user
         // trangthai
         Route::prefix('Trangthai')->group(function () {
-            Route::get('/add', [TrangthaiController::class, 'create'])->name('');
+            Route::get('/add-trang-thai', [TrangthaiController::class, 'create'])->name('admin.trangthai');
+            Route::post('/add-new-trang-thai', [TrangthaiController::class, 'store'])->name('admin.store-trangthai');
+            Route::get('/show-trang-thai', [TrangthaiController::class, 'show'])->name('admin.show.trangthai');
+            Route::get('{id}/store/edit-trang-thai', [TrangthaiController::class, '__store'])->name('admin.edit.trangthai');
+            Route::post('{id}/edit-trang-thai', [TrangthaiController::class, 'edit'])->name('admin.store.edit.trangthai');
+            Route::post('{id}/delete-trang-thai', [TrangthaiController::class, 'destroy'])->name('admin.delete-trangthai');
         });
         //upload
         Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');

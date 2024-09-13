@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id_anh');
             $table->string('hinhanh');
             $table->unsignedBigInteger('id_sanpham');
+            $table->tinyInteger('trangthai')->default(1);
             $table->timestamps();
         });
     }

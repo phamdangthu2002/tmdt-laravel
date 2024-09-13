@@ -63,11 +63,10 @@
                 <ul class="collapse submenu" id="user">
                     <li>
                         <a class="nav-link boder-sidebar bx bxs-add-to-queue"
-                            href="{{ route('admin.create-danh-muc') }}"> Thêm danh mục</a>
+                            href="{{ route('admin.create.user') }}"> Thêm người dùng</a>
                     </li>
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-danh-muc') }}"> Quản lý
-                            danh mục</a>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show.user') }}"> Quản lý người dùng</a>
                     </li>
                 </ul>
             </li>
@@ -119,9 +118,9 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link boder-sidebar bx bx-image" data-bs-toggle="collapse" href="#anh"
-                    role="button" aria-expanded="false" aria-controls="anh">
+            {{-- <li class="nav-item">
+                <a class="nav-link boder-sidebar bx bx-image" data-bs-toggle="collapse" href="#anh" role="button"
+                    aria-expanded="false" aria-controls="anh">
                     Ảnh Sản phẩm
                 </a>
                 <ul class="collapse submenu" id="anh">
@@ -133,19 +132,20 @@
                         <a class="nav-link boder-sidebar bx bxs-cog" href="#"> Quản lý ảnh</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li class="nav-item">
-                <a class="nav-link boder-sidebar bx bx-stats" data-bs-toggle="collapse" href="#trangthai"
-                    role="button" aria-expanded="false" aria-controls="trangthai">
+                <a class="nav-link boder-sidebar bx bx-stats" data-bs-toggle="collapse" href="#trangthai" role="button"
+                    aria-expanded="false" aria-controls="trangthai">
                     Trạng thái
                 </a>
                 <ul class="collapse submenu" id="trangthai">
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.add-anh') }}"> Thêm
-                            ảnh</a>
+                        <a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.trangthai') }}">
+                            Thêm trạng thái
+                        </a>
                     </li>
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-cog" href="#"> Quản lý ảnh</a>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{route('admin.show.trangthai')}}"> Quản lý trạng thái</a>
                     </li>
                 </ul>
             </li>

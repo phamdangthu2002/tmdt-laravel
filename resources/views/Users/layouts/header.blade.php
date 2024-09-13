@@ -122,46 +122,43 @@
         display: block;
     }
 
-    /* Định dạng khung tìm kiếm với hiệu ứng tròn và bóng đổ */
-    #searchContainer {
+    /* search-input */
+    .search {
         position: relative;
-        width: 0;
-        overflow: hidden;
-    }
-
-    #searchInput {
-        width: 100%;
-        border: none;
-        padding: 8px 35px 8px 15px;
+        width: 15px;
+        height: 15px;
         border-radius: 20px;
-        font-size: 16px;
-        color: #333;
-        background-color: #fff;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        will-change: transform, box-shadow;
-    }
-
-    #searchInput:focus {
-        border-color: #9e9e9e;
-        outline: none;
-        background-color: #fff;
-    }
-
-    #closeSearch {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
+        padding: 20px;
+        transition-duration: 500ms;
         cursor: pointer;
-        color: #333;
-        font-size: 18px;
-        background-color: #fff;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        will-change: transform, box-shadow;
+        background-repeat: no-repeat;
+        font-size: 15px;
+        color: transparent;
+        border: none;
+        overflow: hidden;
+        background: url('/assets/images/search-regular-24.png') no-repeat transparent;
+        background-size: 25px;
+        background-position: 45% 50%;
     }
 
-    #closeSearch:hover {
-        color: #ff0000;
+    .search:hover {
+        cursor: pointer;
+        background: url('/assets/images/search-regular-24.png') no-repeat transparent;
+        background-size: 25px;
+        background-position: 45% 50%;
+    }
+
+    .search:focus {
+        width: 200px;
+        cursor: inherit;
+        padding-left: 40px;
+        color: black;
+        outline: none;
+        border: 1px solid #363636;
+        background-color: wheat;
+        background: url('/assets/images/search-regular-24.png') no-repeat;
+        background-size: 25px;
+        background-position: 10px 50%;
     }
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between align-items-center">
@@ -191,22 +188,10 @@
                             <a class="dropdown-item" href="{{ route('user.danhmuc', $danhmuc->id_danhmuc) }}">
                                 {{ $danhmuc->tendanhmuc }}
                             </a>
-                            {{-- <ul class="dropdown-menu-sub no-bullets" id="submenu-{{ $danhmuc->id_danhmuc }}">
-                                @foreach ($danhmuccons->where('id_danhmuc', $danhmuc->id_danhmuc) as $danhmuccon)
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('user.danhmuccon', $danhmuccon->id_danhmuccon)}}">
-                                            {{ $danhmuccon->tendanhmuccon }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul> --}}
                         </li>
                     @endforeach
                 </ul>
             </li>
-
-
-
             <li class="nav-item">
                 <a class="nav-link" href="#">Shop</a>
             </li>
@@ -224,11 +209,10 @@
                     <input type="text" id="searchInput" placeholder="Tìm kiếm..." class="form-control">
                     <a href="#" id="closeSearch"><i class='bx bx-x'></i></a>
                 </div>
-                <!-- Icon tìm kiếm -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="searchToggle" role="button">
-                        <i class='bx bx-search'></i>
-                    </a>
+                <li>
+                    <form action="#">
+                        <input type="search" class="search" placeholder="Search">
+                    </form>
                 </li>
             </div>
             <!-- User Icon with Dropdown -->
@@ -242,8 +226,8 @@
                         <li><span class="dropdown-item">{{ Auth::user()->name }}</span></li>
                         <li><a class="dropdown-item" href="#"><i class='bx bx-edit'></i> Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class='bx bx-cog'></i> Settings</a></li>
-                        <li><a class="dropdown-item text-danger" href="{{route('auth.logout')}}" onclick="confirmLogout(event)"><i
-                                    class='bx bx-log-out'></i> Logout</a></li>
+                        <li><a class="dropdown-item text-danger" href="{{ route('auth.logout') }}"
+                                onclick="confirmLogout(event)"><i class='bx bx-log-out'></i> Logout</a></li>
                     @else
                         <li><a class="dropdown-item" href="{{ route('auth.login') }}"><i class='bx bx-log-in'></i> Login</a>
                         </li>
@@ -257,7 +241,7 @@
                     <a class="nav-link" href="{{ route('user.giohangshow') }}" role="button">
                         <i class='bx bx-cart'></i>
                         <!-- Badge để hiển thị số lượng sản phẩm trong giỏ hàng -->
-                        <span class="cart-badge" id="cartCount">{{$count}}</span>
+                        <span class="cart-badge" id="cartCount">{{ $count }}</span>
                     </a>
                 </li>
             @endauth

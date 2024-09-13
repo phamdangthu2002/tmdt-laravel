@@ -14,7 +14,6 @@
     {{-- giỏ hàng --}}
     {{-- @include('Users.review.index') --}}
     {{-- main --}}
-    {{-- @include('Users.layouts.main') --}}
     {{-- content --}}
     <div id="content" class="w-100">
         <!-- Main Content -->

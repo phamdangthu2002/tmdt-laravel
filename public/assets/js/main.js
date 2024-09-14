@@ -143,37 +143,6 @@ function confirmLogout(event) {
 }
 
 
-
-//nút tìm kiếm
-// Khi bấm vào biểu tượng tìm kiếm
-document.getElementById('searchToggle').addEventListener('click', function (e) {
-    e.preventDefault();
-    const searchContainer = document.getElementById('searchContainer');
-
-    // Kiểm tra trạng thái hiển thị của ô tìm kiếm
-    if (searchContainer.style.display === 'none' || searchContainer.style.width === '0px') {
-        searchContainer.style.display = 'block';
-        anime({
-            targets: '#searchContainer',
-            width: '250px',
-            easing: 'easeInOutQuad',
-            duration: 500
-        });
-    } else {
-        // // Nếu ô tìm kiếm đã mở, thu nhỏ ô tìm kiếm về kích thước 0
-        // anime({
-        //     targets: '#searchContainer',
-        //     width: '0',
-        //     easing: 'easeInOutQuad',
-        //     duration: 500,
-        //     complete: function() {
-        //         searchContainer.style.display = 'none';
-        //         document.getElementById('searchInput').value = ''; // Xóa nội dung ô tìm kiếm
-        //     }
-        // });
-    }
-});
-
 // Khi bấm vào dấu x
 document.getElementById('closeSearch').addEventListener('click', function (e) {
     e.preventDefault();
@@ -192,43 +161,26 @@ document.getElementById('closeSearch').addEventListener('click', function (e) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Xử lý sự kiện khi chọn kích thước
-    const sizeOptions = document.querySelectorAll('.size-option input');
-    sizeOptions.forEach(option => {
-        option.addEventListener('change', function () {
-            // Xóa lớp 'active' khỏi tất cả các tùy chọn
-            sizeOptions.forEach(opt => opt.parentElement.classList.remove('active'));
-            // Thêm lớp 'active' vào tùy chọn hiện tại
-            this.parentElement.classList.add('active');
-        });
-    });
+    // Lắng nghe sự kiện submit của tất cả các form xóa
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
-    // Xử lý sự kiện khi chọn màu sắc
-    const colorOptions = document.querySelectorAll('.color-option input');
-    colorOptions.forEach(option => {
-        option.addEventListener('change', function () {
-            // Xóa lớp 'active' khỏi tất cả các tùy chọn
-            colorOptions.forEach(opt => opt.parentElement.classList.remove('active'));
-            // Thêm lớp 'active' vào tùy chọn hiện tại
-            this.parentElement.classList.add('active');
-        });
-    });
+            const form = event.target;
+            const categoryName = form.getAttribute(
+                'data-name'); // Lấy tên danh mục từ thuộc tính data-name
 
-    // Xử lý sự kiện khi chọn hình thu nhỏ
-    const slides = document.querySelectorAll('.slides li');
-    const thumbnails = document.querySelectorAll('.thumbnails li a img');
-
-    thumbnails.forEach((thumbnail, index) => {
-        thumbnail.addEventListener('click', function (event) {
-            event.preventDefault();
-            // Ẩn tất cả các slide
-            slides.forEach(slide => slide.style.display = 'none');
-            // Ẩn viền của tất cả các hình thu nhỏ
-            thumbnails.forEach(thumb => thumb.classList.remove('active'));
-            // Hiển thị slide tương ứng với hình thu nhỏ được chọn
-            slides[index].style.display = 'block';
-            // Thêm viền vào hình thu nhỏ được chọn
-            thumbnails[index].classList.add('active');
+            Swal.fire({
+                title: `Bạn có chắc chắn muốn xóa "${categoryName}" này không?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Nếu người dùng xác nhận, thực hiện submit form
+                }
+            });
         });
     });
 });

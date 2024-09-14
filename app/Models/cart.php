@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cart extends Model
+class Cart extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_giohang',
         'id_sanpham',
         'id_user',
         'size',
@@ -17,6 +16,8 @@ class cart extends Model
         'quantity',
         'gia',
     ];
+    protected $primaryKey = 'id_giohang';
+
     // Quan hệ với model Sanpham (Sản phẩm)
     public function sanpham()
     {

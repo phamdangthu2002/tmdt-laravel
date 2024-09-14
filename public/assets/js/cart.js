@@ -50,6 +50,8 @@ function calculateTotal() {
 
     // Cập nhật tổng tiền với định dạng VND
     document.querySelector('#cartTotal').innerText = formatVND(total);
+    document.querySelector('#text').value = formatVND(total);
+
 }
 
 // Hàm để định dạng số tiền theo VND
@@ -79,5 +81,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tính tổng tiền và cập nhật số lượng giỏ hàng khi trang được tải
     calculateTotal();
-    updateCartCount();
 });

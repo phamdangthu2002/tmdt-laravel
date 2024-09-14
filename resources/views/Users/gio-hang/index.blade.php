@@ -4,7 +4,7 @@
     <!-- Cart Menu -->
     <div class="container-cart mt-5">
         <h5>Your Cart</h5>
-        @if (count($sanphams) != 0)
+        @if (count($carts) != 0)
             <form action="#" method="POST">
                 @csrf
                 <table class="cart-table">
@@ -20,32 +20,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sanphams as $sanpham)
+                        @foreach ($carts as $cart)
                             <tr class="item-cart">
                                 <th>
-                                    <img src="{{ $sanpham->sanpham->hinhanh }}" alt="{{ $sanpham->sanpham->tensanpham }}"
+                                    <img src="{{ $cart->sanpham->hinhanh }}" alt="{{ $cart->sanpham->tensanpham }}"
                                         class="img-thumbnail">
                                 </th>
                                 <th>
                                     <div class="cart-name">
-                                        {{ $sanpham->sanpham->tensanpham }}
+                                        {{ $cart->sanpham->tensanpham }}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="cart-content">
-                                        {{ $sanpham->size }}
+                                        {{ $cart->size }}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="cart-content">
-                                        {{ $sanpham->color }}
+                                        {{ $cart->color }}
                                     </div>
                                 </th>
                                 <th>
                                     <div class="cart-content">
                                         {{-- <button type="button" id="decrease-quantity-2">-</button> --}}
-                                        <input type="number" name="{{ $sanpham->sanpham->id_sanpham }}" class="quantity"
-                                            value="{{ $sanpham->quantity }}" min="1" max="10">
+                                        <input type="number" name="{{ $cart->sanpham->id_sanpham }}" class="quantity"
+                                            value="{{ $cart->quantity }}" min="1" max="10">
                                         {{-- <button type="button" id="increase-quantity-2">+</button> --}}
                                     </div>
                                     {{-- <div class="cart-content">
@@ -54,13 +54,16 @@
                                 </th>
 
                                 <th>
-                                    {!! \App\Helpers\Helper::price_cart($sanpham->gia, $sanpham->sale) !!}
+                                    {!! \App\Helpers\Helper::price_cart($cart->gia, $cart->sale) !!}
                                 </th>
 
                                 <th>
-                                    <a href="#" class="cart-content cart-item-remove">
-                                        <i class='bx bx-trash'></i>
-                                    </a>
+                                    <form action="{{ route('user.delete-cart', $cart->id_giohang) }}" method="post"
+                                        class="delete-form" style="display:inline;"
+                                        data-name="{{ $cart->sanpham->tensanpham }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger bx bx-trash"></button>
+                                    </form>
                                 </th>
                             </tr>
                         @endforeach
@@ -68,6 +71,7 @@
                 </table>
                 <div class="cart-total">
                     <p class="font-weight-bold">Total: <span id="cartTotal">$0.00</span></p>
+                    <p class="font-weight-bold"><input type="hidden" id="text" class="text-decorate"></p>
                 </div>
                 <button type="submit" class="cart-buy btn btn-danger">Đặt hàng</button>
                 <a href="{{ url()->previous() }}" class="btn btn-outline-success">Tiếp tục mua sắm</a>

@@ -17,33 +17,27 @@ class AnhController extends Controller
         $this->anhspServices = $anhspServices;
     }
 
-    public function add()
+    public function add($id)
     {
-        $sanphams = $this->sanphamServices->getAll();
-
-        // Lấy thông tin các trang
-        $currentPage = $sanphams->currentPage(); // Trang hiện tại
-        $lastPage = $sanphams->lastPage(); // Trang cuối cùng
-
-        // Tính toán các số trang để hiển thị (giới hạn 6 trang ở giữa)
-        $visiblePages = 6;
-        $startPage = max(1, $currentPage - floor($visiblePages / 2));
-        $endPage = min($lastPage, $startPage + $visiblePages - 1);
+        $sanphams = $this->sanphamServices->getByidsanpham($id);
+        $anhs = $this->anhspServices->get($id);
 
         // Tạo mảng các số trang
-        $pageNumbers = range($startPage, $endPage);
         return view('Admin.anhsp.add', [
             'title' => 'Thêm ảnh sản phẩm',
             'sanphams' => $sanphams,
-            'currentPage' => $currentPage,
-            'lastPage' => $lastPage,
-            'pageNumbers' => $pageNumbers,
+            'anhs' => $anhs,
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $this->anhspServices->create($request);
+        $this->anhspServices->create($request, $id);
+        return redirect()->back();
+    }
+    public function destroy($id)
+    {
+        $this->anhspServices->destroy($id);
         return redirect()->back();
     }
 }

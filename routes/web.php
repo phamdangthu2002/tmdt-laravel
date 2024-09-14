@@ -38,7 +38,7 @@ Route::middleware(['admin'])->group(function () {
         // trangchu
         Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
         //user
-        Route::prefix('User')->group(function (){
+        Route::prefix('User')->group(function () {
             Route::get('/add', [UsersController::class, 'create'])->name('admin.create.user');
             Route::post('/add-new-user', [UsersController::class, 'store'])->name('admin.add.user');
             Route::get('/add-show-user', [UsersController::class, 'show'])->name('admin.show.user');
@@ -77,8 +77,9 @@ Route::middleware(['admin'])->group(function () {
         });
         //anhsp
         Route::prefix('Anhsp')->group(function () {
-            Route::get('/add', [AnhController::class, 'add'])->name('admin.add-anh');
-            Route::post('/add-new-anh', [AnhController::class, 'store'])->name('admin.store-anh');
+            Route::get('{id}/add', [AnhController::class, 'add'])->name('admin.add-anh');
+            Route::post('{id}/add-new-anh', [AnhController::class, 'store'])->name('admin.store-anh');
+            Route::post('{id}/destroy-anh', [AnhController::class, 'destroy'])->name('admin.destroy-anh');
         });
         // trangthai
         Route::prefix('Trangthai')->group(function () {
@@ -107,6 +108,7 @@ Route::prefix('User')->group(function () {
     Route::post('/gio-hang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::get('/gio-hang-show', [UserController::class, 'giohangshow'])->name('user.giohangshow');
     Route::post('/update-cart', [UserController::class, 'update'])->name('user.update-cart');
+    Route::post('{id}/delete-cart', [UserController::class, 'destroy'])->name('user.delete-cart');
     //thanhtoan
     Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
 

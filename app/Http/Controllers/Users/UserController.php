@@ -63,19 +63,10 @@ class UserController extends Controller
             'sanphams' => $sanphams,
         ]);
     }
-    // public function danhmuccon(Request $request, $id)
-    // {
-    //     $menus = $this->danhmucServices->getDanhmucByIdCon($id);
-    //     $sanphams = $this->sanphamServices->getProductByDanhmucCon($menus, $request);
-    //     return view('Users.danh-muc.danhmuc',[
-    //         'title' => $menus->tendanhmuccon,
-    //         'sanphams' => $sanphams,
-    //     ]);
-    // }
 
     public function chitiet($id)
     {
-        $anhs = $this->sanphamServices->getAllAnh();
+        $anhs = $this->sanphamServices->getAnhID($id);
         $sanphams = $this->sanphamServices->showSanpham($id);
         $sanphamMores = $this->sanphamServices->more($id);
         return view('Users.chi-tiet.index', [
@@ -93,10 +84,10 @@ class UserController extends Controller
     }
     public function giohangshow(Request $request)
     {
-        $sanphams = $this->cartServices->getCartByID();
+        $carts = $this->cartServices->getCartByID();
         return view('Users.gio-hang.index', [
             'title' => 'Giỏ hàng',
-            'sanphams' => $sanphams,
+            'carts' => $carts,
         ]);
     }
 
@@ -104,6 +95,11 @@ class UserController extends Controller
     {
         $this->sanphamServices->update($request);
         return redirect()->route('user.giohangshow');
+    }
+
+    public function destroy($id){
+        $this->cartServices->destroy($id);
+        return redirect()->back();
     }
     public function buy()
     {

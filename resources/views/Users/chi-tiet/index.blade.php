@@ -214,13 +214,12 @@
                 <h1>{{ $sanphams->tensanpham }}</h1>
                 <h3>{!! \App\Helpers\Helper::price_sale($sanphams->gia, $sanphams->sale) !!}</h3>
                 <p>{{ $sanphams->mota }}</p>
-                <form action="{{ route('user.giohang') }}" method="post">
+                <form id="form-add-cart" action="{{ route('user.giohang') }}" method="post">
                     @csrf
                     @if ($sanphams->gia < $sanphams->sale)
                         <div class="btn btn-danger">Đang cập nhật</div>
                     @else
                         <input type="hidden" name="id_sanpham" value="{{ $sanphams->id_sanpham }}">
-                        <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="gia" value="<?= $price ?>">
                         <!-- Chọn kích thước -->
                         <div class="form-group">
@@ -269,8 +268,11 @@
                         </div>
 
                         <!-- Nút thêm vào giỏ hàng -->
-
-                        <button type="submit" class="btn btn-primary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>
+                        @auth
+                            <button type="submit" class="btn btn-primary add-cart mt-5 mb-5"> Thêm vào giỏ hàng </button>
+                        @else
+                            <button type="button" onclick="checkLogin()" class="btn btn-secondary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>
+                        @endauth
                     @endif
                 </form>
             </div>
@@ -335,4 +337,78 @@
             Categories: {{ $sanphams->danhmuc->tendanhmuc }}
         </span>
     </div>
+    <script>
+        function checkLogin(id) {
+            if (!id) {
+                // Nếu không có userId (người dùng chưa đăng nhập), hiển thị thông báo
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    },
+                });
+                Toast.fire({
+                    icon: "warning",
+                    title: "Bạn cần đăng nhập trước!",
+                });
+            } else {
+
+            }
+        }
+
+        // Xử lý sự kiện khi chọn hình thu nhỏ
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slides li');
+            const thumbnails = document.querySelectorAll('.thumbnails li a img');
+
+            // Ẩn tất cả các slide ngoại trừ slide đầu tiên
+            slides.forEach((slide, index) => {
+                if (index !== 0) {
+                    slide.style.display = 'none';
+                }
+            });
+
+            thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    // Ẩn tất cả các slide
+                    slides.forEach(slide => slide.style.display = 'none');
+                    // Loại bỏ lớp 'active' của tất cả các thumbnail
+                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    // Hiển thị slide tương ứng với thumbnail được chọn
+                    slides[index].style.display = 'block';
+                    // Thêm lớp 'active' cho thumbnail được chọn
+                    thumbnail.classList.add('active');
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý sự kiện khi chọn kích thước
+            const sizeOptions = document.querySelectorAll('.size-option input');
+            sizeOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    // Xóa lớp 'active' khỏi tất cả các tùy chọn
+                    sizeOptions.forEach(opt => opt.parentElement.classList.remove('active'));
+                    // Thêm lớp 'active' vào tùy chọn hiện tại
+                    this.parentElement.classList.add('active');
+                });
+            });
+
+            // Xử lý sự kiện khi chọn màu sắc
+            const colorOptions = document.querySelectorAll('.color-option input');
+            colorOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    // Xóa lớp 'active' khỏi tất cả các tùy chọn
+                    colorOptions.forEach(opt => opt.parentElement.classList.remove('active'));
+                    // Thêm lớp 'active' vào tùy chọn hiện tại
+                    this.parentElement.classList.add('active');
+                });
+            });
+        });
+    </script>
 @endsection

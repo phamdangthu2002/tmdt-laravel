@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class anhsp extends Model
+class Anhsp extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_hinhanh',
         'hinhanh',
         'id_sanpham',
     ];
+    protected $primaryKey = 'id_anh';
+
     // Quan hệ với model Sanpham (Sản phẩm)
     public function sanpham()
     {

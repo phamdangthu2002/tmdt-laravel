@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Services\Anhsp;
 
-use App\Models\anhsp;
-use Illuminate\Support\Facades\Log;
+use App\Models\Anhsp;
+use Illuminate\Support\Facades\Session;
+
 class AnhspServices
 {
-    public function create($request)
+    public function create($request, $id)
     {
         try {
             $urls = []; // Mảng để lưu URL của các file đã lưu
@@ -13,7 +14,7 @@ class AnhspServices
             // Kiểm tra xem có file nào được gửi không
             if ($request->hasFile('alo')) {
                 // Lấy ID sản phẩm từ request
-                $id_sanpham = (int) $request->input('id_sanpham');
+                $id_sanpham = $id;
 
                 // Lặp qua tất cả các file được gửi
                 foreach ($request->file('alo') as $file) {
@@ -37,7 +38,7 @@ class AnhspServices
                     $urls[] = $url;
 
                     // Lưu thông tin vào cơ sở dữ liệu
-                    anhsp::create([
+                    Anhsp::create([
                         'id_sanpham' => $id_sanpham,
                         'hinhanh' => $url, // URL của ảnh vừa lưu
                     ]);
@@ -52,4 +53,20 @@ class AnhspServices
             return response()->json(['error' => true, 'message' => $e->getMessage()]);
         }
     }
+
+    public function get($id)
+    {
+        return Anhsp::where('id_sanpham', $id)->get();
+    }
+
+    public function destroy($id)
+    {
+        $anhs = Anhsp::where('id_anh', $id)->firstOrFail()->delete();
+        if ($anhs) {
+            Session::flash('success', 'Xóa ảnh thành công');
+        } else {
+            Session::flash('error', 'Xóa ảnh thất bại');
+        }
+    }
+
 }

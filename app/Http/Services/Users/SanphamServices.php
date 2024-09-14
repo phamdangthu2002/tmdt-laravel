@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Services\Users;
 
-use App\Models\anhsp;
+use App\Models\Anhsp;
 use App\Models\Sanpham;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Arr;
@@ -66,7 +66,7 @@ class SanphamServices
         return true;
     }
 
-    public function getAllAnh(){
-        return anhsp::all();
+    public function getAnhID($id){
+        return Anhsp::where('id_sanpham', $id)->get();
     }
 }

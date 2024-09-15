@@ -186,25 +186,35 @@
         <div class="row">
             <div class="col-md-6">
                 <ul class="slides">
-                    @foreach ($anhs as $anh)
-                        @php
-                            $count = 0;
-                            $counts = $count + 1;
-                        @endphp
-                        <li id="slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}" alt="Slide <?= $counts ?>" />
-                        </li>
-                    @endforeach
+                    @php
+                        $count = 0;
+                        $counts = $count + 1;
+                    @endphp
+                    @if (count($anhs) > 0)
+                        @foreach ($anhs as $anh)
+                            <li id="slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}" alt="Slide <?= $counts ?>" /></li>
+                        @endforeach
+                    @else
+                        <li id="slide<?= $counts ?>"><img src="{{ $sanphams->hinhanh }}" alt="Slide <?= $counts ?>" /></li>
+                    @endif
                 </ul>
 
                 <ul class="thumbnails">
-                    @foreach ($anhs as $anh)
-                        @php
-                            $count = 0;
-                            $counts = $count + 1;
-                        @endphp
-                        <li><a href="#slide<?= $counts ?>"><img src="{{ $anh->hinhanh }}"
-                                    alt="Thumbnail <?= $counts ?>" /></a></li>
-                    @endforeach
+                    @if (count($anhs) > 0)
+                        @foreach ($anhs as $anh)
+                            <li>
+                                <a href="#slide<?= $counts ?>">
+                                    <img src="{{ $anh->hinhanh }}" alt="Thumbnail <?= $counts ?>" />
+                                </a>
+                            </li>
+                        @endforeach
+                    @else
+                        <li>
+                            <a href="#slide<?= $counts ?>">
+                                <img src="{{ $sanphams->hinhanh }}" alt="Thumbnail <?= $counts ?>" />
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
             @php
@@ -271,7 +281,9 @@
                         @auth
                             <button type="submit" class="btn btn-primary add-cart mt-5 mb-5"> Thêm vào giỏ hàng </button>
                         @else
-                            <button type="button" onclick="checkLogin()" class="btn btn-secondary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>
+                            <button type="button" onclick="checkLogin()" class="btn btn-secondary add-cart mt-5 mb-5">Thêm
+                                vào
+                                giỏ hàng</button>
                         @endauth
                     @endif
                 </form>

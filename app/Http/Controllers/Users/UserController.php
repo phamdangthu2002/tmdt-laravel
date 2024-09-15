@@ -85,6 +85,7 @@ class UserController extends Controller
     public function giohangshow(Request $request)
     {
         $carts = $this->cartServices->getCartByID();
+
         return view('Users.gio-hang.index', [
             'title' => 'Giỏ hàng',
             'carts' => $carts,
@@ -97,9 +98,23 @@ class UserController extends Controller
         return redirect()->route('user.giohangshow');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->cartServices->destroy($id);
         return redirect()->back();
+    }
+
+    public function donhang(Request $request, $id)
+    {
+        $this->cartServices->add_donghang($request, $id);
+        return redirect()->back();
+    }
+    public function showdonhang($id){
+        $donhangs = $this->cartServices->getDonhang($id);
+        return view('Users.dong-hang.index',[
+            'title' => 'Đơn hàng',
+            'donhangs' => $donhangs,
+        ]);
     }
     public function buy()
     {

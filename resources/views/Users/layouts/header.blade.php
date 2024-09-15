@@ -225,7 +225,7 @@
                     @auth
                         <li><span class="dropdown-item">{{ Auth::user()->name }}</span></li>
                         <li><a class="dropdown-item" href="#"><i class='bx bx-edit'></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class='bx bx-cog'></i> Settings</a></li>
+                        <li><a class="dropdown-item" href="{{route('user.show-donhang', Auth::user()->id)}}"><i class='bx bxs-purchase-tag'></i> Đơn hàng</a></li>
                         <li><a class="dropdown-item text-danger" href="{{ route('auth.logout') }}"
                                 onclick="confirmLogout(event)"><i class='bx bx-log-out'></i> Logout</a></li>
                     @else

@@ -11,7 +11,9 @@ class Donhang extends Model
     protected $fillable = [
         'id_donhang',
         'id_user',
+        'id_sanpham',
         'id_trangthai',
+        'tong',
     ];
     protected $primaryKey = 'id_donhang'; // Đặt khóa chính là id_donhang
 
@@ -19,8 +21,12 @@ class Donhang extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
-    public function trangthai()
+    public function trangthais()
     {
         return $this->belongsTo(Trangthai::class, 'id_trangthai');
+    }
+    public function sanpham()
+    {
+        return $this->belongsTo(Sanpham::class, 'id_sanpham', 'id_sanpham');
     }
 }

@@ -41,7 +41,9 @@ class DanhmucComposers
             ->get();
 
         $id_user = Auth::id();
-        $count = cart::where('id_user', $id_user)->sum('quantity');
+        $count = cart::where('id_user', $id_user)
+        ->where('dadathang', 0)
+        ->sum('quantity');
         $view->with([
             'danhmucs' => $danhmucs,
             'count' => $count,

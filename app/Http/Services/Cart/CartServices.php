@@ -2,6 +2,8 @@
 namespace App\Http\Services\Cart;
 
 use App\Models\Cart;
+use App\Models\Donhang;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -16,6 +18,12 @@ class CartServices
         $size = (string) $request->input('size');
         $quantity = (int) $request->input('quantity');
         $gia = (int) $request->input('gia');
+        if ($size == null) {
+            return redirect()->back()->with('error', 'Vui lòng chọn kích thước!');
+        }
+        if ($color == null) {
+            return redirect()->back()->with('error', 'Vui lòng chọn màu sắc!');
+        }
         // Add item to cart
         try {
             Cart::create([
@@ -44,16 +52,48 @@ class CartServices
     {
         // Lấy id của người dùng hiện tại đã đăng nhập
         $id_user = Auth::id();
-        return Cart::select('id_giohang', 'id_sanpham', 'size', 'color', 'quantity', 'gia')->with('sanpham')->where('id_user', $id_user)->get();
+        return Cart::select('id_giohang', 'id_sanpham', 'size', 'color', 'quantity', 'gia','dadathang')->with('sanpham')->where('id_user', $id_user)->get();
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $carts = Cart::where('id_giohang', $id)->firstOrFail()->delete();
-        if($carts){
+        if ($carts) {
             session()->flash('success', 'Đã xóa khỏi giỏ hàng.');
-        }else{
+        } else {
             session()->flash('error', 'Xóa thất bại.');
 
         }
     }
+
+    public function add_donghang($request, $id)
+    {
+        $id_sanpham = $request->input('id_sanpham');
+        $id_user = $id;
+        $tong = $request->input('tong');
+        $id_trangthai = 1;
+        try {
+            Donhang::create([
+                'id_user' => $id_user,
+                'tong' => $tong,
+                'id_sanpham' => $id_sanpham,
+                'id_trangthai' => $id_trangthai,
+            ]);
+            // Danhmuc::create($danhmucFormRequest->all());
+            session()->flash('success', 'Đã đặt hàng.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Đặt hàng thất bại: ' . $e->getMessage());
+            Log::info($e->getMessage());
+            return false;
+        }
+        return true;
+    }
+    public function getDonhang($id)
+    {
+        return Donhang::where('id_user', $id)
+            ->with('user')  // Nếu bạn cần thông tin người dùng
+            ->with('trangthais')
+            ->get();
+    }
+
 }

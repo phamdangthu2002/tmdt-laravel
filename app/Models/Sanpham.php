@@ -33,4 +33,8 @@ class Sanpham extends Model
     {
         return $this->hasMany(Anhsp::class, 'id_sanpham', 'id_sanpham');
     }
+    public function donhangs()
+    {
+        return $this->hasMany(Donhang::class, 'id_sanpham', 'id_sanpham');
+    }
 }

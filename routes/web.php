@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AnhController;
 use App\Http\Controllers\Admin\DanhmucController;
+use App\Http\Controllers\Admin\DonhangController;
 use App\Http\Controllers\Admin\SanphamController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TrangthaiController;
@@ -81,6 +82,11 @@ Route::middleware(['admin'])->group(function () {
             Route::post('{id}/add-new-anh', [AnhController::class, 'store'])->name('admin.store-anh');
             Route::post('{id}/destroy-anh', [AnhController::class, 'destroy'])->name('admin.destroy-anh');
         });
+
+        //donhang
+        Route::prefix('Donhang')->group(function () {
+
+        });
         // trangthai
         Route::prefix('Trangthai')->group(function () {
             Route::get('/add-trang-thai', [TrangthaiController::class, 'create'])->name('admin.trangthai');
@@ -101,14 +107,21 @@ Route::prefix('User')->group(function () {
     // trangchu
     Route::get('/trang-chu', [UserController::class, 'index'])->name('user.index');
     Route::post('/load-more', [UserController::class, 'load'])->name('user.load');
+
     //danhmuc
     Route::get('{id}/load-danhmuc', [UserController::class, 'danhmuc'])->name('user.danhmuc');
     Route::get('{id}/chi-tiet', [UserController::class, 'chitiet'])->name('user.chitiet');
+
     //giohang
     Route::post('/gio-hang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::get('/gio-hang-show', [UserController::class, 'giohangshow'])->name('user.giohangshow');
     Route::post('/update-cart', [UserController::class, 'update'])->name('user.update-cart');
     Route::post('{id}/delete-cart', [UserController::class, 'destroy'])->name('user.delete-cart');
+
+    //donhang
+    Route::post('{id}/don-hang', [UserController::class, 'donhang'])->name('user.add-donghang');
+    Route::get('{id}/show-don-hang', [UserController::class, 'showdonhang'])->name('user.show-donhang');
+
     //thanhtoan
     Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
 

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('trangthais', function (Blueprint $table) {
-            $table->bigIncrements('id_trangthai');
+            $table->bigIncrements('id_trangthai'); // Khóa chính của bảng
             $table->string('tentrangthai');
             $table->string('mota');
             $table->tinyInteger('trangthai')->default(1);

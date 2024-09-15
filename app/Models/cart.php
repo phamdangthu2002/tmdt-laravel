@@ -15,6 +15,7 @@ class Cart extends Model
         'color',
         'quantity',
         'gia',
+        'dadathang',
     ];
     protected $primaryKey = 'id_giohang';
 

@@ -50,7 +50,7 @@ function calculateTotal() {
 
     // Cập nhật tổng tiền với định dạng VND
     document.querySelector('#cartTotal').innerText = formatVND(total);
-    document.querySelector('#text').value = formatVND(total);
+    document.querySelector('#text').value = total
 
 }
 

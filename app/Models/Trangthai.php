@@ -9,7 +9,6 @@ class Trangthai extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_trangthai',
         'tentrangthai',
         'mota',
     ];

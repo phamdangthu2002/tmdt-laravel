@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('color');
             $table->integer('quantity');
             $table->integer('gia');
+            $table->integer('dadathang')->default(1);
             $table->tinyInteger('trangthai')->default(1);
             // Khóa ngoại liên kết với bảng 'sanphams'
             $table->foreign('id_sanpham')

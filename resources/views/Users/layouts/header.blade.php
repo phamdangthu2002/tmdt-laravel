@@ -193,13 +193,10 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Shop</a>
+                <a class="nav-link" href="/User/thong-tin">Thông tin</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Thông tin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Liên hệ</a>
+                <a class="nav-link" href="/User/lien-he">Liên hệ</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto mt-1">
@@ -210,8 +207,8 @@
                     <a href="#" id="closeSearch"><i class='bx bx-x'></i></a>
                 </div>
                 <li>
-                    <form action="#">
-                        <input type="search" class="search" placeholder="Search">
+                    <form action="{{ route('search') }}" method="get">
+                        <input type="search" class="search" name="tu-khoa" placeholder="Search">
                     </form>
                 </li>
             </div>
@@ -225,7 +222,8 @@
                     @auth
                         <li><span class="dropdown-item">{{ Auth::user()->name }}</span></li>
                         <li><a class="dropdown-item" href="#"><i class='bx bx-edit'></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="{{route('user.show-donhang', Auth::user()->id)}}"><i class='bx bxs-purchase-tag'></i> Đơn hàng</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.show-donhang', Auth::user()->id) }}"><i
+                                    class='bx bxs-purchase-tag'></i> Đơn hàng</a></li>
                         <li><a class="dropdown-item text-danger" href="{{ route('auth.logout') }}"
                                 onclick="confirmLogout(event)"><i class='bx bx-log-out'></i> Logout</a></li>
                     @else

@@ -1,7 +1,10 @@
 <?php
 namespace App\Http\Services\Trangthai;
 
+use App\Models\Donhang;
 use App\Models\Trangthai;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -58,7 +61,33 @@ class TrangthaiServices
         }
     }
 
-    public function delete($id){
-       return Trangthai::where('id_trangthai', $id)->firstOrFail()->delete();
+    public function delete($id)
+    {
+        return Trangthai::where('id_trangthai', $id)->firstOrFail()->delete();
+    }
+
+    public function updateStatus($request)
+    {
+        $id_donhang = $request->input('id_donhang');
+        $id_trangthai = $request->input('id_trangthai');
+
+        DB::transaction(function () use ($id_donhang, $id_trangthai) {
+            // Cập nhật trạng thái đơn hàng trong bảng donhang
+            $donhang = Donhang::find($id_donhang);
+            if ($donhang) {
+                $donhang->id_trangthai = $id_trangthai;
+                $donhang->save();
+            }
+
+            // Lưu lịch sử trạng thái đơn hàng
+            DB::table('trangthaidonhangs')->insert([
+                'id_donhang' => $id_donhang,
+                'id_trangthai' => $id_trangthai,
+                'ngaycapnhat' => Carbon::now(),
+            ]);
+        });
+
+        // Redirect hoặc trả về thông báo thành công
+        return redirect()->back()->with('success', 'Cập nhật trạng thái thành công.');
     }
 }

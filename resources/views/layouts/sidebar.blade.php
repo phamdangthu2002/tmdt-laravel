@@ -149,6 +149,17 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a class="nav-link boder-sidebar bx bx-stats" data-bs-toggle="collapse" href="#trangthaidonhang" role="button"
+                    aria-expanded="false" aria-controls="trangthaidonhang">
+                    Trạng thái đơn hàng
+                </a>
+                <ul class="collapse submenu" id="trangthaidonhang">
+                    <li>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{route('admin.show-donhang')}}"> Quản lý trạng thái</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

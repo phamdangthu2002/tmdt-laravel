@@ -13,6 +13,12 @@ class SanphamServices
     {
 
     }
+    public function random(){
+        $LIMIT = 4;
+        $sanpham = Sanpham::where('trangthai',1)->get();
+        $random = $sanpham->random($LIMIT);
+        return $random;
+    }
     public function get($page = null)
     {
         return Sanpham::select('id_sanpham', 'tensanpham', 'mota', 'id_danhmuc', 'gia', 'sale', 'hinhanh', 'trangthai')

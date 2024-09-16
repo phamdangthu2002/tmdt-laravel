@@ -8,6 +8,7 @@ use App\Http\Services\Danhmuc\DanhmucServices;
 use App\Http\Services\Slider\SliderServices;
 use App\Http\Services\Users\SanphamServices;
 use App\Models\cart;
+use App\Models\Sanpham;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -31,11 +32,13 @@ class UserController extends Controller
         $sliders = $this->sliderServices->show();
         $menus = $this->danhmucServices->show();
         $sanphams = $this->sanphamServices->get();
+        $sanphamrandoms = $this->sanphamServices->random();
         return view('Users.trang-chu.trang-chu', [
             'title' => 'Trang chủ',
             'menus' => $menus,
             'sliders' => $sliders,
             'sanphams' => $sanphams,
+            'sanphamrandoms' => $sanphamrandoms,
         ]);
     }
     public function load(Request $request)
@@ -109,11 +112,41 @@ class UserController extends Controller
         $this->cartServices->add_donghang($request, $id);
         return redirect()->back();
     }
-    public function showdonhang($id){
+    public function showdonhang($id)
+    {
         $donhangs = $this->cartServices->getDonhang($id);
-        return view('Users.dong-hang.index',[
+        return view('Users.don-hang.index', [
             'title' => 'Đơn hàng',
             'donhangs' => $donhangs,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        // Lấy từ khóa tìm kiếm từ request
+        $key = $request->input('tu-khoa');
+
+        // Thực hiện tìm kiếm sản phẩm dựa trên từ khóa
+        $sanphams = Sanpham::where('tensanpham', 'like', '%' . $key . '%')->get();
+
+        // Trả kết quả về view
+        return view('Users.tim-kiem.index', [
+            'title' => 'Tìm kiếm',
+            'sanphams' => $sanphams,
+            'key' => $key,
+        ]);
+    }
+
+    public function lienhe()
+    {
+        return view('Users.lien-he.index', [
+            'title' => 'Liên hệ',
+        ]);
+    }
+    public function thongtin()
+    {
+        return view('Users.thong-tin.index', [
+            'title' => 'Thông tin',
         ]);
     }
     public function buy()

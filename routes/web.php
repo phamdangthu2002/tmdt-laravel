@@ -85,7 +85,8 @@ Route::middleware(['admin'])->group(function () {
 
         //donhang
         Route::prefix('Donhang')->group(function () {
-
+            Route::get('/show-don-hang', [DonhangController::class, 'show'])->name('admin.show-donhang');
+            Route::get('{id}/show-don-hang-detail', [DonhangController::class, 'edit'])->name('admin.editdonhang');
         });
         // trangthai
         Route::prefix('Trangthai')->group(function () {
@@ -95,6 +96,11 @@ Route::middleware(['admin'])->group(function () {
             Route::get('{id}/store/edit-trang-thai', [TrangthaiController::class, '__store'])->name('admin.edit.trangthai');
             Route::post('{id}/edit-trang-thai', [TrangthaiController::class, 'edit'])->name('admin.store.edit.trangthai');
             Route::post('{id}/delete-trang-thai', [TrangthaiController::class, 'destroy'])->name('admin.delete-trangthai');
+        });
+        //trangthaidonhang
+        Route::prefix('Trangthaidonhang')->group(function () {
+            Route::get('/show', [TrangthaiController::class, 'show_trangthai'])->name('admin.showtrangthai');
+            Route::post('/add-trang-thai-don-hang', [TrangthaiController::class, 'updateStatus'])->name('admin.updateStatus');
         });
         //upload
         Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');
@@ -116,13 +122,19 @@ Route::prefix('User')->group(function () {
     Route::post('/gio-hang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::get('/gio-hang-show', [UserController::class, 'giohangshow'])->name('user.giohangshow');
     Route::post('/update-cart', [UserController::class, 'update'])->name('user.update-cart');
-    Route::post('{id}/delete-cart', [UserController::class, 'destroy'])->name('user.delete-cart');
+    Route::get('{id}/delete-cart', [UserController::class, 'destroy'])->name('user.delete-cart');
 
     //donhang
     Route::post('{id}/don-hang', [UserController::class, 'donhang'])->name('user.add-donghang');
     Route::get('{id}/show-don-hang', [UserController::class, 'showdonhang'])->name('user.show-donhang');
-
+    //timkiem
+    Route::get('/search', [UserController::class, 'search'])->name('search');
     //thanhtoan
     Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
+
+    //lienhe
+    Route::get('/lien-he', [UserController::class, 'lienhe'])->name('user.lienhe');
+    //thongtin
+    Route::get('/thong-tin', [UserController::class, 'thongtin'])->name('user.thongtin');
 
 });

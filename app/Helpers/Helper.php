@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Models\DanhmucCon;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class Helper
@@ -121,7 +122,7 @@ class Helper
     public static function price_cart($gia = 0, $sale = 0)
     {
         $price = $gia - ($gia * $sale / 100);
-        return '<div class="cart-item-price">'.self::formatVND($price).'</div>';
+        return '<div class="cart-item-price">' . self::formatVND($price) . '</div>';
     }
 
     public static function button($gia = 0, $sale = 0)
@@ -131,6 +132,16 @@ class Helper
             return '<div class="btn btn-danger">Đang cập nhật</div>';
         }
         return '<button type="submit" class="btn btn-primary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>';
+    }
+    public static function timeSince($date)
+    {
+        // Chuyển đổi chuỗi ngày tháng thành đối tượng Carbon
+        $carbonDate = Carbon::parse($date);
+
+        // Tính khoảng thời gian đã trôi qua so với thời điểm hiện tại
+        return '
+        <div class="text-time">' . $carbonDate->diffForHumans() . '</div>
+        ';
     }
 
 }

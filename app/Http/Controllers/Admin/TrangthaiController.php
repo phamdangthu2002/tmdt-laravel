@@ -48,13 +48,20 @@ class TrangthaiController extends Controller
         ]);
     }
 
-    public function edit(Request $request, $id){
+    public function edit(Request $request, $id)
+    {
         $this->trangthaiServices->edit($request, $id);
         return redirect()->back();
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->trangthaiServices->delete($id);
         return redirect()->route('admin.show.trangthai')->with('success', 'Trạng thái đã được xóa thành công.');
+    }
+    public function updateStatus(Request $request)
+    {
+       $this->trangthaiServices->updateStatus($request);
+        return redirect()->back()->with('success', 'Cập nhật trạng thái thành công!');
     }
 }

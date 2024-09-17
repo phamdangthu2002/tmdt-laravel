@@ -90,4 +90,13 @@ class TrangthaiServices
         // Redirect hoặc trả về thông báo thành công
         return redirect()->back()->with('success', 'Cập nhật trạng thái thành công.');
     }
+
+    public function getOrderStatuses()
+    {
+        // Lấy số lượng đơn hàng theo từng trạng thái
+        return Donhang::select('trangthais.tentrangthai', DB::raw('count(*) as total'))
+            ->join('trangthais', 'donhangs.id_trangthai', '=', 'trangthais.id_trangthai')
+            ->groupBy('trangthais.tentrangthai')
+            ->get();
+    }
 }

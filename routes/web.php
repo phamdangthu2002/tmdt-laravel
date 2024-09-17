@@ -102,11 +102,10 @@ Route::middleware(['admin'])->group(function () {
             Route::get('/show', [TrangthaiController::class, 'show_trangthai'])->name('admin.showtrangthai');
             Route::post('/add-trang-thai-don-hang', [TrangthaiController::class, 'updateStatus'])->name('admin.updateStatus');
         });
-        //upload
-        Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');
-        Route::post('/uploadAnh/services', [UploadController::class, 'storeAnh'])->name('admin.uploadAnh-services');
     });
 });
+//upload
+Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');
 
 //user
 Route::prefix('User')->group(function () {

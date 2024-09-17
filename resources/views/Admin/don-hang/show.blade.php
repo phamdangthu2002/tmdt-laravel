@@ -1,7 +1,5 @@
 @extends('Admin.index')
 @section('content')
-    @extends('Admin.index')
-@section('content')
     <h4>{{ $title }}</h4>
     <div class="row">
         <div class="col-md-6">

@@ -4,53 +4,6 @@ $.ajaxSetup({
     }
 });
 
-//admin
-$('#custom-hinhanh').change(function () {
-    const form = new FormData();
-    const files = $(this)[0].files;
-
-    for (let i = 0; i < files.length; i++) {
-        form.append('files[]', files[i]);
-    }
-
-    $.ajax({
-        processData: false,
-        contentType: false,
-        type: 'POST',
-        dataType: 'JSON',
-        data: form,
-        url: '/Admin/uploadAnh/services',
-        success: function (data) {
-            console.log(data); // Kiểm tra dữ liệu trả về từ server
-
-            if (data.error === false) {
-                if (Array.isArray(data.urls)) {
-                    $('#custom-file').val(data.urls.join(','));
-                    $('#custom-file-preview').val(data.urls.join(','));
-
-                    const fileList = $('#custom-file-list');
-                    fileList.empty(); // Xóa nội dung cũ
-                    data.urls.forEach(url => {
-                        fileList.append(`<p><a href="${url}" target="_blank">${url}</a></p>`);
-                    });
-
-                    $('#custom-file-count').text(`Đã thêm ${data.urls.length}/5 file`);
-                } else {
-                    alert('Dữ liệu nhận được không đúng định dạng.');
-                }
-            } else {
-                alert(data.message || 'Có lỗi xảy ra trong quá trình tải lên.');
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Upload failed: ', textStatus, errorThrown);
-            alert('Có lỗi xảy ra trong quá trình tải lên. Vui lòng thử lại.');
-        }
-    });
-});
-
-
-
 
 // upload
 $('#hinhanh').change(function () {
@@ -64,7 +17,7 @@ $('#hinhanh').change(function () {
         type: 'POST',
         dataType: 'JSON',
         data: form,
-        url: '/Admin/upload/services',
+        url: '/upload/services',
         success: function (data) {
             if (data.error == false) {
                 $('#file').val(data.url);
@@ -88,7 +41,7 @@ $('#avatar').change(function () {
         type: 'POST',
         dataType: 'JSON',
         data: form,
-        url: '/Admin/upload/services',
+        url: '/upload/services',
         success: function (data) {
             if (data.error == false) {
                 $('#preview').val(data.url);
@@ -109,7 +62,7 @@ function uploadFile(file) {
         type: 'POST',
         dataType: 'JSON',
         data: form,
-        url: '/Admin/upload/services',
+        url: '/upload/services',
         success: function (data) {
             if (data.error == false) {
                 $('#file').val(data.url);

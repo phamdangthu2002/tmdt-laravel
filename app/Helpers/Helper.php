@@ -91,10 +91,41 @@ class Helper
         return number_format($number, 0, ',', '.') . ' VND';
     }
 
+    // public static function price($gia = 0, $sale = 0)
+    // {
+    //     $price = $gia - ($gia * $sale / 100);
+    //     if ($price > 0) {
+    //         return '<div class="banner-sale">Sale off: ' . $sale . '%</div>'
+    //             . '<div class="product-banner">'
+    //             . '<div class="tille-price">'
+    //             . '<div class="price-update">Giá gốc: ' . self::formatVND($gia) . '</div>'
+    //             . '<div class="price-sale">Giảm còn: ' . self::formatVND($price) . '</div>'
+    //             . '</div>'
+    //             . '</div>';
+    //     } else {
+    //         return '<div class="price-danger">Đang cập nhật</div>';
+    //     }
+    // }
+
+    // public static function price_sale($gia = 0, $sale = 0)
+    // {
+    //     $price = $gia - ($gia * $sale / 100);
+
+    //     if ($price > 0) {
+    //         return '<div class="text-sale">Sale off: ' . $sale . '%</div>'
+    //             . '<div class="text-danger">Giá gốc: ' . self::formatVND($gia) . '</div>'
+    //             . '<div class="text-success">Giảm còn: ' . self::formatVND($price) . '</div>';
+    //     } else {
+    //         return '<div class="price-danger">Đang cập nhật</div>';
+    //     }
+    // }
+
     public static function price($gia = 0, $sale = 0)
     {
+        // Tính giá sau giảm giá
         $price = $gia - ($gia * $sale / 100);
-        if ($price > 0) {
+
+        if ($sale > 0 && $price > 0) {
             return '<div class="banner-sale">Sale off: ' . $sale . '%</div>'
                 . '<div class="product-banner">'
                 . '<div class="tille-price">'
@@ -102,21 +133,32 @@ class Helper
                 . '<div class="price-sale">Giảm còn: ' . self::formatVND($price) . '</div>'
                 . '</div>'
                 . '</div>';
-        } else {
+        } else if ($price <= 0) {
             return '<div class="price-danger">Đang cập nhật</div>';
+        } else {
+            return '<div class="product-banner">'
+                . '<div class="tille-price">'
+                . '<div class="price-success">Giá: ' . self::formatVND($gia) . '</div>'
+                . '</div>'
+                . '</div>';
         }
     }
 
     public static function price_sale($gia = 0, $sale = 0)
     {
         $price = $gia - ($gia * $sale / 100);
-
-        if ($price > 0) {
-            return '<div class="text-sale">Sale off: ' . $sale . '%</div>'
-                . '<div class="text-danger">Giá gốc: ' . self::formatVND($gia) . '</div>'
-                . '<div class="text-success">Giảm còn: ' . self::formatVND($price) . '</div>';
+        // Nếu sale không phải là null
+        if ($sale !== null) {
+            if ($price > 0) {
+                return '<div class="text-sale">Sale off: ' . $sale . '%</div>'
+                    . '<div class="text-danger">Giá gốc: ' . self::formatVND($gia) . '</div>'
+                    . '<div class="text-success">Giảm còn: ' . self::formatVND($price) . '</div>';
+            } else {
+                return '<div class="price-danger">Đang cập nhật</div>';
+            }
         } else {
-            return '<div class="price-danger">Đang cập nhật</div>';
+            // Nếu sale là null, chỉ hiển thị giá gốc
+            return '<div class="text-success">Giá: ' . self::formatVND($gia) . '</div>';
         }
     }
     public static function price_cart($gia = 0, $sale = 0)

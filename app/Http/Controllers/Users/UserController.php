@@ -74,12 +74,14 @@ class UserController extends Controller
     {
         $anhs = $this->sanphamServices->getAnhID($id);
         $sanphams = $this->sanphamServices->showSanpham($id);
+        $sanphamss = $this->sanphamServices->get();
         $sanphamMores = $this->sanphamServices->more($id);
         return view('Users.chi-tiet.index', [
             'title' => $sanphams->tensanpham,
             'sanphams' => $sanphams,
             'sanphamMores' => $sanphamMores,
             'anhs' => $anhs,
+            'sanphamss' => $sanphamss,
         ]);
     }
 

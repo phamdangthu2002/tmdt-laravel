@@ -26,7 +26,6 @@ class SanphamRequest extends FormRequest
             'tensanpham' => 'required',
             'gia' => 'required',
             'mota' => 'required',
-            'sale' => 'required',
             'soluong' => 'required',
             'file' => 'required',
         ];
@@ -37,7 +36,6 @@ class SanphamRequest extends FormRequest
             'tensanpham.required' => 'Bạn chưa nhập vào tên sản phẩm',
             'gia.required' => 'Bạn chưa nhập vào giá',
             'mota.required' => 'Bạn chưa nhập vào mô tả',
-            'sale.required' => 'Bạn chưa nhập vào sale',
             'soluong.required' => 'Bạn chưa nhập vào số lượng',
             'file.required' => 'Bạn chưa nhập vào hình ảnh',
         ];

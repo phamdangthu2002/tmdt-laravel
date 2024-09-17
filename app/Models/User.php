@@ -28,6 +28,9 @@ class User extends Authenticatable
         'avatar'
     ];
 
+    protected $primaryKey = 'id';
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

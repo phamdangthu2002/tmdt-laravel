@@ -337,7 +337,7 @@
         </div>
     </div>
     <div class="container-random">
-        @include('Users.san-pham-main.more')
+        @include('Users.san-pham-main.danhmuc')
     </div>
     <div class="custom-bg d-flex justify-content-center align-items-center flex-wrap p-3 mt-5 mb-5"
         style="background-color: #b2c2b2;">

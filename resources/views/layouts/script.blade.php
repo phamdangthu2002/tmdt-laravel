@@ -12,3 +12,4 @@
 <script src="/assets/vendor/ckeditor/ckeditor.js"></script>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/upload.js"></script>
+<script src="/assets/vendor/chart-js-v4.4.1.js"></script>

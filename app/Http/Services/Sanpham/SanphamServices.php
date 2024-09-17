@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Services\Sanpham;
 
+use App\Models\Donhang;
 use App\Models\Sanpham;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +15,8 @@ class SanphamServices
     {
 
     }
-    public function get(){
+    public function get()
+    {
         $sanpham = Sanpham::all();
         return $sanpham;
     }
@@ -97,11 +100,20 @@ class SanphamServices
     public function delete($id_sanpham)
     {
         $sanphams = Sanpham::where('id_sanpham', $id_sanpham)->first();
-        if($sanphams){
+        if ($sanphams) {
             $sanphams->delete();
             Session::flash('success', 'Xóa sản phẩm thành công');
-        }else{
+        } else {
             Session::flash('error', 'Xóa sản phẩm thất bại');
         }
+    }
+
+    public function getTopSellingProduct()
+    {
+        return Donhang::select('id_sanpham', DB::raw('SUM(soluong) as total_quantity'))
+            ->groupBy('id_sanpham')
+            ->orderBy('total_quantity', 'DESC')
+            ->with('sanpham') // Assuming 'sanpham' is the relationship method
+            ->first();
     }
 }

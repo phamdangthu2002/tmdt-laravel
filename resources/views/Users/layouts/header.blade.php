@@ -221,7 +221,7 @@
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     @auth
                         <li><span class="dropdown-item">{{ Auth::user()->name }}</span></li>
-                        <li><a class="dropdown-item" href="{{ route('user.profile', Auth::user()->id) }}"><i
+                        <li><a class="dropdown-item" href="{{ route('user.profile', $id_user) }}"><i
                                     class='bx bx-edit'></i>
                                 Profile</a></li>
                         <li><a class="dropdown-item" href="{{ route('user.show-donhang', Auth::user()->id) }}"><i

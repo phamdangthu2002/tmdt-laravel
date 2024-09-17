@@ -60,9 +60,9 @@
         }
     </style>
     <div class="container mt-5">
-        <h1>Chi Tiết Đơn Hàng #12345</h1>
-
         @foreach ($donhangs as $donhang)
+            <h1>Chi Tiết Đơn Hàng #{{ $donhang->id_donghang }}</h1>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="row">

@@ -1,6 +1,16 @@
 @extends('Users.index')
 @section('main')
-    <div class="container mt-5">
+<style>
+    .container-tk{
+        width: 90%;
+        margin-left: 9%;
+        margin-right: 9%;
+        justify-content: center;
+        justify-items: center;
+        text-align: center;
+    }
+</style>
+    <div class="container-tk mt-5">
         <h3><label for=""><b>Kết quả tìm kiếm cho "{{ $key }}":</b></label></h3><br>
         <div class="row">
             @if (count($sanphams) > 0)

@@ -7,11 +7,12 @@
 }
 
 .container-random {
-    width: 100%;
-    margin-left: 11%;
-    margin-right: 10%;
+    width: 90%;
+    margin-left: 9%;
+    margin-right: 9%;
     justify-content: center;
     justify-items: center;
+    padding-left: 2%;
 }
 
 .product-card {
@@ -81,6 +82,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.button{
+    margin-left: 80px;
 }
 
 .price-update,

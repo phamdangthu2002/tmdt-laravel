@@ -41,6 +41,11 @@ class UserServices
         return User::find($id);
     }
 
+    public function getUserID($id)
+    {
+        return User::find($id);
+    }
+
     public function update($request, $id)
     {
         // Lấy thông tin người dùng hiện tại
@@ -84,6 +89,40 @@ class UserServices
         }
 
         // Lưu lại thay đổi
+        if ($user->isDirty()) {
+            $user->save();
+            return redirect()->back()->with('success', 'Người dùng đã được cập nhật.');
+        } else {
+            return redirect()->back()->with('info', 'Không có thay đổi nào được thực hiện.');
+        }
+    }
+
+    public function update_User($request, $id)
+    {
+        $user = User::findOrFail($id);
+        // Cập nhật thông tin người dùng
+        $user->update([
+            'name' => $request['name'] ?? $user->name,
+            'email' => $request['email'] ?? $user->email,
+            'phone' => $request['phone'] ?? $user->phone, // Giữ nguyên nếu không có giá trị mới
+            'address' => $request['address'] ?? $user->address, // Giữ nguyên nếu không có giá trị mới
+            'avatar' => $user->avatar, // Giữ nguyên nếu không có ảnh mới
+        ]);
+
+        // Xử lý mật khẩu nếu có thay đổi
+        if ($request->input('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        // Xử lý upload ảnh đại diện nếu có
+        if ($request->input('avatar')) {
+            if ($user->avatar && file_exists(public_path($user->avatar))) {
+                unlink(public_path($user->avatar));
+            }
+            $user->avatar = $request->input('avatar');
+        }
+
+        // Lưu thông tin người dùng
         if ($user->isDirty()) {
             $user->save();
             return redirect()->back()->with('success', 'Người dùng đã được cập nhật.');

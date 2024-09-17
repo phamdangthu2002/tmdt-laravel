@@ -221,13 +221,16 @@
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     @auth
                         <li><span class="dropdown-item">{{ Auth::user()->name }}</span></li>
-                        <li><a class="dropdown-item" href="#"><i class='bx bx-edit'></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.profile', Auth::user()->id) }}"><i
+                                    class='bx bx-edit'></i>
+                                Profile</a></li>
                         <li><a class="dropdown-item" href="{{ route('user.show-donhang', Auth::user()->id) }}"><i
                                     class='bx bxs-purchase-tag'></i> Đơn hàng</a></li>
                         <li><a class="dropdown-item text-danger" href="{{ route('auth.logout') }}"
                                 onclick="confirmLogout(event)"><i class='bx bx-log-out'></i> Logout</a></li>
                     @else
-                        <li><a class="dropdown-item" href="{{ route('auth.login') }}"><i class='bx bx-log-in'></i> Login</a>
+                        <li><a class="dropdown-item" href="{{ route('auth.login') }}"><i class='bx bx-log-in'></i>
+                                Login</a>
                         </li>
                         <li><a class="dropdown-item" href="{{ route('auth.register') }}"><i class='bx bx-registered'></i>
                                 Sign-up</a></li>

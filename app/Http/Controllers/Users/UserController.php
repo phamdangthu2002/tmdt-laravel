@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\Cart\CartServices;
 use App\Http\Services\Danhmuc\DanhmucServices;
 use App\Http\Services\Slider\SliderServices;
+use App\Http\Services\User\UserServices;
 use App\Http\Services\Users\SanphamServices;
 use App\Models\cart;
 use App\Models\Sanpham;
@@ -20,12 +21,14 @@ class UserController extends Controller
     protected $sliderServices;
     protected $sanphamServices;
     protected $cartServices;
-    public function __construct(DanhmucServices $danhmucServices, SliderServices $sliderServices, SanphamServices $sanphamServices, CartServices $cartServices)
+    protected $userServices;
+    public function __construct(DanhmucServices $danhmucServices, SliderServices $sliderServices, SanphamServices $sanphamServices, CartServices $cartServices, UserServices $userServices)
     {
         $this->danhmucServices = $danhmucServices;
         $this->sliderServices = $sliderServices;
         $this->sanphamServices = $sanphamServices;
         $this->cartServices = $cartServices;
+        $this->userServices = $userServices;
     }
     public function index()
     {
@@ -135,6 +138,21 @@ class UserController extends Controller
             'sanphams' => $sanphams,
             'key' => $key,
         ]);
+    }
+
+    public function profile($id)
+    {
+        $users = $this->userServices->getUserID($id);
+        return view('Users.profile.index', [
+            'title' => 'Thông tin cá nhân',
+            'users' => $users,
+        ]);
+    }
+
+    public function update_profile(Request $request, $id)
+    {
+        $this->userServices->update_User($request, $id);
+        return redirect()->back();
     }
 
     public function lienhe()

@@ -16,10 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Auth/users/logout" onclick="confirmLogout(event)">Logout</a>
+                    <a class="nav-link bx bx-log-out" href="/Auth/users/logout" onclick="confirmLogout(event)"> Logout</a>
                 </li>
             </ul>
         </div>

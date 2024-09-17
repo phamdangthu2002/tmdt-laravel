@@ -84,7 +84,7 @@
     </div>
 
     <div class="container-random">
-        <h1><label for="">Hôn nay mua gì ?</label></h1>
+        <h1><label for="">Hôm nay mua gì ?</label></h1>
         @include('Users.san-pham-main.random')
     </div>
     <script>

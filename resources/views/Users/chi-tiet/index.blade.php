@@ -336,7 +336,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-random">
         @include('Users.san-pham-main.more')
     </div>
     <div class="custom-bg d-flex justify-content-center align-items-center flex-wrap p-3 mt-5 mb-5"

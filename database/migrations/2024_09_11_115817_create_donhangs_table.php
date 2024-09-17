@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->bigIncrements('id_donhang'); // Khóa chính của bảng
             $table->unsignedBigInteger('id_user'); // Khóa ngoại liên kết với bảng users
             $table->unsignedBigInteger('id_sanpham'); // Khóa ngoại liên kết với bảng sanphams
+            $table->integer('soluong');
             $table->unsignedBigInteger('id_trangthai')->default(1); // Đảm bảo rằng giá trị mặc định tồn tại trong bảng trangthais
             $table->foreign('id_trangthai')->references('id_trangthai')->on('trangthais')->onDelete('cascade');
 

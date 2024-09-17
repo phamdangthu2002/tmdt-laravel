@@ -51,8 +51,9 @@
                                     </th>
                                     <th>
                                         <div class="cart-content">
-                                            <input type="number" name="{{ $cart->sanpham->id_sanpham }}" class="quantity"
+                                            <input type="hidden" name="quantity" class="quantity"
                                                 value="{{ $cart->quantity }}" min="1" max="10">
+                                                <span>{{ $cart->quantity }}</span>
                                         </div>
                                     </th>
                                     <th>

@@ -45,8 +45,12 @@
                         @endif
                     @endif
                 @endforeach
+                @if ($donhangedits->id_trangthai == 4 || $donhangedits->id_trangthai == 5 || $donhangedits->id_trangthai == 6)
+                    <label for="">...</label>
+                @else
+                    <button type="submit" class="btn btn-primary mt-4">Lưu</button>
+                @endif
             </div>
-            <button type="submit" class="btn btn-primary mt-4">Lưu</button>
         </form>
     </div>
 @endsection

@@ -5,6 +5,7 @@ use App\Models\Cart;
 use App\Models\Donhang;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CartServices
@@ -52,7 +53,7 @@ class CartServices
     {
         // Lấy id của người dùng hiện tại đã đăng nhập
         $id_user = Auth::id();
-        return Cart::select('id_giohang', 'id_sanpham', 'size', 'color', 'quantity', 'gia','dadathang')->with('sanpham')->where('id_user', $id_user)->get();
+        return Cart::select('id_giohang', 'id_sanpham', 'size', 'color', 'quantity', 'gia', 'dadathang')->with('sanpham')->where('id_user', $id_user)->get();
     }
 
     public function destroy($id)
@@ -71,13 +72,20 @@ class CartServices
         $id_sanpham = $request->input('id_sanpham');
         $id_user = $id;
         $tong = $request->input('tong');
+        $quantity = $request->input('quantity');
         $id_trangthai = 1;
+        $datathang = 0;
         try {
             Donhang::create([
                 'id_user' => $id_user,
                 'tong' => $tong,
                 'id_sanpham' => $id_sanpham,
                 'id_trangthai' => $id_trangthai,
+                'soluong' => $quantity,
+            ]);
+            // Lưu lịch sử trạng thái đơn hàng
+            DB::table('carts')->update([
+                'dadathang' => $datathang,
             ]);
             // Danhmuc::create($danhmucFormRequest->all());
             session()->flash('success', 'Đã đặt hàng.');
@@ -91,9 +99,8 @@ class CartServices
     public function getDonhang($id)
     {
         return Donhang::where('id_user', $id)
-            ->with('user')  // Nếu bạn cần thông tin người dùng
-            ->with('trangthais')
+            ->with('user')        // Lấy thông tin người dùng
+            ->with('trangthais')  // Lấy trạng thái đơn hàng
             ->get();
     }
-
 }

@@ -131,7 +131,9 @@ Route::prefix('User')->group(function () {
     Route::get('/search', [UserController::class, 'search'])->name('search');
     //thanhtoan
     Route::get('/thanh-toan', [UserController::class, 'buy'])->name('user.thanh-toan');
-
+    //edit profile
+    Route::get('{id}/edit-profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('{id}/update-profile', [UserController::class, 'update_profile'])->name('user.update-profile');
     //lienhe
     Route::get('/lien-he', [UserController::class, 'lienhe'])->name('user.lienhe');
     //thongtin

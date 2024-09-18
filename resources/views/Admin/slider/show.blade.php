@@ -129,7 +129,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($sliders)
+                            @if (count($sliders) != 0)
                                 @foreach ($sliders as $slider)
                                     <tr>
                                         <td>{{ $slider->id_slider }}</td>
@@ -166,7 +166,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5">Không có danh mục nào để hiển thị.</td>
+                                    <td colspan="5">Không có slider nào để hiển thị.</td>
                                 </tr>
                             @endif
                         </tbody>

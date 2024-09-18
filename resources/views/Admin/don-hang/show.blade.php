@@ -18,7 +18,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($donhangs)
+                            @if (count($donhangs) != 0)
                                 @foreach ($donhangs as $donhang)
                                     <tr>
                                         <td>{{ $donhang->id_donhang }}</td>
@@ -32,10 +32,9 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5">Không có danh mục nào để hiển thị.</td>
+                                    <td colspan="5">Không có đơn hàng nào để hiển thị.</td>
                                 </tr>
                             @endif
-
                         </tbody>
                     </table>
                 </div>

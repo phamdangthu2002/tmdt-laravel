@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($users)
+                    @if (count($users) != 0)
                         @foreach ($users as $user)
                             <tr>
                                 <td>{{ $user->id }}</td>

@@ -19,7 +19,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($danhmucs)
+                            @if (count($danhmucs) != 0)
                                 @foreach ($danhmucs as $danhmuc)
                                     <tr>
                                         <td>{{ $danhmuc->id_danhmuc }}</td>

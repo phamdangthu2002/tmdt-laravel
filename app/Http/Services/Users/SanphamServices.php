@@ -13,9 +13,10 @@ class SanphamServices
     {
 
     }
-    public function random(){
+    public function random()
+    {
         $LIMIT = 4;
-        $sanpham = Sanpham::where('trangthai',1)->get();
+        $sanpham = Sanpham::where('trangthai', 1)->get();
         $random = $sanpham->random($LIMIT);
         return $random;
     }
@@ -72,7 +73,19 @@ class SanphamServices
         return true;
     }
 
-    public function getAnhID($id){
+    public function getAnhID($id)
+    {
         return Anhsp::where('id_sanpham', $id)->get();
+    }
+
+    public function getByDanhmuc($id_danhmuc, $currentProductId)
+    {
+        return Sanpham::select('id_sanpham', 'tensanpham', 'mota', 'id_danhmuc', 'gia', 'sale', 'hinhanh', 'trangthai')
+            ->where('id_danhmuc', $id_danhmuc)
+            ->where('id_sanpham', '!=', $currentProductId) // Không lấy sản phẩm hiện tại
+            ->where('trangthai', 1)
+            ->orderByDesc('id_sanpham')
+            ->take(4)
+            ->get();
     }
 }

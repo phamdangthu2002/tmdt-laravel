@@ -27,6 +27,7 @@ class DonhangController extends Controller
 
     public function edit($id)
     {
+        $donhang = $this->trangthaiServices->getDonhangIdTrangthai($id);
         $trangthais = $this->trangthaiServices->show();
         $donhangs = $this->donhangServices->getDonhang();
         $donhangedits = $this->donhangServices->getDonhangById($id);
@@ -35,6 +36,7 @@ class DonhangController extends Controller
             'donhangs' => $donhangs,
             'donhangedits' => $donhangedits,
             'trangthais' => $trangthais,
+            'donhang' => $donhang,
         ]);
     }
 }

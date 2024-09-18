@@ -99,4 +99,9 @@ class TrangthaiServices
             ->groupBy('trangthais.tentrangthai')
             ->get();
     }
+
+    public function getDonhangIdTrangthai($id){
+        $donhang = Donhang::select('id_trangthai')->where('id_donhang', $id)->get();
+        return $donhang;
+    }
 }

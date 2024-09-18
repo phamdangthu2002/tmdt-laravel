@@ -132,15 +132,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($sanphams)
+                    @if (count($sanphams) != 0)
                         @foreach ($sanphams as $sanpham)
                             <tr>
                                 <td>{{ $sanpham->id_sanpham }}</td>
                                 <td>{{ $sanpham->tensanpham }}</td>
                                 <td>{{ $sanpham->mota }}</td> <!-- Swap with the correct column -->
                                 {{-- <td>{{ $sanpham->motachitiet }}</td> <!-- Swap with the correct column --> --}}
-                                <td>{{ $sanpham->gia }} VND</td>
-                                <td>{{ $sanpham->sale }} VND</td>
+                                <td> {!! \App\Helpers\Helper::formatVND($sanpham->gia) !!}</td>
+                                <td>{!! \App\Helpers\Helper::formatVND($sanpham->sale) !!}</td>
                                 <td>{{ $sanpham->soluong }}</td>
                                 <td>{{ $sanpham->luotmua }}</td>
                                 <td>{{ $sanpham->luotxem }}</td>

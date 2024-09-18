@@ -32,7 +32,7 @@
                 {{-- Kiểm tra nếu trạng thái chưa được chọn --}}
                 @foreach ($trangthais as $trangthai)
                     @if ($donhangedits->id_trangthai !== $trangthai->id_trangthai)
-                        @if ($donhangedits->id_trangthai == 4 || $donhangedits->id_trangthai == 5 || $donhangedits->id_trangthai == 6)
+                        @if (in_array($donhangedits->id_trangthai, [6, 7, 8]))
                             <label for="">...</label>
                         @else
                             <div class="form-check">
@@ -45,9 +45,7 @@
                         @endif
                     @endif
                 @endforeach
-                @if ($donhangedits->id_trangthai == 4 || $donhangedits->id_trangthai == 5 || $donhangedits->id_trangthai == 6)
-                    <label for="">...</label>
-                @else
+                @if (!in_array($donhangedits->id_trangthai, [6, 7, 8]))
                     <button type="submit" class="btn btn-primary mt-4">Lưu</button>
                 @endif
             </div>

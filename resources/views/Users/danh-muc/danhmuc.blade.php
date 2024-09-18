@@ -1,8 +1,15 @@
 @extends('Users.index')
 @section('main')
+<style>
+    .container-dmu{
+        width: 90%;
+        margin-left: 9%;
+        margin-right: 9%;
+    }
+</style>
     <title>{{ $title }}</title>
     @include('Users.layouts.filter')
-    <div class="container mt-5 mb-5" id="load">
+    <div class="container-dmu mt-5 mb-5" id="load">
         <div class="row mb-5">
             <!-- Lặp qua danh sách sản phẩm -->
             @foreach ($sanphams as $sanpham)

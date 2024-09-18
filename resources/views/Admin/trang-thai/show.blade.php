@@ -18,7 +18,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($trangthais)
+                            @if (count($trangthais) != 0)
                                 @foreach ($trangthais as $trangthai)
                                     <tr>
                                         <td>{{ $trangthai->id_trangthai }}</td>

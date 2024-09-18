@@ -3,7 +3,7 @@
 @section('main')
     <style>
         .order-progress {
-            margin-top: 20px;
+            margin-top: -70px;
         }
 
         .timeline {
@@ -60,47 +60,55 @@
         }
     </style>
     <div class="container mt-5">
-        @foreach ($donhangs as $donhang)
-            <h1>Chi Tiết Đơn Hàng #{{ $donhang->id_donghang }}</h1>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p><img src="{{ $donhang->sanpham->hinhanh }}" id="img" alt=""></p>
-                            {{-- <p><img src="https://via.placeholder.com/200x270" alt=""></p> --}}
+        @if (count($donhangs) != 0)
+            @foreach ($donhangs as $donhang)
+                <h1>Chi Tiết Đơn Hàng #{{ $donhang->id_donhang }}</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><img src="{{ $donhang->sanpham->hinhanh }}" id="img" alt=""></p>
+                                {{-- <p><img src="https://via.placeholder.com/200x270" alt=""></p> --}}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="order-summary">
+                                    <h2>Tóm Tắt Đơn Hàng</h2>
+                                    <p><strong>Khách Hàng:</strong> {{ $donhang->user->name }}</p>
+                                    <p><strong>Tên sản phẩm</strong> {{ $donhang->sanpham->tensanpham }}</p>
+                                    <p><strong>Số lượng:</strong> {{ $donhang->soluong }}</p>
+                                    <p><strong>Ngày Đặt:</strong> {{ $donhang->created_at }}</p>
+                                    <p><strong>Tổng Số Tiền: </strong>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="order-summary">
-                                <h2>Tóm Tắt Đơn Hàng</h2>
-                                <p><strong>Khách Hàng:</strong> {{ $donhang->user->name }}</p>
-                                <p><strong>Tên sản phẩm</strong> {{ $donhang->sanpham->tensanpham }}</p>
-                                <p><strong>Số lượng:</strong> {{ $donhang->soluong }}</p>
-                                <p><strong>Ngày Đặt:</strong> {{ $donhang->created_at }}</p>
-                                <p><strong>Tổng Số Tiền: </strong>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="order-progress">
+                            <h2>Tiến Trình Đơn Hàng #{{ $donhang->id_donhang }}</h2>
+                            <div class="timeline">
+                                @foreach ($donhang->trangthaiDonHangs as $trangthai)
+                                    <div class="timeline-event">
+                                        <div class="timeline-date">
+                                            {{ \Carbon\Carbon::parse($trangthai->ngaycapnhat)->setTimezone('Asia/Ho_Chi_Minh')->format('H:i A') }}
+                                            <br>
+                                            {{ \Carbon\Carbon::parse($trangthai->ngaycapnhat)->format('l, d F Y') }}
+                                        </div>
+                                        <div class="timeline-description">{{ $trangthai->trangthai->tentrangthai }}</div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="order-progress">
-                        <h2>Tiến Trình Đơn Hàng</h2>
-                        <div class="timeline">
-                            @foreach ($donhang->trangthaiDonHangs as $trangthai)
-                                <div class="timeline-event">
-                                    <div class="timeline-date">
-                                        {{ \Carbon\Carbon::parse($trangthai->ngaycapnhat)->setTimezone('Asia/Ho_Chi_Minh')->format('H:i A') }}
-                                        <br>
-                                        {{ \Carbon\Carbon::parse($trangthai->ngaycapnhat)->format('l, d F Y') }}
-                                    </div>
-                                    <div class="timeline-description">{{ $trangthai->trangthai->tentrangthai }}</div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        @endforeach
+                <hr>
+            @endforeach
+        @else
+            <label for="">
+                <h3>
+                    <b>Đơn hàng trống</b>
+                </h3>
+            </label>
+        @endif
     </div>
 @endsection

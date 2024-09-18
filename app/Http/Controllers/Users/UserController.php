@@ -74,7 +74,7 @@ class UserController extends Controller
     {
         $anhs = $this->sanphamServices->getAnhID($id);
         $sanphams = $this->sanphamServices->showSanpham($id);
-        $sanphamss = $this->sanphamServices->get();
+        $sanphamss = $this->sanphamServices->getByDanhmuc($sanphams->id_danhmuc, $id);
         $sanphamMores = $this->sanphamServices->more($id);
         return view('Users.chi-tiet.index', [
             'title' => $sanphams->tensanpham,

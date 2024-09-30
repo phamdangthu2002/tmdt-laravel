@@ -175,15 +175,37 @@ class Helper
         }
         return '<button type="submit" class="btn btn-primary add-cart mt-5 mb-5">Thêm vào giỏ hàng</button>';
     }
+    // public static function timeSince($date)
+    // {
+    //     // Chuyển đổi chuỗi ngày tháng thành đối tượng Carbon
+    //     $carbonDate = Carbon::parse($date);
+
+    //     // Tính khoảng thời gian đã trôi qua so với thời điểm hiện tại
+    //     return '
+    //     <div class="text-time">' . $carbonDate->diffForHumans() . '</div>
+    //     ';
+    // }
+
     public static function timeSince($date)
     {
-        // Chuyển đổi chuỗi ngày tháng thành đối tượng Carbon
-        $carbonDate = Carbon::parse($date);
+        // Kiểm tra nếu $date không hợp lệ
+        if (!$date) {
+            return 'Không xác định';
+        }
 
-        // Tính khoảng thời gian đã trôi qua so với thời điểm hiện tại
-        return '
-        <div class="text-time">' . $carbonDate->diffForHumans() . '</div>
-        ';
+        try {
+            // Chuyển đổi chuỗi ngày tháng thành đối tượng Carbon
+            $carbonDate = Carbon::parse($date);
+
+            // Thiết lập ngôn ngữ Tiếng Việt
+            Carbon::setLocale('vi');
+
+            // Tính khoảng thời gian đã trôi qua so với thời điểm hiện tại
+            return '<div class="text-time">' . $carbonDate->diffForHumans() . '</div>';
+        } catch (\Exception $e) {
+            // Bắt lỗi nếu định dạng ngày tháng không hợp lệ
+            return 'Ngày không hợp lệ';
+        }
     }
 
 }

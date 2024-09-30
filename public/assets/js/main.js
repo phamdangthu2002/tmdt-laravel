@@ -118,22 +118,6 @@ function confirmLogout(event) {
 }
 
 
-// Khi bấm vào dấu x
-document.getElementById('closeSearch').addEventListener('click', function (e) {
-    e.preventDefault();
-    const searchContainer = document.getElementById('searchContainer');
-
-    anime({
-        targets: '#searchContainer',
-        width: '0',
-        easing: 'easeInOutQuad',
-        duration: 500,
-        complete: function () {
-            searchContainer.style.display = 'none';
-            document.getElementById('searchInput').value = ''; // Xóa nội dung ô tìm kiếm
-        }
-    });
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     // Lắng nghe sự kiện submit của tất cả các form xóa
@@ -159,3 +143,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+

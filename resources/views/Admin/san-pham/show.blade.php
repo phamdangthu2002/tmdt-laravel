@@ -140,7 +140,14 @@
                                 <td>{{ $sanpham->mota }}</td> <!-- Swap with the correct column -->
                                 {{-- <td>{{ $sanpham->motachitiet }}</td> <!-- Swap with the correct column --> --}}
                                 <td> {!! \App\Helpers\Helper::formatVND($sanpham->gia) !!}</td>
-                                <td>{!! \App\Helpers\Helper::formatVND($sanpham->sale) !!}</td>
+                                {{-- <td>{!! \App\Helpers\Helper::formatVND($sanpham->sale) !!}</td> --}}
+                                <td>
+                                    @if ($sanpham->sale == null)
+                                        Không giảm
+                                    @else
+                                        GIảm: {{ $sanpham->sale }}%
+                                    @endif
+                                </td>
                                 <td>{{ $sanpham->soluong }}</td>
                                 <td>{{ $sanpham->luotmua }}</td>
                                 <td>{{ $sanpham->luotxem }}</td>

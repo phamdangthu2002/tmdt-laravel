@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Upload\UploadServices;
+use App\Models\Donhang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class UploadController extends Controller
@@ -25,6 +27,23 @@ class UploadController extends Controller
             ]);
         }
         return response()->json(['error' => true,]);
+    }
+
+    public function upload(Request $request)
+    {
+        $res = $this->uploadServices->upload($request);
+
+        // Ghi nhận kết quả
+        Log::info('Kết quả từ uploadServices:', ['res' => $res]);
+
+        if ($res != false) {
+            return response()->json([
+                'error' => false,
+                'res' => $res,
+            ]);
+        }
+
+        return response()->json(['error' => true]);
     }
 
 }

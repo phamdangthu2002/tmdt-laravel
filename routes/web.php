@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AnhController;
 use App\Http\Controllers\Admin\DanhmucController;
 use App\Http\Controllers\Admin\DonhangController;
 use App\Http\Controllers\Admin\SanphamController;
+use App\Http\Controllers\Admin\SizeColorContronller;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TrangthaiController;
 use App\Http\Controllers\Admin\UploadController;
@@ -102,10 +103,35 @@ Route::middleware(['admin'])->group(function () {
             Route::get('/show', [TrangthaiController::class, 'show_trangthai'])->name('admin.showtrangthai');
             Route::post('/add-trang-thai-don-hang', [TrangthaiController::class, 'updateStatus'])->name('admin.updateStatus');
         });
+
+        //size
+        Route::prefix('Size')->group(function () {
+            Route::get('/add-size', [SizeColorContronller::class, 'size_add'])->name('admin.add-size');
+            Route::post('/add-new-size', [SizeColorContronller::class, 'size_store'])->name('admin.store-size');
+            Route::get('/show-size', [SizeColorContronller::class, 'size_show'])->name('admin.show-size');
+            Route::get('{id}/store-edit-size', [SizeColorContronller::class, 'size__store'])->name('admin.store-edit-size');
+            Route::post('{id}/edit-size', [SizeColorContronller::class, 'size_edit'])->name('admin.edit-size');
+            Route::post('{id}/delete-size', [SizeColorContronller::class, 'size_destroy'])->name('admin.delete-size');
+        });
+
+        //color
+        Route::prefix('Color')->group(function () {
+            Route::get('/add-color', [SizeColorContronller::class, 'color_add'])->name('admin.add-color');
+            Route::post('/add-new-color', [SizeColorContronller::class, 'color_store'])->name('admin.store-color');
+            Route::get('/show-color', [SizeColorContronller::class, 'color_show'])->name('admin.show-color');
+            Route::get('{id}/store-edit-color', [SizeColorContronller::class, 'color__store'])->name('admin.store-edit-color');
+            Route::post('{id}/edit-color', [SizeColorContronller::class, 'color_edit'])->name('admin.edit-color');
+            Route::post('{id}/delete-color', [SizeColorContronller::class, 'color_destroy'])->name('admin.delete-color');
+
+        });
+
     });
 });
 //upload
 Route::post('/upload/services', [UploadController::class, 'store'])->name('admin.upload-services');
+
+//nut cong tru
+Route::post('/upload/services/cong-tru', [UploadController::class, 'upload']);
 
 //user
 Route::prefix('User')->group(function () {
@@ -126,6 +152,7 @@ Route::prefix('User')->group(function () {
     //donhang
     Route::post('{id}/don-hang', [UserController::class, 'donhang'])->name('user.add-donghang');
     Route::get('{id}/show-don-hang', [UserController::class, 'showdonhang'])->name('user.show-donhang');
+    Route::get('{id}/detail', [UserController::class, 'detail'])->name('user.detail');
     //timkiem
     Route::get('/search', [UserController::class, 'search'])->name('search');
     //thanhtoan

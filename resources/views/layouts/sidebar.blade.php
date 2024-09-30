@@ -62,11 +62,12 @@
                 </a>
                 <ul class="collapse submenu" id="user">
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-add-to-queue"
-                            href="{{ route('admin.create.user') }}"> Thêm người dùng</a>
+                        <a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.create.user') }}">
+                            Thêm người dùng</a>
                     </li>
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show.user') }}"> Quản lý người dùng</a>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show.user') }}"> Quản lý
+                            người dùng</a>
                     </li>
                 </ul>
             </li>
@@ -134,7 +135,7 @@
                 </ul>
             </li> --}}
             <li class="nav-item">
-                <a class="nav-link boder-sidebar bx bx-stats" data-bs-toggle="collapse" href="#trangthai" role="button"
+                <a class="nav-link boder-sidebar bx bx-station" data-bs-toggle="collapse" href="#trangthai" role="button"
                     aria-expanded="false" aria-controls="trangthai">
                     Trạng thái
                 </a>
@@ -145,18 +146,48 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{route('admin.show.trangthai')}}"> Quản lý trạng thái</a>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show.trangthai') }}"> Quản
+                            lý trạng thái</a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link boder-sidebar bx bx-stats" data-bs-toggle="collapse" href="#trangthaidonhang" role="button"
-                    aria-expanded="false" aria-controls="trangthaidonhang">
+                <a class="nav-link boder-sidebar bx bx-stats" data-bs-toggle="collapse" href="#trangthaidonhang"
+                    role="button" aria-expanded="false" aria-controls="trangthaidonhang">
                     Trạng thái đơn hàng
                 </a>
                 <ul class="collapse submenu" id="trangthaidonhang">
                     <li>
-                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{route('admin.show-donhang')}}"> Quản lý trạng thái</a>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{ route('admin.show-donhang') }}"> Quản lý
+                            trạng thái</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link boder-sidebar bx bx-font-size" data-bs-toggle="collapse" href="#size"
+                    role="button" aria-expanded="false" aria-controls="size">
+                    Size
+                </a>
+                <ul class="collapse submenu" id="size">
+                    <li>
+                        <a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.add-size') }}"> Thêm size</a>
+                    </li>
+                    <li>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{route('admin.show-size')}}"> Quản lý size</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link boder-sidebar bx bx-palette" data-bs-toggle="collapse" href="#color"
+                    role="button" aria-expanded="false" aria-controls="color">
+                    Color
+                </a>
+                <ul class="collapse submenu" id="color">
+                    <li>
+                        <a class="nav-link boder-sidebar bx bxs-add-to-queue" href="{{ route('admin.add-color') }}"> Thêm color</a>
+                    </li>
+                    <li>
+                        <a class="nav-link boder-sidebar bx bxs-cog" href="{{route('admin.show-color')}}"> Quản lý color</a>
                     </li>
                 </ul>
             </li>

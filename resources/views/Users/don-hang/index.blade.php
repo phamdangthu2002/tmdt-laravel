@@ -1,6 +1,11 @@
 @extends('Users.index')
 
 @section('main')
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="/assets/vendor/jquery-3.5.1.slim.min.js"></script>
+    <script src="/assets/vendor/jquery-3.7.1.js"></script>
+    <script src="/assets/vendor/bootstrap.bundle.min.js"></script>
     <style>
         .order-progress {
             margin-top: -70px;
@@ -35,7 +40,7 @@
             top: 0;
             width: 20px;
             height: 20px;
-            background: #ff6f61;
+            background: #f13827;
             /* Màu sắc giống như TikTok Shop */
             border-radius: 50%;
             border: 2px solid #fff;
@@ -58,6 +63,95 @@
             width: 100%;
             height: 70%;
         }
+
+        .order-summary {
+            font-size: 25px;
+        }
+
+
+        /* Điều chỉnh chiều rộng của modal */
+        .modal-dialog {
+            max-width: 700px;
+            /* Bạn có thể điều chỉnh kích thước này theo nhu cầu */
+            margin: 30px auto;
+        }
+
+        /* Tùy chỉnh phần header của modal */
+        .modal-header {
+            background-color: #17a2b8;
+            /* Màu xanh của nút xem chi tiết */
+            color: white;
+            border-bottom: none;
+        }
+
+        /* Tùy chỉnh nút đóng (close button) */
+        .modal-header .close {
+            color: white;
+            opacity: 0.8;
+        }
+
+        .modal-header .close:hover {
+            opacity: 1;
+        }
+
+        /* Tùy chỉnh nội dung bên trong modal */
+        .modal-body {
+            padding: 20px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        /* Định dạng cho table */
+        .table thead th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .table tbody tr td {
+            vertical-align: middle;
+        }
+
+        .table tbody tr img {
+            width: 50px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Tùy chỉnh phần footer của modal */
+        .modal-footer {
+            border-top: none;
+            padding-top: 10px;
+        }
+
+        /* Định dạng nút Đóng */
+        .modal-footer .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        /* Đảm bảo modal xuất hiện phía trên tất cả các phần tử khác */
+        .modal {
+            z-index: 1050;
+        }
+
+        .modal-backdrop {
+            z-index: 1040;
+        }
+
+        /* Animation cho modal */
+        .modal.fade .modal-dialog {
+            -webkit-transform: translate(0, -50px);
+            transform: translate(0, -50px);
+            -webkit-transition: -webkit-transform 0.3s ease-out;
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal.show .modal-dialog {
+            -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+        }
     </style>
     <div class="container mt-5">
         @if (count($donhangs) != 0)
@@ -65,20 +159,52 @@
                 <h1>Chi Tiết Đơn Hàng #{{ $donhang->id_donhang }}</h1>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <p><img src="{{ $donhang->sanpham->hinhanh }}" id="img" alt=""></p>
-                                {{-- <p><img src="https://via.placeholder.com/200x270" alt=""></p> --}}
-                            </div>
-                            <div class="col-md-8">
-                                <div class="order-summary">
-                                    <h2>Tóm Tắt Đơn Hàng</h2>
-                                    <p><strong>Khách Hàng:</strong> {{ $donhang->user->name }}</p>
-                                    <p><strong>Tên sản phẩm</strong> {{ $donhang->sanpham->tensanpham }}</p>
-                                    <p><strong>Số lượng:</strong> {{ $donhang->soluong }}</p>
-                                    <p><strong>Ngày Đặt:</strong> {{ $donhang->created_at }}</p>
-                                    <p><strong>Tổng Số Tiền: </strong>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}
-                                    </p>
+                        <div class="order-summary">
+                            <h2>Tóm Tắt Đơn Hàng</h2>
+                            <p><strong>Khách Hàng:</strong> {{ $donhang->user->name }}</p>
+                            <p><strong>ID đơn hàng</strong> {{ $donhang->id_donhang }}</p>
+                            <p><strong>Số lượng sản phẩm:</strong> {{ $donhang->ctdh->sum('soluong') }}</p>
+                            <p><strong>Ngày Đặt:</strong>
+                                {{ \Carbon\Carbon::parse($donhang->created_at)->setTimezone('Asia/Ho_Chi_Minh')->format('H:i A') }}
+                                <br>
+                                {{ \Carbon\Carbon::parse($donhang->created_at)->format('l, d F Y') }}
+                            </p>
+                            <p><strong>Tổng Số Tiền: </strong>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}
+                            </p>
+                            <button type="button" class="btn btn-info" data-id="{{ $donhang->id_donhang }}" data-toggle="modal"
+                                data-target="#orderDetailsModal">
+                                Xem chi tiết
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog"
+                                aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="orderDetailsModalLabel">Chi Tiết Đơn Hàng</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Image</th>
+                                                        <th>Tên sản phẩm</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Tổng số tiền</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,4 +237,46 @@
             </label>
         @endif
     </div>
+    <script>
+        $(document).ready(function() {
+            // Khi nhấn nút "Xem chi tiết"
+            $('button[data-target="#orderDetailsModal"]').on('click', function() {
+                var orderId = $(this).data('id');
+
+                // Gửi yêu cầu AJAX
+                $.ajax({
+                    url: '/User/' + orderId + '/detail',
+                    method: 'GET',
+                    success: function(response) {
+                        // Cập nhật nội dung modal với dữ liệu đơn hàng
+                        var tbody = $('#orderDetailsModal .modal-body tbody');
+                        tbody.empty();
+
+                        response.ctdhs.forEach(function(item) {
+                            tbody.append(
+                                '<tr>' +
+                                '<td><img src="' + item.sanpham.hinhanh +
+                                '" alt="" width="50"></td>' +
+                                '<td>' + item.sanpham.tensanpham + '</td>' +
+                                '<td>' + item.soluong + '</td>' +
+                                '<td>' + item.formatted_gia + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                        // Hiển thị modal
+                        $('#orderDetailsModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+        $(document).ready(function() {
+            // Khi nút "Đóng" hoặc dấu "X" được nhấn
+            $('.btn-secondary, .close').on('click', function() {
+                $('#orderDetailsModal').modal('hide'); // Ẩn modal
+            });
+        });
+    </script>
 @endsection

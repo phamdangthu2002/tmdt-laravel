@@ -20,9 +20,21 @@ class SanphamServices
         $random = $sanpham->random($LIMIT);
         return $random;
     }
-    public function get($page = null)
+    public function getAll($page = null)
     {
-        return Sanpham::select('id_sanpham', 'tensanpham', 'mota', 'id_danhmuc', 'gia', 'sale', 'hinhanh', 'trangthai')
+        return Sanpham::select('id_sanpham', 'tensanpham', 'mota', 'id_danhmuc', 'gia', 'sale', 'hinhanh', 'trangthai', 'created_at')
+            ->orderByDesc('id_sanpham')
+            ->when($page != null, function ($query) use ($page) {
+                $query->offset($page * self::LIMIT);
+            })
+            ->limit(self::LIMIT)
+            ->get();
+    }
+
+    public function getSale($page = null)
+    {
+        return Sanpham::select('id_sanpham', 'tensanpham', 'mota', 'id_danhmuc', 'gia', 'sale', 'hinhanh', 'trangthai', 'created_at')
+            ->whereNotNull('sale') // Kiểm tra trường 'sale' không phải là null
             ->orderByDesc('id_sanpham')
             ->when($page != null, function ($query) use ($page) {
                 $query->offset($page * self::LIMIT);

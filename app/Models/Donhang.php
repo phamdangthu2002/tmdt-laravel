@@ -14,7 +14,6 @@ class Donhang extends Model
         'id_sanpham',
         'id_trangthai',
         'tong',
-        'soluong',
     ];
     protected $primaryKey = 'id_donhang'; // Đặt khóa chính là id_donhang
 
@@ -33,5 +32,9 @@ class Donhang extends Model
     public function trangthaiDonHangs()
     {
         return $this->hasMany(TrangThaiDonHang::class, 'id_donhang');
+    }
+    public function ctdh()
+    {
+        return $this->hasMany(Chitietdonghang::class, 'id_donhang', 'id_donhang');
     }
 }

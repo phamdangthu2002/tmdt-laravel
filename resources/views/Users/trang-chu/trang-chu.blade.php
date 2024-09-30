@@ -46,20 +46,20 @@
     </style>
 
     <div class="container mt-5 mb-5">
-        <h1>Product Overview</h1>
+        <h1>Xem trước các sản phẩm</h1>
 
         {{-- @include('Users.layouts.filter') --}}
         <!-- Categories Section -->
         <div>
             <a class="allproduct me-3" href="#" id="all-products-link">
-                All Products
+                Tất cả sản phẩm
             </a>
             <a class="allproduct me-3" href="#" id="sale-link">
-                Sale
+                Giảm giá
             </a>
-            <a class="allproduct" href="#" id="random-link">
+            {{-- <a class="allproduct" href="#" id="random-link">
                 Random
-            </a>
+            </a> --}}
         </div>
         <div id="all-products-content" class="content1">
             <div class="container-main mt-5 mb-5" id="load">

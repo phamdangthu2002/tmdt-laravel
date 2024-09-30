@@ -18,4 +18,8 @@ class Trangthai extends Model
     {
         return $this->hasMany(Donhang::class, 'id_trangthai');
     }
+    public function ctdonhangs()
+    {
+        return $this->hasMany(Chitietdonghang::class, 'id_trangthai');
+    }
 }

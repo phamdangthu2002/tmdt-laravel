@@ -4,14 +4,21 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Cart\CartServices;
+use App\Http\Services\Color\ColorServices;
+use App\Http\Services\Ctdh\ChitietdonghangServices;
 use App\Http\Services\Danhmuc\DanhmucServices;
+use App\Http\Services\Size\SizeServices;
 use App\Http\Services\Slider\SliderServices;
 use App\Http\Services\User\UserServices;
 use App\Http\Services\Users\SanphamServices;
 use App\Models\cart;
+use App\Models\Chitietdonghang;
+use App\Models\Donhang;
 use App\Models\Sanpham;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -22,19 +29,26 @@ class UserController extends Controller
     protected $sanphamServices;
     protected $cartServices;
     protected $userServices;
-    public function __construct(DanhmucServices $danhmucServices, SliderServices $sliderServices, SanphamServices $sanphamServices, CartServices $cartServices, UserServices $userServices)
+    protected $sizeServices;
+    protected $colorServices;
+    protected $chitietdonghangServices;
+    public function __construct(ColorServices $colorServices, SizeServices $sizeServices, DanhmucServices $danhmucServices, SliderServices $sliderServices, SanphamServices $sanphamServices, CartServices $cartServices, UserServices $userServices, ChitietdonghangServices $chitietdonghangServices)
     {
         $this->danhmucServices = $danhmucServices;
         $this->sliderServices = $sliderServices;
         $this->sanphamServices = $sanphamServices;
         $this->cartServices = $cartServices;
         $this->userServices = $userServices;
+        $this->sizeServices = $sizeServices;
+        $this->colorServices = $colorServices;
+        $this->chitietdonghangServices = $chitietdonghangServices;
     }
     public function index()
     {
         $sliders = $this->sliderServices->show();
         $menus = $this->danhmucServices->show();
-        $sanphams = $this->sanphamServices->get();
+        $sanphams = $this->sanphamServices->getAll();
+        $sanphamsales = $this->sanphamServices->getSale();
         $sanphamrandoms = $this->sanphamServices->random();
         return view('Users.trang-chu.trang-chu', [
             'title' => 'Trang chủ',
@@ -42,12 +56,13 @@ class UserController extends Controller
             'sliders' => $sliders,
             'sanphams' => $sanphams,
             'sanphamrandoms' => $sanphamrandoms,
+            'sanphamsales' => $sanphamsales,
         ]);
     }
     public function load(Request $request)
     {
         $page = $request->input('page', 0);
-        $result = $this->sanphamServices->get($page);
+        $result = $this->sanphamServices->getAll($page);
         if (count($result) != 0) {
             $html = view('Users.san-pham-main.main', [
                 'sanphams' => $result,
@@ -76,12 +91,16 @@ class UserController extends Controller
         $sanphams = $this->sanphamServices->showSanpham($id);
         $sanphamss = $this->sanphamServices->getByDanhmuc($sanphams->id_danhmuc, $id);
         $sanphamMores = $this->sanphamServices->more($id);
+        $sizes = $this->sizeServices->get_size();
+        $colors = $this->colorServices->get_color();
         return view('Users.chi-tiet.index', [
             'title' => $sanphams->tensanpham,
             'sanphams' => $sanphams,
             'sanphamMores' => $sanphamMores,
             'anhs' => $anhs,
             'sanphamss' => $sanphamss,
+            'sizes' => $sizes,
+            'colors' => $colors,
         ]);
     }
 
@@ -120,11 +139,28 @@ class UserController extends Controller
     public function showdonhang($id)
     {
         $donhangs = $this->cartServices->getDonhang($id);
+        $ctdhs = $this->chitietdonghangServices->getDonhangById($id);
         return view('Users.don-hang.index', [
             'title' => 'Đơn hàng',
             'donhangs' => $donhangs,
+            'ctdhs' => $ctdhs,
         ]);
     }
+
+    public function detail($id)
+    {
+        $ctdhs = Chitietdonghang::where('id_donhang', $id)->with('sanpham')->get();
+
+        // Định dạng giá cho từng sản phẩm
+        foreach ($ctdhs as $item) {
+            $item->formatted_gia = \App\Helpers\Helper::formatVND($item->gia);
+        }
+
+        return response()->json([
+            'ctdhs' => $ctdhs
+        ]);
+    }
+
 
     public function search(Request $request)
     {

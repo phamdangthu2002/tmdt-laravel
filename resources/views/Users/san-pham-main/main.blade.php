@@ -16,7 +16,7 @@
     <!-- Lặp qua danh sách sản phẩm -->
     @foreach ($sanphams as $sanpham)
         <div class="product-card">
-            {!! \App\Helpers\Helper::timeSince($sanpham->updated_at) !!}
+            {!! \App\Helpers\Helper::timeSince($sanpham->created_at) !!}
             <img src="{{ $sanpham->hinhanh }}" alt="Sản phẩm">
             <div class="product-info">
                 <h3 class="product-title">{{ $sanpham->tensanpham }}</h3>

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Services\Sanpham;
 
+use App\Models\Chitietdonghang;
 use App\Models\Donhang;
 use App\Models\Sanpham;
 use Exception;
@@ -110,7 +111,7 @@ class SanphamServices
 
     public function getTopSellingProduct()
     {
-        return Donhang::select('id_sanpham', DB::raw('SUM(soluong) as total_quantity'))
+        return Chitietdonghang::select('id_sanpham', DB::raw('SUM(soluong) as total_quantity'))
             ->groupBy('id_sanpham')
             ->orderBy('total_quantity', 'DESC')
             ->with('sanpham') // Assuming 'sanpham' is the relationship method

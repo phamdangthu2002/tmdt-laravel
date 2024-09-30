@@ -162,8 +162,18 @@
             text-align: center;
         }
 
+        .input-group.input-group-sm {
+            position: relative;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            width: 100px;
+            justify-content: center;
+        }
 
-        /* Chọn kích thước */
+        input.form-control.quantity {
+            text-align: center;
+        }
     </style>
     <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -235,18 +245,12 @@
                         <div class="form-group">
                             <label for="size">Chọn kích thước</label>
                             <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
-                                <label class="btn btn-outline-primary size-option">
-                                    <input type="radio" name="size" value="S" autocomplete="off"> Size S
-                                </label>
-                                <label class="btn btn-outline-primary size-option">
-                                    <input type="radio" name="size" value="M" autocomplete="off"> Size M
-                                </label>
-                                <label class="btn btn-outline-primary size-option">
-                                    <input type="radio" name="size" value="L" autocomplete="off"> Size L
-                                </label>
-                                <label class="btn btn-outline-primary size-option">
-                                    <input type="radio" name="size" value="XL" autocomplete="off"> Size XL
-                                </label>
+                                @foreach ($sizes as $size)
+                                    <label class="btn btn-outline-primary size-option">
+                                        <input type="radio" name="size" value="{{ $size->id_size }}"
+                                            autocomplete="off"> {{ $size->tensize }}
+                                    </label>
+                                @endforeach
                             </div>
                         </div>
 
@@ -254,35 +258,38 @@
                         <div class="form-group">
                             <label for="color">Chọn màu sắc</label>
                             <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
-                                <label class="btn btn-outline-primary color-option">
-                                    <input type="radio" name="color" value="red" autocomplete="off"> Đỏ
-                                </label>
-                                <label class="btn btn-outline-primary color-option">
-                                    <input type="radio" name="color" value="green" autocomplete="off"> Xanh lá
-                                </label>
-                                <label class="btn btn-outline-primary color-option">
-                                    <input type="radio" name="color" value="blue" autocomplete="off"> Xanh dương
-                                </label>
-                                <label class="btn btn-outline-primary color-option">
-                                    <input type="radio" name="color" value="black" autocomplete="off"> Đen
-                                </label>
+                                @foreach ($colors as $color)
+                                    <label class="btn btn-outline-primary color-option">
+                                        <input type="radio" name="color" value="{{ $color->id_color }}"
+                                            autocomplete="off"> {{ $color->tencolor }}
+                                    </label>
+                                @endforeach
                             </div>
                         </div>
 
                         <!-- Chọn số lượng -->
-                        <div class="quantity-controls">
+                        {{-- <div class="quantity-controls">
                             <button type="button" id="decrease-quantity-1">-</button>
                             <input type="number" name="quantity" class="quantity" value="1" min="1"
                                 max="10">
                             <button type="button" id="increase-quantity-1">+</button>
+                        </div> --}}
+                        <div class="d-flex flex-row align-items-center m-1">
+                            <div class="input-group input-group-sm">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="decrease(this)"
+                                    type="button">-</button>
+                                <input type="number" name="quantity" class="quantity" value="1" min="1"
+                                    max="10">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="increase(this)"
+                                    type="button">+</button>
+                            </div>
                         </div>
 
                         <!-- Nút thêm vào giỏ hàng -->
                         @auth
                             <button type="submit" class="btn btn-primary add-cart mt-5 mb-5"> Thêm vào giỏ hàng </button>
                         @else
-                            <button type="button" onclick="checkLogin()" class="btn btn-secondary add-cart mt-5 mb-5">Thêm
-                                vào
+                            <button type="button" onclick="checkLogin()" class="btn btn-secondary add-cart mt-5 mb-5">Thêm vào
                                 giỏ hàng</button>
                         @endauth
                     @endif

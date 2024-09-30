@@ -1,84 +1,62 @@
-// Hàm để điều chỉnh số lượng sản phẩm
-function adjustQuantity(button, change) {
-    // Tìm phần tử input chứa số lượng sản phẩm
-    const quantityInput = button.closest('.quantity-controls').querySelector('input[type="number"]');
-    let currentQuantity = parseInt(quantityInput.value, 10);
+$(document).ready(function () {
+    function calculateCartTotal() {
+        let total = 0;
 
-    if (isNaN(currentQuantity)) {
-        currentQuantity = 0;
+        // Lặp qua từng hàng trong giỏ hàng
+        $('.item-cart').each(function () {
+            const priceText = $(this).find('.cart-item-price').text().trim(); // Lấy giá sản phẩm
+            const quantity = parseInt($(this).find('.quantity').val(), 10); // Lấy số lượng sản phẩm
+
+            // Chuyển đổi giá thành số và xử lý trường hợp không hợp lệ
+            const price = parseInt(priceText.replace(/[^0-9]/g, ''), 10); // Xóa các ký tự không phải số
+
+            if (!isNaN(price) && !isNaN(quantity)) {
+                total += price * quantity; // Tính tổng
+            } else {
+                console.log('Giá trị không hợp lệ:', priceText); // Log nếu giá không hợp lệ
+            }
+        });
+
+        // Cập nhật tổng vào phần tử với id cartTotal
+        $('#cartTotal').text(total.toLocaleString() + ' VND'); // Hiển thị tổng với định dạng
+        $('#text').val(total); // Cập nhật giá trị vào input ẩn
     }
 
-    // Tăng hoặc giảm số lượng
-    currentQuantity += change;
+    // Tính tổng giỏ hàng khi trang được tải
+    calculateCartTotal();
 
-    // Đảm bảo số lượng không nhỏ hơn 1 và không vượt quá 10
-    if (currentQuantity < 1) {
-        currentQuantity = 1;
-        Swal.fire({
-            icon: 'warning',
-            title: 'Số lượng tối thiểu là 1',
-            text: 'Bạn không thể giảm số lượng thấp hơn 1.',
-        });
-    } else if (currentQuantity > 10) {
-        currentQuantity = 10;
-        Swal.fire({
-            icon: 'warning',
-            title: 'Số lượng tối đa là 10',
-            text: 'Bạn không thể tăng số lượng cao hơn 10.',
-        });
-    }
-
-    // Cập nhật số lượng mới vào ô nhập
-    quantityInput.value = currentQuantity;
-
-    // Tính lại tổng tiền và cập nhật số lượng giỏ hàng
-    calculateTotal();
-    updateCartCount();
-}
-
-// Hàm để tính tổng tiền của các sản phẩm trong giỏ hàng
-function calculateTotal() {
-    let total = 0;
-    const cartItems = document.querySelectorAll('.item-cart');
-
-    cartItems.forEach(item => {
-        const priceText = item.querySelector('.cart-item-price').innerText.replace(/[^0-9]/g, ''); // Lấy số tiền bỏ ký tự đặc biệt
-        const price = parseFloat(priceText); // Chuyển sang số
-        const quantity = parseInt(item.querySelector('.quantity').value, 10); // Lấy số lượng từ giá trị của input
-        total += price * quantity; // Tính tổng giá
+    // Tính lại tổng khi số lượng thay đổi (nếu có)
+    $('.quantity').on('change', function () {
+        calculateCartTotal();
     });
-
-    // Cập nhật tổng tiền với định dạng VND
-    document.querySelector('#cartTotal').innerText = formatVND(total);
-    document.querySelector('#text').value = total
-
-}
+});
 
 // Hàm để định dạng số tiền theo VND
 function formatVND(number) {
     return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', ' VND');
 }
 
-// Gán sự kiện cho các nút điều chỉnh số lượng
-document.addEventListener('DOMContentLoaded', () => {
-    // Gán sự kiện cho nhóm 1
-    document.querySelectorAll('#decrease-quantity-1').forEach(button => {
-        button.addEventListener('click', () => adjustQuantity(button, -1));
-    });
 
-    document.querySelectorAll('#increase-quantity-1').forEach(button => {
-        button.addEventListener('click', () => adjustQuantity(button, 1));
-    });
+function increase(element) {
+    var input = element.parentNode.querySelector('input.quantity');
+    var value = parseInt(input.value, 10);
+    if (value < 10) { // Giới hạn là 10 sản phẩm
+        input.value = value + 1;
+    } else {
+        const Toast = Swal.fire({
+            title: 'THÔNG BÁO',
+            text: 'Chỉ có thể chọn tối đa 10 sản phẩm!!!',
+            icon: 'warning',
+            confirmButtonText: 'Đồng ý',
+        });
+        return false;
+    }
+}
 
-    // Gán sự kiện cho nhóm 2
-    document.querySelectorAll('#decrease-quantity-2').forEach(button => {
-        button.addEventListener('click', () => adjustQuantity(button, -1));
-    });
-
-    document.querySelectorAll('#increase-quantity-2').forEach(button => {
-        button.addEventListener('click', () => adjustQuantity(button, 1));
-    });
-
-    // Tính tổng tiền và cập nhật số lượng giỏ hàng khi trang được tải
-    calculateTotal();
-});
+function decrease(element) {
+    var input = element.parentNode.querySelector('input.quantity');
+    var value = parseInt(input.value, 10);
+    if (value > 1) {
+        input.value = value - 1;
+    }
+}

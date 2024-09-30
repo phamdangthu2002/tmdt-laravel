@@ -50,17 +50,16 @@
                                         </div>
                                     </th>
                                     <th>
-                                        <div class="cart-content">
-                                            <input type="hidden" name="quantity" class="quantity"
-                                                value="{{ $cart->quantity }}" min="1" max="10">
-                                                <span>{{ $cart->quantity }}</span>
-                                        </div>
+                                        <input type="hidden" name="quantity" class="quantity"
+                                            value="{{ $cart->quantity }}" />
+                                        <span>{{ $cart->quantity }}</span>
                                     </th>
                                     <th>
                                         {!! \App\Helpers\Helper::price_cart($cart->gia, $cart->sale) !!}
                                     </th>
                                     <th>
-                                        <a href="{{ $cart->id_giohang }}/delete-cart" style="display:inline;" data-name="{{ $cart->sanpham->tensanpham }}"
+                                        <a href="{{ $cart->id_giohang }}/delete-cart" style="display:inline;"
+                                            data-name="{{ $cart->sanpham->tensanpham }}"
                                             class="btn btn-danger delete-form bx bx-trash"></a>
                                     </th>
                                 </tr>
@@ -69,7 +68,8 @@
                     </tbody>
                 </table>
                 <div class="cart-total">
-                    <p class="font-weight-bold">Total: <span id="cartTotal">$0.00</span></p>
+                    <p class="font-weight-bold">Total: <span id="cartTotal"></span>
+                    </p>
                     <p class="font-weight-bold"><input type="hidden" name="tong" id="text" class="text-decorate">
                     </p>
                 </div>

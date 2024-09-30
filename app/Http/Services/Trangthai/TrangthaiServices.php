@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Services\Trangthai;
 
+use App\Models\Chitietdonghang;
 use App\Models\Donhang;
 use App\Models\Trangthai;
 use Carbon\Carbon;
@@ -79,6 +80,13 @@ class TrangthaiServices
                 $donhang->save();
             }
 
+            // Cập nhật trạng thái cho từng chi tiết đơn hàng trong bảng chitietdonghang
+            $ctdh = Chitietdonghang::where('id_donhang', $id_donhang)->get();
+            foreach ($ctdh as $item) {
+                $item->id_trangthai = $id_trangthai; // Giả sử bạn có cột id_trangthai trong bảng chitietdonghang
+                $item->save();
+            }
+
             // Lưu lịch sử trạng thái đơn hàng
             DB::table('trangthaidonhangs')->insert([
                 'id_donhang' => $id_donhang,
@@ -91,6 +99,7 @@ class TrangthaiServices
         return redirect()->back()->with('success', 'Cập nhật trạng thái thành công.');
     }
 
+
     public function getOrderStatuses()
     {
         // Lấy số lượng đơn hàng theo từng trạng thái
@@ -100,7 +109,8 @@ class TrangthaiServices
             ->get();
     }
 
-    public function getDonhangIdTrangthai($id){
+    public function getDonhangIdTrangthai($id)
+    {
         $donhang = Donhang::select('id_trangthai')->where('id_donhang', $id)->get();
         return $donhang;
     }

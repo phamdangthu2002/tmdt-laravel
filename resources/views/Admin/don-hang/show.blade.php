@@ -24,7 +24,7 @@
                                         <td>{{ $donhang->id_donhang }}</td>
                                         <td>{{ $donhang->user->name }}</td>
                                         <td>{{ $donhang->sanpham->tensanpham }}</td>
-                                        <td>{{ $donhang->tong }}</td>
+                                        <td>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}</td>
                                         <td>{{ $donhang->trangthais->tentrangthai }}</td>
                                         <td><a href="{{ route('admin.editdonhang', $donhang->id_donhang) }}"
                                                 class="btn btn-outline-warning bx bx-edit"></a></td>

@@ -26,8 +26,19 @@
                                         <td>{{ $donhang->sanpham->tensanpham }}</td>
                                         <td>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}</td>
                                         <td>{{ $donhang->trangthais->tentrangthai }}</td>
-                                        <td><a href="{{ route('admin.editdonhang', $donhang->id_donhang) }}"
-                                                class="btn btn-outline-warning bx bx-edit"></a></td>
+                                        @if (!collect($donhang->trangthais->id_trangthai)->intersect([5, 6, 7])->isNotEmpty())
+                                            <td>
+                                                <a href="{{ route('admin.editdonhang', $donhang->id_donhang) }}"
+                                                    class="btn btn-outline-warning bx bx-edit"></a>
+                                            </td>
+                                        @else
+                                            <td>
+                                                <a
+                                                    class="btn btn-outline-danger">
+                                                    <i class='bx bxs-minus-circle'></i>
+                                                </a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             @else

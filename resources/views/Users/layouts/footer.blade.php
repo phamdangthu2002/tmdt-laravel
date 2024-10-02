@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="py-5">
+<footer class="py-5 mt-5">
     <div class="container">
         <div class="row">
             <div class="col-md-3">

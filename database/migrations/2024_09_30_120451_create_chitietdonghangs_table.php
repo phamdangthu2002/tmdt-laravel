@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->bigIncrements('id_ctdh');
             $table->unsignedBigInteger('id_donhang');
             $table->unsignedBigInteger('id_sanpham'); // Khóa ngoại liên kết với bảng sanphams
+            $table->unsignedBigInteger('id_size');
+            $table->unsignedBigInteger('id_color');
+            $table->foreign('id_size')->references('id_size')->on('sizes')->onDelete('cascade');
+            $table->foreign('id_color')->references('id_color')->on('colors')->onDelete('cascade');
             $table->unsignedBigInteger('id_trangthai')->default(1); // Đảm bảo rằng giá trị mặc định tồn tại trong bảng trangthais
             $table->integer('soluong');
             $table->decimal('gia', 15, 2);

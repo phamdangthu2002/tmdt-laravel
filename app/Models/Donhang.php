@@ -13,6 +13,8 @@ class Donhang extends Model
         'id_user',
         'id_sanpham',
         'id_trangthai',
+        'id_size',
+        'id_color',
         'tong',
     ];
     protected $primaryKey = 'id_donhang'; // Đặt khóa chính là id_donhang

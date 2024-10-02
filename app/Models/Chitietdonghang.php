@@ -36,7 +36,18 @@ class Chitietdonghang extends Model
         return $this->belongsTo(Trangthai::class, 'id_trangthai');
     }
     public function sanpham()
-{
-    return $this->belongsTo(Sanpham::class, 'id_sanpham');
-}
+    {
+        return $this->belongsTo(Sanpham::class, 'id_sanpham');
+    }
+    // Định nghĩa quan hệ với màu sắc
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'id_color');
+    }
+
+    // Định nghĩa quan hệ với kích thước
+    public function size()
+    {
+        return $this->belongsTo(Size::class, 'id_size');
+    }
 }

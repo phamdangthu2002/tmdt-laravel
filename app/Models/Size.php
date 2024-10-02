@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class size extends Model
+class Size extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,10 @@ class size extends Model
     protected $fillable = [
         'tensize',
     ];
+
+    // Quan hệ với model Cart
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'id_size');
+    }
 }

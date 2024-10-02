@@ -15,7 +15,7 @@ class SanphamServices
     }
     public function random()
     {
-        $LIMIT = 4;
+        $LIMIT = 0;
         $sanpham = Sanpham::where('trangthai', 1)->get();
         $random = $sanpham->random($LIMIT);
         return $random;

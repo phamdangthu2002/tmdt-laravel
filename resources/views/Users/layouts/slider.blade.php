@@ -294,15 +294,15 @@
 
 </div>
 
-
 <div class="container-banner container my-5">
+    <h1>Danh mục các sản phẩm</h1>
     <div class="sec-banner bg0 p-t-80 p-b-50">
         <div class="row">
             @foreach ($menus as $menu)
-                <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+                <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto mb-4">
                     <!-- Block1 -->
                     <div class="block1 wrap-pic-w">
-                        <img src="{{$menu->hinhanh}}" alt="IMG-BANNER">
+                        <img src="{{ $menu->hinhanh }}" alt="IMG-BANNER">
 
                         <a href="{{ route('user.danhmuc', $menu->id_danhmuc) }}"
                             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">

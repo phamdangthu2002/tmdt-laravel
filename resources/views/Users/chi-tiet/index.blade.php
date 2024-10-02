@@ -247,7 +247,7 @@
                             <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
                                 @foreach ($sizes as $size)
                                     <label class="btn btn-outline-primary size-option">
-                                        <input type="radio" name="size" value="{{ $size->id_size }}"
+                                        <input type="radio" name="id_size" value="{{ $size->id_size }}"
                                             autocomplete="off"> {{ $size->tensize }}
                                     </label>
                                 @endforeach
@@ -260,7 +260,7 @@
                             <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
                                 @foreach ($colors as $color)
                                     <label class="btn btn-outline-primary color-option">
-                                        <input type="radio" name="color" value="{{ $color->id_color }}"
+                                        <input type="radio" name="id_color" value="{{ $color->id_color }}"
                                             autocomplete="off"> {{ $color->tencolor }}
                                     </label>
                                 @endforeach

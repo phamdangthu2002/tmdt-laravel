@@ -19,7 +19,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="email" class="form-label">Nhập vào email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" autofocus>
                         @if ($errors->has('email'))
                             <p class="error-message">*
                                 {{ $errors->first('email') }}

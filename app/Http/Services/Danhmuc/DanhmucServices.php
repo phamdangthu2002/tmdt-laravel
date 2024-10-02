@@ -30,8 +30,9 @@ class DanhmucServices
 
     public function show()
     {
-        $LIMIT = 3;
-        $danhmucs = Danhmuc::select('id_danhmuc', 'tendanhmuc','hinhanh')->orderByDesc('id_danhmuc')->limit($LIMIT)->get();
+        // $LIMIT = 6;
+        // $danhmucs = Danhmuc::select('id_danhmuc', 'tendanhmuc','hinhanh')->orderByDesc('id_danhmuc')->limit($LIMIT)->get();
+        $danhmucs = Danhmuc::select('id_danhmuc', 'tendanhmuc','hinhanh')->orderByDesc('id_danhmuc')->get();
         return $danhmucs;
     }
     public function showAllDanhmuc()

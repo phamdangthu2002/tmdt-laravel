@@ -1,6 +1,5 @@
 @extends('Users.index')
 @section('main')
-    @include('Users.layouts.slider')
     <style>
         .allproduct {
             font-size: 14px;
@@ -44,6 +43,7 @@
             /* Ẩn tất cả nội dung mặc định */
         }
     </style>
+    @include('Users.layouts.slider')
 
     <div class="container mt-5 mb-5">
         <h1>Xem trước các sản phẩm</h1>

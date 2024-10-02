@@ -11,8 +11,8 @@ class Cart extends Model
     protected $fillable = [
         'id_sanpham',
         'id_user',
-        'size',
-        'color',
+        'id_size',
+        'id_color',
         'quantity',
         'gia',
         'dadathang',
@@ -29,5 +29,16 @@ class Cart extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    // Quan hệ với model Size (Kích thước)
+    public function size()
+    {
+        return $this->belongsTo(Size::class, 'id_size');
+    }
+    // Quan hệ với model Size (Kích thước)
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'id_color');
     }
 }

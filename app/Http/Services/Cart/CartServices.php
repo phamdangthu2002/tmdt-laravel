@@ -50,24 +50,24 @@ class CartServices
     {
         $id_user = Auth::user()->id;
         $id_sanpham = (int) $request->input('id_sanpham');
-        $color = (string) $request->input('color');
-        $size = (string) $request->input('size');
+        $id_color = (int) $request->input('id_color');
+        $id_size = (int) $request->input('id_size');
         $quantity = (int) $request->input('quantity');
         $gia = (int) $request->input('gia');
 
         // Kiểm tra các giá trị cần thiết
-        if ($size == null) {
+        if (empty($id_size)) {
             return redirect()->back()->with('error', 'Vui lòng chọn kích thước!');
         }
-        if ($color == null) {
+        if (empty($id_color)) {
             return redirect()->back()->with('error', 'Vui lòng chọn màu sắc!');
         }
 
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng hay chưa
         $cartItem = Cart::where('id_user', $id_user)
             ->where('id_sanpham', $id_sanpham)
-            ->where('color', $color)
-            ->where('size', $size)
+            ->where('id_size', $id_size)
+            ->where('id_color', $id_color)
             ->first();
 
         if ($cartItem) {
@@ -79,25 +79,25 @@ class CartServices
             Cart::create([
                 'id_user' => $id_user,
                 'id_sanpham' => $id_sanpham,
-                'color' => $color,
-                'size' => $size,
+                'id_color' => $id_color,
+                'id_size' => $id_size,
                 'quantity' => $quantity,
                 'gia' => $gia,
             ]);
         }
+
         return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
     }
 
-
     public function show_cart()
     {
-        return Cart::select('id_giohang', 'id_sanpham', 'id_user', 'size', 'color', 'quantity', 'gia')->with('sanpham')->get();
+        return Cart::select('id_giohang', 'id_sanpham', 'id_user', 'id_size', 'id_color', 'quantity', 'gia')->with('sanpham')->get();
     }
     public function getCartByID()
     {
         // Lấy id của người dùng hiện tại đã đăng nhập
         $id_user = Auth::id();
-        return Cart::select('id_giohang', 'id_sanpham', 'size', 'color', 'quantity', 'gia', 'dadathang')->with('sanpham')->where('id_user', $id_user)->get();
+        return Cart::select('id_giohang', 'id_sanpham', 'id_size', 'id_color', 'quantity', 'gia', 'dadathang')->with('sanpham')->where('id_user', $id_user)->get();
     }
 
     public function destroy($id)
@@ -142,6 +142,8 @@ class CartServices
     public function add_donghang($request, $id)
     {
         $id_sanpham = $request->input('id_sanpham');
+        $id_size = $request->input('id_size');
+        $id_color = $request->input('id_color');
         $id_user = $id;
         $id_trangthai = 1; // Mặc định trạng thái đơn hàng
         $datathang = 0; // Đánh dấu giỏ hàng đã đặt hàng
@@ -179,7 +181,9 @@ class CartServices
                     'id_sanpham' => $cart->id_sanpham,
                     'soluong' => $cart->quantity,
                     'gia' => $cart->gia,
-                    'id_trangthai' => $id_trangthai,
+                    'id_trangthai' => $id_trangthai, // Đảm bảo rằng id_trangthai có giá trị hợp lệ
+                    'id_size' => $id_size,
+                    'id_color' => $id_color,
                 ]);
             }
 
@@ -199,7 +203,6 @@ class CartServices
 
         return true;
     }
-
 
 
     // public function add_donghang($request, $id)
@@ -244,7 +247,7 @@ class CartServices
         return Donhang::where('id_user', $id)
             ->with('user')              // Lấy thông tin người dùng
             ->with('trangthais')        // Lấy trạng thái đơn hàng
-            ->with('sanpham') 
+            ->with('sanpham')
             ->with('ctdh')  // Lấy thông tin từ bảng chitietdonhang
             ->get();
     }

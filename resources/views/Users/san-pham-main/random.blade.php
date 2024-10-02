@@ -2,7 +2,7 @@
     <!-- Lặp qua danh sách sản phẩm -->
     @foreach ($sanphamrandoms as $sanphamrandom)
         <div class="product-card">
-            {{-- {!! \App\Helpers\Helper::price($sanphamrandom->gia, $sanphamrandom->sale) !!} --}}
+            {!! \App\Helpers\Helper::price($sanphamrandom->gia, $sanphamrandom->sale) !!}
             <img src="{{ $sanphamrandom->hinhanh }}" alt="Sản phẩm">
             <div class="product-info">
                 <h3 class="product-title">{{ $sanphamrandom->tensanpham }}</h3>

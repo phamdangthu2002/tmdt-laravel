@@ -4,11 +4,11 @@
     <!-- Cart Menu -->
     <div class="container-cart mt-5">
 
-        <h5>Your Cart</h5>
+        <h2><b>Giỏ hàng</b></h2>
         @if ($carts->isEmpty())
-            <h3>
-                <p>No items in cart</p>
-            </h3>
+            <h4>
+                <p>Không có sản phẩm trong giỏ hàng</p>
+            </h4>
             <a href="{{ url()->previous() }}" class="btn btn-outline-success">Tiếp tục mua sắm</a>
         @else
             <form action="{{ route('user.add-donghang', Auth::id()) }}" method="POST">
@@ -30,6 +30,8 @@
                             @if ($cart->dadathang != 0)
                                 <tr class="item-cart">
                                     <input type="hidden" name="id_sanpham" value="{{ $cart->sanpham->id_sanpham }}">
+                                    <input type="hidden" name="id_size" value="{{ $cart->size->id_size }}">
+                                    <input type="hidden" name="id_color" value="{{ $cart->color->id_color }}">
                                     <th>
                                         <img src="{{ $cart->sanpham->hinhanh }}" alt="{{ $cart->sanpham->tensanpham }}"
                                             class="img-thumbnail">
@@ -41,12 +43,12 @@
                                     </th>
                                     <th>
                                         <div class="cart-content">
-                                            {{ $cart->size }}
+                                            {{ $cart->size->tensize }}
                                         </div>
                                     </th>
                                     <th>
                                         <div class="cart-content">
-                                            {{ $cart->color }}
+                                            {{ $cart->color->tencolor }}
                                         </div>
                                     </th>
                                     <th>

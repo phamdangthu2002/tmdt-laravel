@@ -14,25 +14,22 @@ return new class extends Migration {
             $table->bigIncrements('id_giohang');
             $table->unsignedBigInteger('id_sanpham');
             $table->unsignedBigInteger('id_user');
-            $table->string('size');
-            $table->string('color');
+            $table->unsignedBigInteger('id_size');
+            $table->unsignedBigInteger('id_color');
             $table->integer('quantity');
             $table->integer('gia');
             $table->integer('dadathang')->default(1);
             $table->tinyInteger('trangthai')->default(1);
-            // Khóa ngoại liên kết với bảng 'sanphams'
-            $table->foreign('id_sanpham')
-                ->references('id_sanpham')
-                ->on('sanphams')
-                ->onDelete('cascade'); // Khi xóa sản phẩm, sẽ tự động xóa giỏ hàng liên quan
 
-            // Khóa ngoại liên kết với bảng 'users'
-            $table->foreign('id_user')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade'); // Khi xóa user, sẽ tự động xóa giỏ hàng liên quan
+            // Khóa ngoại
+            $table->foreign('id_sanpham')->references('id_sanpham')->on('sanphams')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_size')->references('id_size')->on('sizes')->onDelete('cascade');
+            $table->foreign('id_color')->references('id_color')->on('colors')->onDelete('cascade');
+
             $table->timestamps();
         });
+
     }
 
     /**

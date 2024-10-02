@@ -149,7 +149,7 @@ class UserController extends Controller
 
     public function detail($id)
     {
-        $ctdhs = Chitietdonghang::where('id_donhang', $id)->with('sanpham')->get();
+        $ctdhs = Chitietdonghang::where('id_donhang', $id)->with('sanpham')->with('color')->with('size')->get();
 
         // Định dạng giá cho từng sản phẩm
         foreach ($ctdhs as $item) {

@@ -13,15 +13,12 @@ return new class extends Migration {
         Schema::create('donhangs', function (Blueprint $table) {
             $table->bigIncrements('id_donhang'); // Khóa chính của bảng
             $table->unsignedBigInteger('id_user'); // Khóa ngoại liên kết với bảng users
-            $table->unsignedBigInteger('id_sanpham'); // Khóa ngoại liên kết với bảng sanphams
             $table->unsignedBigInteger('id_trangthai')->default(1); // Đảm bảo rằng giá trị mặc định tồn tại trong bảng trangthais
             $table->foreign('id_trangthai')->references('id_trangthai')->on('trangthais')->onDelete('cascade');
 
             $table->integer('tong');
             $table->tinyInteger('trangthai')->default(1);
 
-            // Liên kết khóa ngoại với bảng sanphams
-            $table->foreign('id_sanpham')->references('id_sanpham')->on('sanphams')->onDelete('cascade');
 
             // Liên kết khóa ngoại với bảng users
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade'); // Khi xóa user, sẽ tự động xóa đơn hàng liên quan

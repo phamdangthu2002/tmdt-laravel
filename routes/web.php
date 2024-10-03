@@ -148,6 +148,7 @@ Route::prefix('User')->group(function () {
     Route::get('/gio-hang-show', [UserController::class, 'giohangshow'])->name('user.giohangshow');
     Route::post('/update-cart', [UserController::class, 'update'])->name('user.update-cart');
     Route::get('{id}/delete-cart', [UserController::class, 'destroy'])->name('user.delete-cart');
+    Route::post('/cart/update', [UserController::class, 'updateCart'])->name('cart.update');
 
     //donhang
     Route::post('{id}/don-hang', [UserController::class, 'donhang'])->name('user.add-donghang');

@@ -9,10 +9,15 @@ class ColorServices
 {
     public function add_color($request)
     {
+        $tencolor = $request->input('colorName');
+        $trangthai = $request->input('colorStatus');
+        if (empty($tencolor)) {
+            return redirect()->back()->with('error', 'Bạn chưa nhập tên Color');
+        }
         try {
             Color::create([
-                'tencolor' => (string) $request->input('colorName'),
-                'trangthai' => (int) $request->input('colorStatus'), // Chuyển đổi thành số nguyên
+                'tencolor' => $tencolor,
+                'trangthai' => $trangthai, // Chuyển đổi thành số nguyên
 
             ]);
             session()->flash('success', 'Thêm color thành công');
@@ -28,6 +33,12 @@ class ColorServices
     {
         $colors = Color::all();
         return $colors;
+    }
+
+    public function getColorid($id)
+    {
+        $color = Color::find($id);
+        return $color;
     }
 
     public function update_color($id)

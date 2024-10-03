@@ -17,6 +17,9 @@ class TrangthaiServices
         $mota = $request->input('mota');
         $trangthai = $request->input('trangthai');
 
+        if (empty($tentrangthai)) {
+            return redirect()->back()->with('error', 'Bạn chưa nhập tên trạng thái');
+        }
         try {
             // $request->except('_token');
             Trangthai::create(

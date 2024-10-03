@@ -90,12 +90,27 @@
                                         <th>Ngày Tạo</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {{-- <tbody>
                                     @foreach ($recentOrders as $order)
                                         <tr>
                                             <td>{{ $order->id_donhang }}</td>
                                             <td>{{ $order->user->name }}</td>
                                             <td>{{ $order->sanpham->tensanpham }}</td>
+                                            <td>{{ $order->trangthais->tentrangthai }}</td>
+                                            <td>{{ $order->created_at->format('d/m/Y H:i A') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody> --}}
+                                <tbody>
+                                    @foreach ($recentOrders as $order)
+                                        <tr>
+                                            <td>{{ $order->id_donhang }}</td>
+                                            <td>{{ $order->user->name }}</td>
+                                            <td>
+                                                @foreach ($order->chitietdonghangs as $chitiet)
+                                                    {{ $chitiet->sanpham->tensanpham }} ({{ $chitiet->soluong }})<br>
+                                                @endforeach
+                                            </td>
                                             <td>{{ $order->trangthais->tentrangthai }}</td>
                                             <td>{{ $order->created_at->format('d/m/Y H:i A') }}</td>
                                         </tr>
@@ -185,7 +200,17 @@
         // Chuyển dữ liệu từ Laravel thành các mảng cho biểu đồ
         const labels = orderStatuses.map(status => status.tentrangthai);
         const data = orderStatuses.map(status => status.total);
-        const backgroundColors = ['#36a2eb', '#ff6384', '#ffce56']; // Màu nền cho từng trạng thái
+        const backgroundColors = [
+            '#36a2eb', // Xanh dương
+            '#ff6384', // Đỏ hồng
+            '#ffce56', // Vàng
+            '#4bc0c0', // Xanh ngọc
+            '#9966ff', // Tím
+            '#ff9f40', // Cam
+            '#e7e9ed', // Xám
+            '#f7464a' // Đỏ
+        ];
+        // Màu nền cho từng trạng thái
 
         const orderStatusData = {
             labels: labels,

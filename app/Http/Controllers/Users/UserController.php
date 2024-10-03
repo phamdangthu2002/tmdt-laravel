@@ -91,6 +91,7 @@ class UserController extends Controller
         $sanphams = $this->sanphamServices->showSanpham($id);
         $sanphamss = $this->sanphamServices->getByDanhmuc($sanphams->id_danhmuc, $id);
         $sanphamMores = $this->sanphamServices->more($id);
+        $menus = $this->danhmucServices->getAllDanhmuc();
         $sizes = $this->sizeServices->get_size();
         $colors = $this->colorServices->get_color();
         return view('Users.chi-tiet.index', [
@@ -101,6 +102,7 @@ class UserController extends Controller
             'sanphamss' => $sanphamss,
             'sizes' => $sizes,
             'colors' => $colors,
+            'menus' => $menus
         ]);
     }
 
@@ -118,6 +120,24 @@ class UserController extends Controller
             'carts' => $carts,
         ]);
     }
+
+    public function updateCart(Request $request)
+    {
+        $cartId = $request->input('cart_id');
+        $quantity = $request->input('quantity');
+
+        // Tìm sản phẩm trong giỏ hàng và cập nhật số lượng
+        $cartItem = Cart::find($cartId);
+        if ($cartItem) {
+            $cartItem->quantity = $quantity;
+            $cartItem->save();
+
+            return response()->json(['message' => 'Số lượng đã được cập nhật thành công.']);
+        } else {
+            return response()->json(['message' => 'Không tìm thấy sản phẩm trong giỏ hàng.'], 404);
+        }
+    }
+
 
     public function update(Request $request)
     {
@@ -139,18 +159,16 @@ class UserController extends Controller
     public function showdonhang($id)
     {
         $donhangs = $this->cartServices->getDonhang($id);
-        $ctdhs = $this->chitietdonghangServices->getDonhangById($id);
         return view('Users.don-hang.index', [
             'title' => 'Đơn hàng',
             'donhangs' => $donhangs,
-            'ctdhs' => $ctdhs,
         ]);
     }
 
     public function detail($id)
     {
-        $ctdhs = Chitietdonghang::where('id_donhang', $id)->with('sanpham')->with('color')->with('size')->get();
 
+        $ctdhs = Chitietdonghang::where('id_donhang', $id)->with('sanpham')->with('color')->with('size')->get();
         // Định dạng giá cho từng sản phẩm
         foreach ($ctdhs as $item) {
             $item->formatted_gia = \App\Helpers\Helper::formatVND($item->gia);

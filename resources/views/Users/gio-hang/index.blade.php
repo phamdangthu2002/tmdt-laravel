@@ -52,9 +52,20 @@
                                         </div>
                                     </th>
                                     <th>
-                                        <input type="hidden" name="quantity" class="quantity"
+                                        {{-- <input type="hidden" name="quantity" class="quantity"
                                             value="{{ $cart->quantity }}" />
-                                        <span>{{ $cart->quantity }}</span>
+                                        <span>{{ $cart->quantity }}</span> --}}
+                                        <div class="d-flex flex-row align-items-center m-1">
+                                            <div class="input-group input-group-sm">
+                                                <button class="btn btn-sm btn-outline-secondary"
+                                                    onclick="decrease(this, {{ $cart->id_giohang }})" type="button">-</button>
+                                                <input type="number" name="quantity" class="quantity"
+                                                    value="{{ $cart->quantity }}" min="1" max="10"
+                                                    data-cart-id="{{ $cart->id }}">
+                                                <button class="btn btn-sm btn-outline-secondary"
+                                                    onclick="increase(this, {{ $cart->id_giohang }})" type="button">+</button>
+                                            </div>
+                                        </div>
                                     </th>
                                     <th>
                                         {!! \App\Helpers\Helper::price_cart($cart->gia, $cart->sale) !!}
@@ -80,4 +91,59 @@
             </form>
         @endif
     </div>
+    <script>
+        function increase(element, cartId) {
+            var input = element.parentNode.querySelector('input.quantity');
+            var value = parseInt(input.value, 10);
+            if (value < 10) {
+                input.value = value + 1;
+                updateQuantity(cartId, value + 1);
+            } else {
+                Swal.fire({
+                    title: 'THÔNG BÁO',
+                    text: 'Chỉ có thể chọn tối đa 10 sản phẩm!!!',
+                    icon: 'warning',
+                    confirmButtonText: 'Đồng ý',
+                });
+            }
+        }
+
+        function decrease(element, cartId) {
+            var input = element.parentNode.querySelector('input.quantity');
+            var value = parseInt(input.value, 10);
+            if (value > 1) {
+                input.value = value - 1;
+                updateQuantity(cartId, value - 1);
+            }
+        }
+
+        function updateQuantity(cartId, quantity) {
+            // Gửi yêu cầu AJAX để cập nhật số lượng
+            $.ajax({
+                url: '/User/cart/update', // Đường dẫn đến API để cập nhật giỏ hàng
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}', // CSRF token
+                    cart_id: cartId, // ID của sản phẩm trong giỏ hàng
+                    quantity: quantity // Số lượng mới
+                },
+                success: function(response) {
+                    Swal.fire({
+                        title: 'THÔNG BÁO',
+                        text: 'Đã cập nhật số lượng sản phẩm.',
+                        icon: 'success',
+                        confirmButtonText: 'Đồng ý',
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Lỗi',
+                        text: 'Có lỗi xảy ra khi cập nhật số lượng.',
+                        icon: 'error',
+                        confirmButtonText: 'Đồng ý',
+                    });
+                }
+            });
+        }
+    </script>
 @endsection

@@ -22,10 +22,6 @@ class SliderController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'url' => 'required',
-        ]);
         $this->sliderServices->insert($request);
         return redirect()->back();
     }

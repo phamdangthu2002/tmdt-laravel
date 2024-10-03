@@ -11,7 +11,6 @@ class Donhang extends Model
     protected $fillable = [
         'id_donhang',
         'id_user',
-        'id_sanpham',
         'id_trangthai',
         'id_size',
         'id_color',
@@ -39,4 +38,18 @@ class Donhang extends Model
     {
         return $this->hasMany(Chitietdonghang::class, 'id_donhang', 'id_donhang');
     }
+    public function chitietdonghangs()
+    {
+        return $this->hasMany(Chitietdonghang::class, 'id_donhang');
+    }
+    public function sizes()
+    {
+        return $this->hasMany(Size::class, 'id_size');
+    }
+
+    public function colors()
+    {
+        return $this->hasMany(Color::class, 'id_color');
+    }
+
 }

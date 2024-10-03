@@ -9,10 +9,15 @@ class SizeServices
 {
     public function add_size($request)
     {
+        $tensize = $request->input('sizeName');
+        $trangthai = $request->input('sizeStatus');
+        if (empty($tensize)) {
+            return redirect()->back()->with('error', 'Bạn chưa nhập tên Size');
+        }
         try {
             Size::create([
-                'tensize' => (string) $request->input('sizeName'),
-                'trangthai' => (int) $request->input('sizeStatus'), // Chuyển đổi thành số nguyên
+                'tensize' => $tensize,
+                'trangthai' => $trangthai, // Chuyển đổi thành số nguyên
 
             ]);
             // size::create($sizeFormRequest->all());
@@ -31,6 +36,11 @@ class SizeServices
         return $sizes;
     }
 
+    public function getSizeid($id)
+    {
+        $size = Size::find($id);
+        return $size;
+    }
     public function update_size($id)
     {
         $size = Size::find($id);

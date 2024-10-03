@@ -33,7 +33,7 @@ class DonhangController extends Controller
         $donhang = $this->trangthaiServices->getDonhangIdTrangthai($id);
         $trangthais = $this->trangthaiServices->show();
         $donhangs = $this->donhangServices->getDonhang();
-        $donhangedits = $this->chitietdonghangServices->getDonhangById($id);
+        $donhangedits = $this->chitietdonghangServices->Chitietdonghang($id);
         return view('Admin.don-hang.edit', [
             'title' => 'Trạng thái đơn hàng',
             'donhangs' => $donhangs,

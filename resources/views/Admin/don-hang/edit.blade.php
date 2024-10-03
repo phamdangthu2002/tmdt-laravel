@@ -60,7 +60,7 @@
                 @endforeach
 
                 {{-- Hiển thị nút lưu nếu trạng thái không nằm trong danh sách 6, 7, 8 --}}
-                @if (!collect($donhangedits)->pluck('id_trangthai')->intersect([5, 6, 7])->isNotEmpty())
+                @if (!collect($donhangedits)->pluck('id_trangthai')->intersect([6, 7, 8])->isNotEmpty())
                     <button type="submit" class="btn btn-primary mt-4">Lưu</button>
                 @endif
             </div>

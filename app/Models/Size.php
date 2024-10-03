@@ -20,4 +20,8 @@ class Size extends Model
     {
         return $this->hasMany(Cart::class, 'id_size');
     }
+    public function chitietdonghangs()
+    {
+        return $this->hasMany(Chitietdonghang::class, 'id_size');
+    }
 }

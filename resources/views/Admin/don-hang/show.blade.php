@@ -23,18 +23,24 @@
                                     <tr>
                                         <td>{{ $donhang->id_donhang }}</td>
                                         <td>{{ $donhang->user->name }}</td>
-                                        <td>{{ $donhang->sanpham->tensanpham }}</td>
+                                        {{-- Hiển thị tên sản phẩm --}}
+                                        <td>
+                                            @foreach ($donhang->chitietdonghangs as $item)
+                                                <div>{{ $item->sanpham->tensanpham }}</div>
+                                            @endforeach
+                                        </td>
                                         <td>{{ \App\Helpers\Helper::formatVND($donhang->tong) }}</td>
                                         <td>{{ $donhang->trangthais->tentrangthai }}</td>
-                                        @if (!collect($donhang->trangthais->id_trangthai)->intersect([5, 6, 7])->isNotEmpty())
+
+
+                                        @if (!collect($donhang->trangthais->id_trangthai)->intersect([6, 7, 8])->isNotEmpty())
                                             <td>
                                                 <a href="{{ route('admin.editdonhang', $donhang->id_donhang) }}"
                                                     class="btn btn-outline-warning bx bx-edit"></a>
                                             </td>
                                         @else
                                             <td>
-                                                <a
-                                                    class="btn btn-outline-danger">
+                                                <a class="btn btn-outline-danger">
                                                     <i class='bx bxs-minus-circle'></i>
                                                 </a>
                                             </td>
@@ -43,7 +49,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5">Không có đơn hàng nào để hiển thị.</td>
+                                    <td colspan="6">Không có đơn hàng nào để hiển thị.</td>
                                 </tr>
                             @endif
                         </tbody>

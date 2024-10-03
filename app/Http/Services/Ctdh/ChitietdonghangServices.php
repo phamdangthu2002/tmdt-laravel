@@ -10,10 +10,12 @@ class ChitietdonghangServices
         return Chitietdonghang::all();
     }
 
-    public function getDonhangById($id)
+    public function Chitietdonghang($id)
     {
         return Chitietdonghang::where('id_donhang', $id)
             ->with('sanpham') // Lấy thông tin sản phẩm liên quan
+            ->with('size')
+            ->with('color')
             ->get();
     }
 

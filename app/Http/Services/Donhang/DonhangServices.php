@@ -8,8 +8,9 @@ class DonhangServices
 {
     public function getDonhang()
     {
-        return Donhang::all();
+        return Donhang::with('chitietdonghangs.sanpham')->get();
     }
+
 
     public function getDonhangById($id)
     {
@@ -40,10 +41,10 @@ class DonhangServices
     }
     public function getRecentOrders()
     {
-        // Lấy 5 đơn hàng mới nhất
-        return Donhang::with('user', 'sanpham', 'trangthais')
+        return Donhang::with(['user', 'trangthais', 'chitietdonghangs.sanpham'])
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
     }
+
 }

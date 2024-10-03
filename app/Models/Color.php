@@ -18,4 +18,8 @@ class Color extends Model
     {
         return $this->hasMany(Cart::class, 'id_color');
     }
+    public function chitietdonghangs()
+    {
+        return $this->hasMany(Chitietdonghang::class, 'id_color');
+    }
 }

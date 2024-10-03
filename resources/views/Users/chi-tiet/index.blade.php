@@ -241,31 +241,36 @@
                     @else
                         <input type="hidden" name="id_sanpham" value="{{ $sanphams->id_sanpham }}">
                         <input type="hidden" name="gia" value="<?= $price ?>">
-                        <!-- Chọn kích thước -->
-                        <div class="form-group">
-                            <label for="size">Chọn kích thước</label>
-                            <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
-                                @foreach ($sizes as $size)
-                                    <label class="btn btn-outline-primary size-option">
-                                        <input type="radio" name="id_size" value="{{ $size->id_size }}"
-                                            autocomplete="off"> {{ $size->tensize }}
-                                    </label>
-                                @endforeach
+                        <input type="hidden" name="id_danhmuc" value="{{ $sanphams->danhmuc->id_danhmuc }}">
+                        <input type="hidden" name="id_sizedefault" value="1">
+                        <input type="hidden" name="id_colordefault" value="1">
+                        @if ($sanphams->danhmuc->id_danhmuc != 1)
+                            <!-- Chọn kích thước -->
+                            <div class="form-group">
+                                <label for="size">Chọn kích thước</label>
+                                <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                    @foreach ($sizes as $size)
+                                        <label class="btn btn-outline-primary size-option">
+                                            <input type="radio" name="id_size" value="{{ $size->id_size }}"
+                                                autocomplete="off"> {{ $size->tensize }}
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Chọn màu sắc -->
-                        <div class="form-group">
-                            <label for="color">Chọn màu sắc</label>
-                            <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
-                                @foreach ($colors as $color)
-                                    <label class="btn btn-outline-primary color-option">
-                                        <input type="radio" name="id_color" value="{{ $color->id_color }}"
-                                            autocomplete="off"> {{ $color->tencolor }}
-                                    </label>
-                                @endforeach
+                            <!-- Chọn màu sắc -->
+                            <div class="form-group">
+                                <label for="color">Chọn màu sắc</label>
+                                <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                    @foreach ($colors as $color)
+                                        <label class="btn btn-outline-primary color-option">
+                                            <input type="radio" name="id_color" value="{{ $color->id_color }}"
+                                                autocomplete="off"> {{ $color->tencolor }}
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <!-- Chọn số lượng -->
                         {{-- <div class="quantity-controls">
@@ -276,11 +281,11 @@
                         </div> --}}
                         <div class="d-flex flex-row align-items-center m-1">
                             <div class="input-group input-group-sm">
-                                <button class="btn btn-sm btn-outline-secondary" onclick="decrease(this)"
+                                <button class="btn btn-sm btn-outline-secondary" onclick="tru(this)"
                                     type="button">-</button>
                                 <input type="number" name="quantity" class="quantity" value="1" min="1"
                                     max="10">
-                                <button class="btn btn-sm btn-outline-secondary" onclick="increase(this)"
+                                <button class="btn btn-sm btn-outline-secondary" onclick="cong(this)"
                                     type="button">+</button>
                             </div>
                         </div>
@@ -333,12 +338,7 @@
             <!-- Reviews Tab Content -->
             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                 <p>
-                    Customer reviews about the product. Average rating, etc.
-                    Customer reviews about the product. Average rating, etc.
-                    Customer reviews about the product. Average rating, etc.
-                    Customer reviews about the product. Average rating, etc.
-                    Customer reviews about the product. Average rating, etc.
-                    Customer reviews about the product. Average rating, etc.
+                    No comment.
                 </p>
             </div>
         </div>

@@ -37,7 +37,7 @@ function formatVND(number) {
 }
 
 
-function increase(element) {
+function cong(element) {
     var input = element.parentNode.querySelector('input.quantity');
     var value = parseInt(input.value, 10);
     if (value < 10) { // Giới hạn là 10 sản phẩm
@@ -53,7 +53,7 @@ function increase(element) {
     }
 }
 
-function decrease(element) {
+function tru(element) {
     var input = element.parentNode.querySelector('input.quantity');
     var value = parseInt(input.value, 10);
     if (value > 1) {

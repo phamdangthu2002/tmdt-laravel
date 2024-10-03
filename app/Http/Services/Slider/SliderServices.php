@@ -11,6 +11,13 @@ class SliderServices
 {
     public function insert($request)
     {
+        $request->validate([
+            'name' => 'required',
+            'url' => 'required',
+        ], [
+            'name.required' => 'Vui lòng nhập tên',
+            'url.required' => 'Vui lòng nhập url',
+        ]);
         try {
             // $request->except('_token');
             Slider::create(
@@ -36,8 +43,9 @@ class SliderServices
         return Slider::orderByDesc('id_slider')->paginate(15);
     }
 
-    public function show(){
-        return Slider::where('trangthai',1)->orderByDesc('sort_by')->get();
+    public function show()
+    {
+        return Slider::where('trangthai', 1)->orderByDesc('sort_by')->get();
     }
 
     public function getSliderById($id_slider)
@@ -80,12 +88,12 @@ class SliderServices
     public function delete($id_slider)
     {
         $sliders = Slider::where('id_slider', $id_slider)->first();
-        if($sliders){
+        if ($sliders) {
             $path = str_replace('storage', 'public', $sliders->hinhanh);
             Storage::delete($path);
             $sliders->delete();
             Session::flash('success', 'Sản phẩm đã được xóa thành công.');
-        }else{
+        } else {
             Session::flash('error', 'Xóa sản phẩm thất bại.');
         }
     }

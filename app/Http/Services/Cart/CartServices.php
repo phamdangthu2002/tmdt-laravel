@@ -230,10 +230,10 @@ class CartServices
         DB::beginTransaction();
         try {
             // Tính tổng tiền
-            $tong = $carts->sum(function ($cart) {
-                return $cart->quantity * $cart->gia;
-            });
-
+            $tong = 0;
+            foreach ($carts as $cart) {
+                $tong += $cart->quantity * $cart->gia;
+            }
             // Tạo đơn hàng mới
             $donhang = Donhang::create([
                 'id_user' => $id_user,

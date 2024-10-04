@@ -58,12 +58,14 @@
                                         <div class="d-flex flex-row align-items-center m-1">
                                             <div class="input-group input-group-sm">
                                                 <button class="btn btn-sm btn-outline-secondary"
-                                                    onclick="decrease(this, {{ $cart->id_giohang }})" type="button">-</button>
+                                                    onclick="decrease(this, {{ $cart->id_giohang }})"
+                                                    type="button">-</button>
                                                 <input type="number" name="quantity" class="quantity"
                                                     value="{{ $cart->quantity }}" min="1" max="10"
                                                     data-cart-id="{{ $cart->id }}">
                                                 <button class="btn btn-sm btn-outline-secondary"
-                                                    onclick="increase(this, {{ $cart->id_giohang }})" type="button">+</button>
+                                                    onclick="increase(this, {{ $cart->id_giohang }})"
+                                                    type="button">+</button>
                                             </div>
                                         </div>
                                     </th>
@@ -128,22 +130,43 @@
                     quantity: quantity // Số lượng mới
                 },
                 success: function(response) {
-                    Swal.fire({
-                        title: 'THÔNG BÁO',
-                        text: 'Đã cập nhật số lượng sản phẩm.',
-                        icon: 'success',
-                        confirmButtonText: 'Đồng ý',
-                    });
+                    // Lưu thông báo vào sessionStorage trước khi reload trang
+                    sessionStorage.setItem('updateMessage', 'Đã cập nhật số lượng sản phẩm.');
+
+                    // Reload trang
+                    location.reload(true);
                 },
                 error: function(xhr) {
                     Swal.fire({
-                        title: 'Lỗi',
-                        text: 'Có lỗi xảy ra khi cập nhật số lượng.',
+                        toast: true,
+                        position: 'top-end',
                         icon: 'error',
-                        confirmButtonText: 'Đồng ý',
+                        title: 'Có lỗi xảy ra khi cập nhật số lượng.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
                     });
                 }
             });
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Kiểm tra sessionStorage có thông báo không
+            let message = sessionStorage.getItem('updateMessage');
+            if (message) {
+                // Hiển thị Toast
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                });
+
+                // Xóa thông báo khỏi sessionStorage
+                sessionStorage.removeItem('updateMessage');
+            }
+        });
     </script>
 @endsection

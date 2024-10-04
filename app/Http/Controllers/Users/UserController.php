@@ -169,11 +169,15 @@ class UserController extends Controller
     {
 
         $ctdhs = Chitietdonghang::where('id_donhang', $id)->with('sanpham')->with('color')->with('size')->get();
-        // Định dạng giá cho từng sản phẩm
-        foreach ($ctdhs as $item) {
-            $item->formatted_gia = \App\Helpers\Helper::formatVND($item->gia);
-        }
 
+        // Tính tổng tiền cho từng sản phẩm và định dạng giá
+        foreach ($ctdhs as $item) {
+            // Tính tổng tiền (giá * số lượng)
+            $item->tong_tien = $item->gia * $item->soluong;
+
+            // Định dạng tổng tiền
+            $item->formatted_gia = \App\Helpers\Helper::formatVND($item->tong_tien);
+        }
         return response()->json([
             'ctdhs' => $ctdhs
         ]);

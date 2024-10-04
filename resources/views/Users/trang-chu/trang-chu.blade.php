@@ -92,10 +92,8 @@
             // Lấy các phần tử liên kết và nội dung
             const allProductsLink = document.getElementById('all-products-link');
             const saleLink = document.getElementById('sale-link');
-            const randomLink = document.getElementById('random-link');
             const allProductsContent = document.getElementById('all-products-content');
             const saleContent = document.getElementById('sale-content');
-            const randomContent = document.getElementById('random-content');
 
             // Xử lý sự kiện click cho liên kết "All Products"
             allProductsLink.addEventListener('click', function(e) {
@@ -111,14 +109,6 @@
                 allProductsContent.style.display = 'none';
                 saleContent.style.display = 'block';
                 randomContent.style.display = 'none';
-            });
-
-            // Xử lý sự kiện click cho liên kết "Random"
-            randomLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
-                allProductsContent.style.display = 'none';
-                saleContent.style.display = 'none';
-                randomContent.style.display = 'block';
             });
         });
     </script>

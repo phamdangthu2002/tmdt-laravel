@@ -307,12 +307,11 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
-                    type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+                    type="button" role="tab" aria-controls="description" aria-selected="true">Mô tả</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="additional-info-tab" data-bs-toggle="tab" data-bs-target="#additional-info"
-                    type="button" role="tab" aria-controls="additional-info" aria-selected="false">Additional
-                    information</button>
+                    type="button" role="tab" aria-controls="additional-info" aria-selected="false">Thông tin chi tiết</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"

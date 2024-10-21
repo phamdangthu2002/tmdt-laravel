@@ -3,7 +3,6 @@
     <title>{{ $title }}</title>
     <!-- Cart Menu -->
     <div class="container-cart mt-5">
-
         <h2><b>Giỏ hàng</b></h2>
         @if ($carts->isEmpty())
             <h4>
@@ -11,6 +10,7 @@
             </h4>
             <a href="{{ url()->previous() }}" class="btn btn-outline-success">Tiếp tục mua sắm</a>
         @else
+            <!-- Form giỏ hàng -->
             <form action="{{ route('user.add-donghang', Auth::id()) }}" method="POST">
                 @csrf
                 <table class="cart-table">
@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
                         @foreach ($carts as $cart)
-                            @if ($cart->dadathang != 0)
+                            @if ($cart->dadathang == 1)
                                 <tr class="item-cart">
                                     <input type="hidden" name="id_sanpham" value="{{ $cart->sanpham->id_sanpham }}">
                                     <input type="hidden" name="id_size" value="{{ $cart->size->id_size }}">
@@ -37,24 +37,11 @@
                                             class="img-thumbnail">
                                     </th>
                                     <th>
-                                        <div class="cart-name">
-                                            {{ $cart->sanpham->tensanpham }}
-                                        </div>
+                                        <div class="cart-name">{{ $cart->sanpham->tensanpham }}</div>
                                     </th>
+                                    <th>{{ $cart->size->tensize }}</th>
+                                    <th>{{ $cart->color->tencolor }}</th>
                                     <th>
-                                        <div class="cart-content">
-                                            {{ $cart->size->tensize }}
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="cart-content">
-                                            {{ $cart->color->tencolor }}
-                                        </div>
-                                    </th>
-                                    <th>
-                                        {{-- <input type="hidden" name="quantity" class="quantity"
-                                            value="{{ $cart->quantity }}" />
-                                        <span>{{ $cart->quantity }}</span> --}}
                                         <div class="d-flex flex-row align-items-center m-1">
                                             <div class="input-group input-group-sm">
                                                 <button class="btn btn-sm btn-outline-secondary"
@@ -70,11 +57,12 @@
                                         </div>
                                     </th>
                                     <th>
-                                        {!! \App\Helpers\Helper::price_cart($cart->gia, $cart->sale) !!}
+                                        <div class="cart-item-price">
+                                            {!! \App\Helpers\Helper::formatVND($cart->tong) !!}
+                                        </div>
                                     </th>
                                     <th>
-                                        <a href="{{ $cart->id_giohang }}/delete-cart" style="display:inline;"
-                                            data-name="{{ $cart->sanpham->tensanpham }}"
+                                        <a href="{{ $cart->id_giohang }}/delete-cart"
                                             class="btn btn-danger delete-form bx bx-trash"></a>
                                     </th>
                                 </tr>
@@ -83,15 +71,15 @@
                     </tbody>
                 </table>
                 <div class="cart-total">
-                    <p class="font-weight-bold">Total: <span id="cartTotal"></span>
-                    </p>
-                    <p class="font-weight-bold"><input type="hidden" name="tong" id="text" class="text-decorate">
+                    <p class="font-weight-bold">
+                        Tổng tiền: {{ \App\Helpers\Helper::formatVND($tongTien) }}
                     </p>
                 </div>
                 <button type="submit" class="cart-buy btn btn-danger">Đặt hàng</button>
                 <a href="{{ url()->previous() }}" class="btn btn-outline-success">Tiếp tục mua sắm</a>
             </form>
         @endif
+
     </div>
     <script>
         function increase(element, cartId) {
@@ -149,24 +137,24 @@
                 }
             });
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            // Kiểm tra sessionStorage có thông báo không
-            let message = sessionStorage.getItem('updateMessage');
-            if (message) {
-                // Hiển thị Toast
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success',
-                    title: message,
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // Kiểm tra sessionStorage có thông báo không
+        //     let message = sessionStorage.getItem('updateMessage');
+        //     if (message) {
+        //         // Hiển thị Toast
+        //         Swal.fire({
+        //             toast: true,
+        //             position: 'top-end',
+        //             icon: 'success',
+        //             title: message,
+        //             showConfirmButton: false,
+        //             timer: 1500,
+        //             timerProgressBar: true,
+        //         });
 
-                // Xóa thông báo khỏi sessionStorage
-                sessionStorage.removeItem('updateMessage');
-            }
-        });
+        //         // Xóa thông báo khỏi sessionStorage
+        //         sessionStorage.removeItem('updateMessage');
+        //     }
+        // });
     </script>
 @endsection

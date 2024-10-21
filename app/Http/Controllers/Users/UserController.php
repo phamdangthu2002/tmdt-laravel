@@ -111,13 +111,14 @@ class UserController extends Controller
         $this->cartServices->add_cart($request);
         return redirect()->back();
     }
-    public function giohangshow(Request $request)
+    public function giohangshow()
     {
         $carts = $this->cartServices->getCartByID();
 
         return view('Users.gio-hang.index', [
             'title' => 'Giỏ hàng',
-            'carts' => $carts,
+            'carts' => $carts['cart'],  // Danh sách sản phẩm
+            'tongTien' => $carts['tongTien'],  // Tổng tiền của toàn bộ giỏ hàng
         ]);
     }
 

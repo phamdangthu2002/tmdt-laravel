@@ -137,8 +137,23 @@ class CartServices
     {
         // Lấy id của người dùng hiện tại đã đăng nhập
         $id_user = Auth::id();
-        return Cart::select('id_giohang', 'id_sanpham', 'id_size', 'id_color', 'quantity', 'gia', 'dadathang')->with('sanpham')->where('id_user', $id_user)->get();
+
+        $cart = Cart::select('id_giohang', 'id_sanpham', 'id_size', 'id_color', 'quantity', 'gia', 'dadathang')
+            ->selectRaw('quantity * gia as tong') // Tính cột tổng
+            ->with('sanpham') // Liên kết với bảng sản phẩm
+            ->where('id_user', $id_user)
+            ->where('dadathang', 1) // Thêm điều kiện chỉ lấy sản phẩm đã đặt hàng
+            ->get();
+
+        // Tính tổng giá của tất cả sản phẩm trong giỏ hàng
+        $tongTien = $cart->sum('tong');
+
+        return [
+            'cart' => $cart,
+            'tongTien' => $tongTien,
+        ];
     }
+
 
     public function destroy($id)
     {
